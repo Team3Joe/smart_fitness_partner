@@ -78,108 +78,146 @@ class _CenterListState extends State<CenterList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('$nowTap'),
+        title: Text('$nowTap',
+        style: TextStyle(
+                fontWeight: FontWeight.w600,
+                shadows: [
+                  Shadow(
+                    color: Colors.black.withOpacity(0.3),
+                    offset: const Offset(5, 5),
+                    blurRadius:10
+                  )
+                ]
+              ),
+        ),
+        backgroundColor: Color.fromARGB(230, 73, 39, 174),
+        toolbarHeight: 75,
+        elevation: 0,
       ),
       body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: [
-              Container(
-                height: 52,
-                child: data.isEmpty
-                    ? const Text("데이터가 없습니다.")
-                    : ListView.builder(
-                      
-                        scrollDirection: Axis.horizontal,
-                        itemCount: mRegion.length,
-                        itemBuilder: (context, position) {
-                          return GestureDetector(
-                            onTap: () {},
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: ElevatedButton(
-                                      onPressed: () {
-                                          setState(() {
-                                          nowTap = mRegion[position];
-                                        });
-                                        tap(position);
-                                      
-                                        
-                                      },
-                                      child: Text(
-                                        mRegion[position],
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 17.0,
-                                        ),
-                                      )),
-                                )
-                              ],
-                            ),
-                          );
-                        }),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Container(
-                height: 700,
-                child: ListView.builder(
-                  controller: _scrollController,
-                    scrollDirection: Axis.vertical,
-                    itemCount: data.length,
-                    itemBuilder: (context, position) {
-                      return GestureDetector(
-                        onTap: () {
-                          locateGetJSONData(data[position]['mid']);
-                  
-                        },
+        child: Column(
+          children: [
+            Container(
+              color: Color.fromARGB(220, 200, 167, 238),
+              height: 65,
+              child: data.isEmpty
+                  ? const Text("데이터가 없습니다.")
+                  : ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: mRegion.length,
+                      itemBuilder: (context, position) {
+                        return GestureDetector(
+                          onTap: () {},
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 5.5,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                        setState(() {
+                                        nowTap = mRegion[position];
+                                      });
+                                      tap(position);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      primary: const Color.fromARGB(200, 96, 60, 205),
+                                    ),
+                                    child: Text(
+                                      mRegion[position],
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 17.0,
+                                      ),
+                                    )
+                                  ),
+                              )
+                            ],
+                          ),
+                        );
+                      }),
+            ),
+            Container(
+              width: 400,
+              height: 700,
+              child: ListView.builder(
+                controller: _scrollController,
+                  scrollDirection: Axis.vertical,
+                  itemCount: data.length,
+                  itemBuilder: (context, position) {
+                    return GestureDetector(
+                      onTap: () {
+                        locateGetJSONData(data[position]['mid']);
+                
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 3, 8, 3),
                         child: Card(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Column(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      data[position]['mName'],
-                                      style: TextStyle(
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Image.asset(
+                                        "images/korea.png",
+                                        width: 180,
+                                        height: 80,
+                                      ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        data[position]['mName'],
+                                        style: TextStyle(
                                           color: Colors.black,
-                                          letterSpacing: 2.0,
-                                          fontSize: 20.0,
+                                          fontSize: 17.0,
                                           fontWeight: FontWeight.bold),
+                                        ),
+                                        SizedBox(
+                                          height: 3,
+                                        ),
+                                      Text(
+                                        " Tel: " + data[position]['mTell'],
+                                        style: TextStyle(
+                                          color: Color.fromARGB(255, 103, 103, 103),
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14.0,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Text(data[position]['mAddress'],
+                                    style: const TextStyle(
+                                      color: Color.fromARGB(255, 89, 89, 89),
+                                      fontSize: 11
                                     ),
                                   ),
-                                  Text(
-                                    " Tel: " + data[position]['mTell'],
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      letterSpacing: 2.0,
-                                      fontSize: 15.0,
-                                    ),
-                                  ),
-                                                               Padding(
-                                                padding: const EdgeInsets.all(5.0),
-                                                child: Text(data[position]['mAddress'],
-                                                style: TextStyle(
-                                    color: Colors.black,
-
-                                    fontSize: 15
-                                  ),),
-                                              ),
+                            ),
                                 ],
                               ),
                             ],
                           ),
                         ),
-                      );
-                    }),
-              ),
-            ],
-          ),
+                      ),
+                    );
+                  }),
+            ),
+          ],
         ),
       ),
     );
