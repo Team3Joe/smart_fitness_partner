@@ -10,4 +10,6 @@ class Message2 {
   static String situp = "";
   static String bmi = "";
 
+  static String ratingResult = "";
+  static String gender = "";
 }
