@@ -2,8 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
 import 'package:http/http.dart' as http;
+import 'package:korean_fitness/Main/splashscreen.dart';
 import 'package:korean_fitness/message.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get/get.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
@@ -332,13 +336,19 @@ class _LogInState extends State<LogIn> {
               content: const Text('로그인에 성공하였습니다.'),
               actions: [
                 ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async{
                       Message.uId = data[0]['uId'];
                       Message.uPw = data[0]['uPw'];
                       Message.uName = data[0]['uName'];
                       Message.uBirth = data[0]['uBirth'];
                       Message.uEmail = data[0]['uEmail'];
-
+                      final SharedPreferences sharedPreferences =
+                          await SharedPreferences.getInstance();
+                      sharedPreferences.setString(
+                          'id', idController.text.trim());
+                      sharedPreferences.setString(
+                          'pw', pwController.text.trim());
+                      Get.to(SplashPage());
                       Navigator.popAndPushNamed(context, '/Mainpage');
                     },
                     child: const Text('OK'))

@@ -29,6 +29,7 @@ import 'package:korean_fitness/Setting/privacy_policy.dart';
 import 'package:korean_fitness/Setting/setting.dart';
 import 'package:korean_fitness/Setting/terms_of_service.dart';
 import 'package:korean_fitness/Analysis/select_gender.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: themeNotifier,
       builder: (context, ThemeMode currentMode, __) {
-        return MaterialApp(
+        return GetMaterialApp(
           // debug banner
           debugShowCheckedModeBanner: false,
           theme: ThemeData(primarySwatch: Colors.deepPurple),

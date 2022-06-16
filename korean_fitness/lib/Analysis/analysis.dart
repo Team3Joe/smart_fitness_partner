@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:korean_fitness/Calendar/calender.dart';
 import 'package:korean_fitness/Main/mainpage.dart';
 import 'package:korean_fitness/Setting/mypage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Analysis extends StatefulWidget {
   const Analysis({Key? key}) : super(key: key);
@@ -277,6 +278,18 @@ class _AnalysisState extends State<Analysis> {
                 // color: Colors.deepPurple,
               ),
               title: const Text('설정'),
+            ),
+            ListTile(
+              onTap: () async{
+                final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                sharedPreferences.remove("id");
+                Navigator.pushNamed(context, '/Log_in');
+              },
+              leading: const Icon(
+                Icons.logout,
+                // color: Colors.deepPurple,
+              ),
+              title: const Text('로그아웃'),
             ),
           ],
         ),
