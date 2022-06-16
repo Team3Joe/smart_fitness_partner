@@ -74,8 +74,20 @@ class _AnalysisDataState extends State<AnalysisData> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text('나의 신체 티어는?'),
-          backgroundColor: Color.fromARGB(255, 209, 149, 233),
+          title: Text(
+              '나의 신체 티어는?',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                shadows: [
+                  Shadow(
+                    color: Colors.black.withOpacity(0.3),
+                    offset: const Offset(5, 5),
+                    blurRadius:10
+                  )
+                ]
+              ),
+            ),
+          backgroundColor: Color.fromARGB(255, 197, 129, 224),
           elevation: 0,
           toolbarHeight: 75,
         ),
@@ -424,7 +436,8 @@ class _AnalysisDataState extends State<AnalysisData> {
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
-                            color: Colors.white),
+                            color: Colors.white,
+                          ),
                       ),
                       icon: const Icon(
                         Icons.arrow_forward,

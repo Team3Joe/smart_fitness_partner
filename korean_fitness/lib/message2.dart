@@ -13,4 +13,6 @@ class Message2 {
 
   static String ratingResult = "";
   static String gender = "";
+
+  static String tier = "";
 }
