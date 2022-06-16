@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:ffi';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:korean_fitness/message2.dart';
 
@@ -26,7 +30,12 @@ class _AnalysisDataState extends State<AnalysisData> {
   late String longJump;
   late String fatMass;
   late String situp;
+  late String bmr;
+  late String bmi;
 
+  late String ratingUri;
+
+  late String ratingResult;
   @override
   void initState() {
     // TODO: implement initState
@@ -40,12 +49,26 @@ class _AnalysisDataState extends State<AnalysisData> {
     longJumpController = TextEditingController();
     fatMassController = TextEditingController();
     situpController = TextEditingController();
+
+    height = "";
+    weight = "";
+    age = "";
+    grip = "";
+    forwardBending = "";
+    longJump = "";
+    fatMass = "";
+    situp = "";
+
+    ratingUri = "";
+
+    bmr = "";
+    bmi = "";
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-       onTap: () {
+      onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
@@ -64,9 +87,7 @@ class _AnalysisDataState extends State<AnalysisData> {
                 children: [
                   const Text(
                     "                                    좀더 정확한 분석을 위해\n                             체력측정센터를 방문해보세요!",
-                    style: TextStyle(
-                      color: Color.fromARGB(200, 209, 149, 233)
-                    ),
+                    style: TextStyle(color: Color.fromARGB(200, 209, 149, 233)),
                   ),
                   Row(
                     children: [
@@ -90,7 +111,7 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40,8,40,8),
+                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
                     child: TextField(
                       controller: weightController,
                       decoration: const InputDecoration(
@@ -98,17 +119,21 @@ class _AnalysisDataState extends State<AnalysisData> {
                         hintText: '몸무게를 입력해주세요(Enter your Weight)',
                         labelStyle: TextStyle(
                           color: Color.fromARGB(255, 203, 144, 226),
-                          ),
+                        ),
                         hintStyle: TextStyle(
                           color: Color.fromARGB(150, 203, 144, 226),
-                          ),
+                        ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(width: 2, color: Color.fromARGB(255, 234, 200, 247)),
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 234, 200, 247)),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(width: 2, color: Color.fromARGB(255, 234, 200, 247)),
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 234, 200, 247)),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -119,7 +144,7 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40,8,40,8),
+                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
                     child: TextField(
                       controller: heightController,
                       decoration: const InputDecoration(
@@ -127,17 +152,21 @@ class _AnalysisDataState extends State<AnalysisData> {
                         hintText: '키를 입력해주세요(Enter your Height)',
                         labelStyle: TextStyle(
                           color: Color.fromARGB(255, 203, 144, 226),
-                          ),
+                        ),
                         hintStyle: TextStyle(
                           color: Color.fromARGB(150, 203, 144, 226),
-                          ),
+                        ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(width: 2, color: Color.fromARGB(255, 234, 200, 247)),
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 234, 200, 247)),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(width: 2, color: Color.fromARGB(255, 234, 200, 247)),
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 234, 200, 247)),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -148,25 +177,29 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40,8,40,8),
+                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
                     child: TextField(
-                      controller: ageController,
+                      controller: situpController,
                       decoration: const InputDecoration(
                         labelText: '윗몸 일으키기(Sit-up)',
                         hintText: '윗몸 일으키기 갯수를 입력해주세요',
                         labelStyle: TextStyle(
                           color: Color.fromARGB(255, 145, 108, 255),
-                          ),
+                        ),
                         hintStyle: TextStyle(
                           color: Color.fromARGB(150, 145, 108, 255),
-                          ),
+                        ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(width: 2, color: Color.fromARGB(255, 195, 180, 250)),
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 195, 180, 250)),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(width: 2, color: Color.fromARGB(255, 195, 180, 250)),
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 195, 180, 250)),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -177,25 +210,29 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40,8,40,8),
+                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
                     child: TextField(
-                      controller: gripController,
+                      controller: ageController,
                       decoration: const InputDecoration(
                         labelText: '나이(Height)',
                         hintText: '나이를 입력해주세요(Enter your age)',
                         labelStyle: TextStyle(
                           color: Color.fromARGB(255, 145, 108, 255),
-                          ),
+                        ),
                         hintStyle: TextStyle(
                           color: Color.fromARGB(150, 145, 108, 255),
-                          ),
+                        ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(width: 2, color: Color.fromARGB(255, 195, 180, 250)),
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 195, 180, 250)),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(width: 2, color: Color.fromARGB(255, 195, 180, 250)),
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 195, 180, 250)),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -206,25 +243,29 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40,8,40,8),
+                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
                     child: TextField(
-                      controller: forwardBendingController,
+                      controller:  gripController,
                       decoration: const InputDecoration(
                         labelText: '악력(grip)',
                         hintText: '악력을 입력해주세요(Enter your grip)',
                         labelStyle: TextStyle(
                           color: Color.fromARGB(255, 145, 108, 255),
-                          ),
+                        ),
                         hintStyle: TextStyle(
                           color: Color.fromARGB(150, 145, 108, 255),
-                          ),
+                        ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(width: 2, color: Color.fromARGB(255, 195, 180, 250)),
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 195, 180, 250)),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(width: 2, color: Color.fromARGB(255, 195, 180, 250)),
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 195, 180, 250)),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -235,25 +276,29 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40,8,40,8),
+                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
                     child: TextField(
-                      controller: longJumpController,
+                      controller:  forwardBendingController,
                       decoration: const InputDecoration(
                         labelText: '앞으로 구부리기(forwardBending)',
                         hintText: '앞으로 구부리기(cm) 값을 입력해주세요',
                         labelStyle: TextStyle(
                           color: Color.fromARGB(255, 91, 126, 222),
-                          ),
+                        ),
                         hintStyle: TextStyle(
                           color: Color.fromARGB(150, 76, 111, 208),
-                          ),
+                        ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(width: 2, color: Color.fromARGB(255, 133, 165, 253)),
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 133, 165, 253)),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(width: 2, color: Color.fromARGB(255, 133, 165, 253)),
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 133, 165, 253)),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -264,25 +309,29 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40,8,40,8),
+                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
                     child: TextField(
-                      controller: fatMassController,
+                      controller: longJumpController,
                       decoration: const InputDecoration(
                         labelText: '멀리뛰기(longJump)',
                         hintText: '멀리뛰기(cm)을 입력해주세요(Enter your longJump)',
                         labelStyle: TextStyle(
                           color: Color.fromARGB(255, 91, 126, 222),
-                          ),
+                        ),
                         hintStyle: TextStyle(
                           color: Color.fromARGB(150, 91, 126, 222),
-                          ),
+                        ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(width: 2, color: Color.fromARGB(255, 133, 165, 253)),
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 133, 165, 253)),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(width: 2, color: Color.fromARGB(255, 133, 165, 253)),
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 133, 165, 253)),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -293,25 +342,29 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40,8,40,30),
+                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 30),
                     child: TextField(
-                      controller: situpController,
+                      controller: fatMassController,
                       decoration: const InputDecoration(
                         labelText: '체지방량(fatMass)',
                         hintText: '체지방량을 입력해주세요(Enter your fatmass)',
                         labelStyle: TextStyle(
                           color: Color.fromARGB(255, 91, 126, 222),
-                          ),
+                        ),
                         hintStyle: TextStyle(
                           color: Color.fromARGB(150, 91, 126, 222),
-                          ),
+                        ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(width: 2, color: Color.fromARGB(255, 133, 165, 253)),
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 133, 165, 253)),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(width: 2, color: Color.fromARGB(255, 133, 165, 253)),
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 133, 165, 253)),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -323,20 +376,18 @@ class _AnalysisDataState extends State<AnalysisData> {
                   ),
                   DecoratedBox(
                     decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                        colors: [
+                        gradient: const LinearGradient(colors: [
                           Color.fromARGB(255, 133, 165, 253),
                           Color.fromARGB(255, 150, 126, 255)
                           //add more colors
-                        ]
-                      ),
-                      borderRadius: BorderRadius.circular(5),
-                      boxShadow: const <BoxShadow>[
-                        BoxShadow(
-                          color: Color.fromRGBO(0, 0, 0, 0.57), //shadow for button
-                          blurRadius: 5) //blur radius of shadow
-                      ]
-                    ),
+                        ]),
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: const <BoxShadow>[
+                          BoxShadow(
+                              color: Color.fromRGBO(
+                                  0, 0, 0, 0.57), //shadow for button
+                              blurRadius: 5) //blur radius of shadow
+                        ]),
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         primary: Colors.transparent,
@@ -344,31 +395,42 @@ class _AnalysisDataState extends State<AnalysisData> {
                         shadowColor: Colors.transparent,
                         //make color or elevated button transparent
                       ),
-                      onPressed: (){
-                              Message2.height = heightController.text;
-                              Message2.weight = weightController.text;
-                              Message2.age = ageController.text;
-                              Message2.grip = gripController.text;
-                              Message2.forwardBending = forwardBendingController.text;
-                              Message2.longJump = longJumpController.text;
-                              Message2.fatMass = fatMassController.text;
-                              Message2.situp = situpController.text;
-          
-                              Navigator.pushNamed(context, '/Analysis_result');
+                      onPressed: () {
+                        Message2.height = heightController.text;
+                        Message2.weight = weightController.text;
+                        Message2.age = ageController.text;
+                        Message2.grip = gripController.text;
+                        Message2.forwardBending = forwardBendingController.text;
+                        Message2.longJump = longJumpController.text;
+                        Message2.fatMass = fatMassController.text;
+                        Message2.situp = situpController.text;
+
+                        height = heightController.text;
+                        weight = weightController.text;
+                        age = ageController.text;
+                        grip = gripController.text;
+                        forwardBending = forwardBendingController.text;
+                        longJump = longJumpController.text;
+                        fatMass = fatMassController.text;
+                        situp = situpController.text;
+
+                        getRatingResult();
+                        Timer(Duration(seconds: 3), () {
+                          Navigator.pushNamed(context, '/Analysis_result');
+                        });
                       },
                       label: const Text(
                         "티어분석",
                         style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white
-                        ),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white),
                       ),
                       icon: const Icon(
                         Icons.arrow_forward,
-                        size : 20,
+                        size: 20,
                       ),
-                    ),  
+                    ),
                   )
                 ],
               ),
@@ -377,21 +439,203 @@ class _AnalysisDataState extends State<AnalysisData> {
         ),
       ),
     );
+  }
 
-    // insertAction() async{
-    // var url = Uri.parse(
-    //   'http://localhost:8080/Flutter/student_insert_return_flutter.jsp?code=$code&name=$name&dept=$dept&phone=$phone'
-    // );
-    // var response = await http.get(url);
-    // setState(() {
-    //   var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
-    //   result = dataConvertedJSON['result'];
-    // });
-    // if(result == 'OK'){
-    //   _showDialog(context);
-    // }else{
-    //   errorSnackBar(context);
-    // }
-    // }
+  analysis() {
+    if (heightController.text.isEmpty == false &&
+        weightController.text.isEmpty == false &&
+        ageController.text.isEmpty == false &&
+        gripController.text.isEmpty == false &&
+        gripController.text.isEmpty == false &&
+        forwardBendingController.text.isEmpty == false &&
+        longJumpController.text.isEmpty == false &&
+        fatMassController.text.isEmpty == false &&
+        situpController.text.isEmpty == false) {
+      height = heightController.text;
+      weight = weightController.text;
+      age = ageController.text;
+      grip = gripController.text;
+      forwardBending = forwardBendingController.text;
+      longJump = longJumpController.text;
+      fatMass = fatMassController.text;
+      situp = situpController.text;
+
+      double double_weight = double.parse(weight);
+      double double_height = double.parse(height);
+      double double_grip = double.parse(grip);
+      double double_forwardBending = double.parse(forwardBending);
+      int int_age = int.parse(age);
+      double double_longJump = double.parse(longJump);
+      double double_fatMass = double.parse(fatMass);
+      double double_situp = double.parse(situp);
+
+      if (double_weight > 250) {
+        errorSnackBar(context);
+      } else if (double_height >= 250) {
+        errorSnackBar2(context);
+      } else if (double_situp > 200) {
+        errorSnackBar3(context);
+      } else if (int_age > 200) {
+        errorSnackBar4(context);
+      } else if (double_grip > 200) {
+        errorSnackBar5(context);
+      } else if (double_forwardBending > 150 && double_forwardBending < -100) {
+        errorSnackBar6(context);
+      } else if (double_longJump > 300 && double_longJump < 0) {
+        errorSnackBar7(context);
+      } else if (double_fatMass > 100) {
+        errorSnackBar8(context);
+      } else {
+        Message2.height = height;
+        Message2.weight = weight;
+        Message2.age = age;
+        Message2.grip = grip;
+        Message2.forwardBending = forwardBending;
+        Message2.longJump = longJump;
+        Message2.fatMass = fatMass;
+        Message2.situp = situp;
+        Navigator.pushNamed(context, '/Analysis_result');
+      }
+    } else {
+      errorSnackBar9(context);
+    }
+  }
+
+  errorSnackBar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("몸무게 입력을 잘못되었습니다."),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
+  errorSnackBar2(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("키 입력을 잘못되었습니다."),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
+  errorSnackBar3(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("윗몸 일으키기 입력을 잘못되었습니다."),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
+  errorSnackBar4(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("나이 입력을 잘못되었습니다."),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
+  errorSnackBar5(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("악력 입력을 잘못되었습니다."),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
+  errorSnackBar6(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("앞으로 구부리기 입력을 잘못되었습니다."),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
+  errorSnackBar7(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("멀리뛰기 입력을 잘못되었습니다."),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
+  errorSnackBar8(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("체지방량 입력을 잘못되었습니다."),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
+  errorSnackBar9(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("모든 값을 입력해주세요."),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
+  getRatingResult() async {
+    print(Message2.gender);
+    //비동기 함수 == 작업하면서 화면구성도 같이하겠다!
+    //이럴땐 (주소) var를 많이 씀.
+    // result.clear();
+
+    var bmi2 = double.parse(weightController.text) /
+        ((double.parse(heightController.text) / 100) *
+            (double.parse(heightController.text) / 100));
+    bmi = bmi2.toString();
+
+    if (Message2.gender == "여") {
+     var bmr2 = 655.1 +
+          (9.56 * double.parse(weightController.text)) +
+          (1.85 * double.parse(heightController.text)) -
+          4.68 * int.parse(ageController.text);
+      bmr = bmr2.toString();
+      ratingUri =
+          "http://localhost:8080/Rserve/response_bodyF.jsp?age=$age&fatMass=$fatMass&grip=$grip&forwardBending=$forwardBending&situp=$situp&longJump=$longJump&bmi=$bmi&bmr=$bmr";
+      print(ratingUri);
+    } else {
+      int ageGroup2 = (int.parse(ageController.text) ~/ 4) - 3;
+      String ageGroup = ageGroup2.toString();
+
+      var bmr2 = 66.47 +
+          (13.75 * double.parse(weightController.text)) +
+          (5 * double.parse(heightController.text)) -
+          (6.76 * int.parse(ageController.text));
+      bmr=bmr2.toString();
+      ratingUri =
+          "http://localhost:8080/Rserve/response_mbp.jsp?age=$age&fatMass=$fatMass&grip=$grip&forwardBending=$forwardBending&situp=$situp&longJump=$longJump&bmi=$bmi&bmr=$bmr&ageGroup=$ageGroup";
+    }
+
+    var url = Uri.parse(ratingUri);
+    //http 가 위주소를 다가져옴 //await <- 빌드가 끝날때까지 일단 기다려
+    var response = await http.get(url);
+    var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+    setState(() {
+      ratingResult = dataConvertedJSON['result']; //results 키값!
+
+      print(ratingResult);
+
+      Message2.ratingResult = ratingResult;
+
+      //result[0]['code'] = S001 <- 리스트에 넣어준거 불러오는법
+    });
   }
 }

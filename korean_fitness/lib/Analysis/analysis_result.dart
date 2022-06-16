@@ -65,7 +65,7 @@ class BarChartSample1State extends State<BarChartSample1> {
   final Duration animDuration1 = const Duration(milliseconds: 250);
 
   int touchedIndex1 = -1;
-
+ 
   bool isPlaying1 = true;
 
   @override
@@ -1837,21 +1837,33 @@ class _AnalysisResultState extends State<AnalysisResult> {
   late double longJump;
   late double fatMass;
   late double situp;
+  late String rating;
+  
 
   @override
   void initState() {
     super.initState();
-    
-  height = double.parse(Message2.height);
-  weight = double.parse(Message2.weight);
-  age = double.parse(Message2.age);
-  grip = double.parse(Message2.grip);
-  forwardBending = double.parse(Message2.forwardBending);
-  longJump = double.parse(Message2.longJump);
-  fatMass = double.parse(Message2.fatMass);
-  situp = double.parse(Message2.situp);
 
-
+    height = double.parse(Message2.height);
+    weight = double.parse(Message2.weight);
+    age = double.parse(Message2.age);
+    grip = double.parse(Message2.grip);
+    forwardBending = double.parse(Message2.forwardBending);
+    longJump = double.parse(Message2.longJump);
+    fatMass = double.parse(Message2.fatMass);
+    situp = double.parse(Message2.situp);
+    rating = Message2.ratingResult;
+    setState(() {
+      if(rating=="A"){
+        rating = "다이아";
+      }else if(rating=="B"){
+        rating="골드";
+      }else if(rating=="C"){
+        rating=="실버";
+      }else{
+        rating="브론즈";
+      }
+    });
   }
 
   @override
@@ -1874,25 +1886,25 @@ class _AnalysisResultState extends State<AnalysisResult> {
             children: [
               Center(
                 child: Column(
-                  children: const [
-                    Text(
+                  children:  [
+                    const Text(
                       "다이아 / 골드 / 실버 / 브론즈\n\n 총 4개의 티어가 존재합니다.",
                       style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
                     ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height : 20
                     ),
                     Text(
-                      "당신은 골드 티어 입니다!",
-                      style: TextStyle(
+                      "당신의 티어는 ${rating}입니다.",
+                      style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
                     ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height : 30
                     ),
                   ],
