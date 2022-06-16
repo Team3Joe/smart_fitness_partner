@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:korean_fitness/message2.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'dart:math';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 const gridColor = Color.fromARGB(255, 129, 66, 219);
 const titleColor = Color.fromARGB(255, 129, 66, 219);
@@ -96,6 +98,7 @@ class BarChartSample1State extends State<BarChartSample1> {
     bmi = double.parse(Message2.bmi);
     bmi2 = bmi.toStringAsFixed(1); 
     bmi3 = double.parse(bmi2);
+    
 
     setState(() {
       if(rating=="A"){
@@ -2353,42 +2356,55 @@ class result extends StatefulWidget {
 
 class _resultState extends State<result> {
 
-  late double height;
-  late double weight;
-  late double age;
-  late double grip;
-  late double forwardBending;
-  late double longJump;
-  late double fatMass;
-  late double situp;
+  late String height;
+  late String weight;
+  late String age;
+  late String grip;
+  late String forwardBending;
+  late String longJump;
+  late String fatMass;
+  late String situp;
   late double bmi;
+  late String bmi2;
+  late double bmi3;
   late String rating;
+  late String gender;
+  late String tier;
+  late String uId;
   
+  late String result;
 
   @override
   void initState() {
     super.initState();
 
-    height = double.parse(Message2.height);
-    weight = double.parse(Message2.weight);
-    age = double.parse(Message2.age);
-    grip = double.parse(Message2.grip);
-    forwardBending = double.parse(Message2.forwardBending);
-    longJump = double.parse(Message2.longJump);
-    fatMass = double.parse(Message2.fatMass);
-    situp = double.parse(Message2.situp);
+    height = Message2.height;
+    weight = Message2.weight;
+    age = Message2.age;
+    grip = Message2.grip;
+    forwardBending = Message2.forwardBending;
+    longJump = Message2.longJump;
+    fatMass = Message2.fatMass;
+    situp = Message2.situp;
     rating = Message2.ratingResult;
+    gender = Message2.gender;
     bmi = double.parse(Message2.bmi);
+    bmi2 = bmi.toStringAsFixed(1); 
+    bmi3 = double.parse(bmi2);
 
     setState(() {
       if(rating=="A"){
         rating = "다이아";
+        Message2.tier = rating;
       }else if(rating=="B"){
         rating="골드";
+        Message2.tier = rating;
       }else if(rating=="C"){
         rating=="실버";
+        Message2.tier = rating;
       }else{
         rating="브론즈";
+        Message2.tier = rating;
       }
     });
   }
@@ -2445,7 +2461,19 @@ class _resultState extends State<result> {
                   //make color or elevated button transparent
                 ),
                 onPressed: (){
-
+                  gender = Message2.gender;
+                  height = Message2.height;
+                  weight = Message2.weight;
+                  age = Message2.age;
+                  grip = Message2.grip;
+                  forwardBending = Message2.forwardBending;
+                  longJump = Message2.longJump;
+                  fatMass = Message2.fatMass;
+                  situp = Message2.situp;
+                  bmi = bmi3;
+                  rating = Message2.tier;
+                  uId = "asdf";
+                  insert_result();
                 },
                 label: const Text(
                   "분석결과 저장하기",
@@ -2515,4 +2543,53 @@ class _resultState extends State<result> {
       ),
     );
   }
+// function
+   insert_result() async {
+    var url = Uri.parse(
+        'http://localhost:8080/Flutter/fitness/analysis_result_insert.jsp?gender=$gender&height=$height&weight=$weight&age=$age&grip=$grip&forwardBending=$forwardBending&longJump=$longJump&fatMass=$fatMass&situp=$situp&bmi=$bmi&rating=$rating&uId=$uId');
+    var response = await http.get(url);
+    setState(() {
+      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      result = dataConvertedJSON['result'];
+
+      if (result == 'OK') {
+       _showDialog(context);
+      } else {
+        errorSnackBar(context);
+      }
+    });
+  }
+
+  _showDialog(BuildContext ctx) {
+    showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            title: const Text('분석결과 입력'),
+            content: const Text('입력이 완료되었습니다'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/Calender');
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        });
+  }
+
+
+  errorSnackBar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('사용자 정보 입력에 문제가 발생하였습니다.'),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
 }
+
