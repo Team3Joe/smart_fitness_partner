@@ -15,199 +15,177 @@ class Analysis extends StatefulWidget {
 
 class _AnalysisState extends State<Analysis> {
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           "당신의 신체등급을 분석해보세요!",
           style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w600,
-              color: Colors.black
-            ),
+              fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black),
         ),
         backgroundColor: Colors.white10,
         foregroundColor: Colors.black,
         elevation: 0,
       ),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 35,
-          ),
-          const Text(
-            "스마트 체력 테스트",
-            style: TextStyle(
-              fontSize: 20,
-              color: Color.fromARGB(255, 92, 29, 181),
-              fontWeight: FontWeight.bold
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 35,
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  Image.asset(
-                    "images/bmi.png",
-                    width: 80,
-                    height: 80,
-                    color: Colors.white.withOpacity(0.9), colorBlendMode: BlendMode.modulate,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  const Text(
-                    "신체조성",
-                    style : TextStyle(
-                      fontSize: 16,
-                      color: Color.fromARGB(235, 110, 47, 199),
-                      fontWeight: FontWeight.bold
-                    )
-                  ),
-                ],
-              ),
-              const SizedBox(
-                width: 30,
-              ),
-              Column(
-                children: [
-                  Image.asset(
-                    "images/muscular_strength.png",
-                    width: 80,
-                    height: 80,
-                    color: Colors.white.withOpacity(0.9), colorBlendMode: BlendMode.modulate,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  const Text(
-                    "근력",
-                    style : TextStyle(
-                      fontSize: 16,
-                      color: Color.fromARGB(235, 110, 47, 199),
-                      fontWeight: FontWeight.bold
-                    )
-                  ),
-                ],
-              ),
-              const SizedBox(
-                width: 30,
-              ),
-              Column(
-                children: [
-                  Image.asset(
-                    "images/muscle_endurance.png",
-                    width: 80,
-                    height: 80,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  const Text(
-                    "근지구력",
-                    style : TextStyle(
-                      fontSize: 16,
-                      color: Color.fromARGB(235, 110, 47, 199),
-                      fontWeight: FontWeight.bold
-                    )
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  Image.asset(
-                    "images/flexibility.png",
-                    width: 80,
-                    height: 80,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    "유연성",
-                    style : TextStyle(
-                      fontSize: 16,
-                      color: Color.fromARGB(235, 110, 47, 199),
-                      fontWeight: FontWeight.bold
-                    )
-                  ),
-                ],
-              ),
-              const SizedBox(
-                width: 30,
-              ),
-              Column(
-                children: [
-                  Image.asset(
-                    "images/speed_strength.png",
-                    width: 80,
-                    height: 80,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  const Text(
-                    "순발력",
-                    style : TextStyle(
-                      fontSize: 16,
-                      color: Color.fromARGB(235, 110, 47, 199),
-                      fontWeight: FontWeight.bold
-                    )
-                  ),
-                ],
-              ),
-              const SizedBox(
-                width: 30,
-              ),
-              Column(
-                children: [
-                  Image.asset(
-                    "images/analysis.png",
-                    width: 70,
-                    height: 70,
-                    color: Colors.white.withOpacity(0.8), colorBlendMode: BlendMode.modulate,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    "분석",
-                    style : TextStyle(
-                      fontSize: 16,
-                      color: Color.fromARGB(235, 110, 47, 199),
-                      fontWeight: FontWeight.bold
-                    )
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 5
-          ),
-          Image.asset(
-            "images/chartexample.png",
-            width: 270,
-            height: 300,
-          ),
-          const SizedBox(
-            height: 10
-          ),
-          OutlinedButton(
-              onPressed: (){
+            const Text(
+              "스마트 체력 테스트",
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Color.fromARGB(255, 92, 29, 181),
+                  fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    Image.asset(
+                      "images/bmi.png",
+                      width: 80,
+                      height: 80,
+                      color: Colors.white.withOpacity(0.9),
+                      colorBlendMode: BlendMode.modulate,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const Text("신체조성",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(235, 110, 47, 199),
+                            fontWeight: FontWeight.bold)),
+                  ],
+                ),
+                const SizedBox(
+                  width: 30,
+                ),
+                Column(
+                  children: [
+                    Image.asset(
+                      "images/muscular_strength.png",
+                      width: 80,
+                      height: 80,
+                      color: Colors.white.withOpacity(0.9),
+                      colorBlendMode: BlendMode.modulate,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const Text("근력",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(235, 110, 47, 199),
+                            fontWeight: FontWeight.bold)),
+                  ],
+                ),
+                const SizedBox(
+                  width: 30,
+                ),
+                Column(
+                  children: [
+                    Image.asset(
+                      "images/muscle_endurance.png",
+                      width: 80,
+                      height: 80,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const Text("근지구력",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(235, 110, 47, 199),
+                            fontWeight: FontWeight.bold)),
+                  ],
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    Image.asset(
+                      "images/flexibility.png",
+                      width: 80,
+                      height: 80,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text("유연성",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(235, 110, 47, 199),
+                            fontWeight: FontWeight.bold)),
+                  ],
+                ),
+                const SizedBox(
+                  width: 30,
+                ),
+                Column(
+                  children: [
+                    Image.asset(
+                      "images/speed_strength.png",
+                      width: 80,
+                      height: 80,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const Text("순발력",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(235, 110, 47, 199),
+                            fontWeight: FontWeight.bold)),
+                  ],
+                ),
+                const SizedBox(
+                  width: 30,
+                ),
+                Column(
+                  children: [
+                    Image.asset(
+                      "images/analysis.png",
+                      width: 70,
+                      height: 70,
+                      color: Colors.white.withOpacity(0.8),
+                      colorBlendMode: BlendMode.modulate,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text("분석",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(235, 110, 47, 199),
+                            fontWeight: FontWeight.bold)),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 5),
+            Image.asset(
+              "images/chartexample.png",
+              width: 270,
+              height: 300,
+            ),
+            const SizedBox(height: 10),
+            OutlinedButton(
+              onPressed: () {
                 Navigator.pushNamed(context, '/SelectGender');
               },
               style: OutlinedButton.styleFrom(
-              minimumSize: const Size(100, 45),
+                minimumSize: const Size(100, 45),
                 primary: Colors.deepPurpleAccent,
                 side: const BorderSide(
                   color: Colors.deepPurple,
@@ -220,22 +198,23 @@ class _AnalysisState extends State<Analysis> {
                   Text(
                     '스마트체력테스트 하러가기',
                     style: TextStyle(
-                          color: Color.fromARGB(255, 98, 53, 164),
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600
-                        ),
+                        color: Color.fromARGB(255, 98, 53, 164),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600),
                   ), // <-- Text
                   SizedBox(
                     width: 5,
                   ),
-                  Icon( // <-- Icon
+                  Icon(
+                    // <-- Icon
                     Icons.arrow_forward_rounded,
                     size: 24.0,
                   ),
                 ],
               ),
             ),
-        ],
+          ],
+        ),
       ),
       drawer: Drawer(
         child: ListView(
