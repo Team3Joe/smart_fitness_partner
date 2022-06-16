@@ -94,7 +94,7 @@ class MyApp extends StatelessWidget {
             '/Terms_of_service': (context) => const TermsOfService(),
             '/Privacy_policy': (context) => const PrivacyPolicy(),
           },
-          initialRoute: '/Log_in',
+          initialRoute: '/loading',
         );
       },
     );
