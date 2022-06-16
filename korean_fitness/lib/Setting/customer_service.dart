@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:chat_bubbles/chat_bubbles.dart'; // 고객센터 채팅형식을 위한 import
 import 'package:http/http.dart' as http;
+import 'package:korean_fitness/message.dart';
 
 class CustomerService extends StatefulWidget {
   const CustomerService({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class _CustomerServiceState extends State<CustomerService> {
     getJSONData();
 
     csContent = '';
-    uId = '';
+    uId = Message.uId;
   }
 
   @override
@@ -136,7 +137,7 @@ class _CustomerServiceState extends State<CustomerService> {
   Future getJSONData() async {
     // 비동기 방식 async : 동시에 실행되고
     var url = Uri.parse(
-        'http://localhost:8080/Flutter/fitness/customer_service_select.jsp?uId=abc');
+        'http://localhost:8080/Flutter/fitness/customer_service_select.jsp?uId=$uId');
     var response = await http.get(url);
     // await, build가 data를 기다림
     // get 방식

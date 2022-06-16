@@ -83,9 +83,9 @@ class _SettingState extends State<Setting> {
                 ),
               ),
               GestureDetector(
-                onTap: (() {
+                onTap: () {
                   Navigator.pushNamed(context, '/Customer_service');
-                }),
+                },
                 child: Card(
                   // color: const Color.fromARGB(255, 164, 154, 239),
                   child: Padding(
@@ -191,30 +191,35 @@ class _SettingState extends State<Setting> {
                   ),
                 ),
               ),
-              Card(
-                // color: const Color.fromARGB(255, 164, 154, 239),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: const [
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Icon(
-                        Icons.circle,
-                        // color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        '이용약관 & 개인정보 보호방침',
-                        style: TextStyle(
-                          fontSize: 20,
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/Privacy_policy');
+                },
+                child: Card(
+                  // color: const Color.fromARGB(255, 164, 154, 239),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: const [
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Icon(
+                          Icons.circle,
                           // color: Colors.white,
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          '이용약관 & 개인정보 보호방침',
+                          style: TextStyle(
+                            fontSize: 20,
+                            // color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

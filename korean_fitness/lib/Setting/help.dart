@@ -15,6 +15,9 @@ class _HelpState extends State<Help> {
         title: const Text('도움말 & 사용설명서'),
         elevation: 0,
       ),
+      body: Center(
+        child: Column(),
+      ),
     );
   }
 }

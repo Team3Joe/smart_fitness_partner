@@ -38,14 +38,14 @@ dependencies:
   http: ^0.13.4
 
   chat_bubbles: ^1.2.0 # 고객센터 채팅
-  google_maps_flutter: ^2.1.7
-  fl_chart: ^0.51.0
-  easy_splash_screen: ^1.0.3
-  table_calendar: ^3.0.6
-  intl: ^0.17.0
 
-  kakao_flutter_sdk: ^1.1.1 # 카카오 sdk 전체 추가
+  google_maps_flutter: ^2.1.7 # 체력인증센터 위치
 
+  fl_chart: ^0.51.0 # 체력분석 차트
+  easy_splash_screen: ^1.0.3 # 로딩화면
+  
+  table_calendar: ^3.0.6 # 캘린더 구현
+  intl: ^0.17.0 # 캘린더 datetime 세팅
 
 dev_dependencies:
   flutter_test:
