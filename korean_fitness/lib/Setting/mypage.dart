@@ -26,6 +26,7 @@ class _MyPageState extends State<MyPage> {
   late String uBirth;
   late String uEmail;
   late List data;
+  late String result;
 
   @override
   void initState() {
@@ -281,7 +282,7 @@ class _MyPageState extends State<MyPage> {
                       uName = uNameController.text;
                       uBirth = uBirthController.text;
                       uEmail = uEmailController.text;
-                      // updateAction();
+                      updateAction();
                     },
                     style: ElevatedButton.styleFrom(
                         primary: const Color.fromARGB(255, 164, 154, 239),
@@ -297,7 +298,7 @@ class _MyPageState extends State<MyPage> {
                   ElevatedButton(
                     onPressed: () {
                       uId = uIdController.text;
-                      // deleteAction();
+                      _deleteShowDialog(context);
                     },
                     style: ElevatedButton.styleFrom(
                         primary: const Color.fromARGB(255, 164, 154, 239),
@@ -334,7 +335,118 @@ class _MyPageState extends State<MyPage> {
       uNameController.text = data[0]['uName'];
       uBirthController.text = data[0]['uBirth'].toString();
       uEmailController.text = data[0]['uEmail'];
-      print(data[0]['uId']);
     });
   }
+
+//functions
+
+updateAction() async {
+    var url = Uri.parse(
+        'http://localhost:8080/Flutter/fitness/mypage_user_update.jsp?uId=$uId&uPw=$uPw&uName=$uName&uBirth=$uBirth&uEmail=$uEmail');
+    var response = await http.get(url);
+    setState(() {
+      var dataCovertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      result = dataCovertedJSON['result'];
+      if (result == 'OK') {
+        _updateShowDialog(context);
+      } else {
+        errorSnackBar(context);
+      }
+    });
+  }
+
+  _updateShowDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('수정결과'),
+            content: const Text('수정이 완료되었습니다!'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/Mypage');
+                },
+                child: const Text('예'),
+              ),
+            ],
+          );
+        });
+  }
+
+  deleteAction() async {
+    print(uId);
+    var url = Uri.parse('http://localhost:8080/Flutter/fitness/mypage_user_delete.jsp?uId=$uId');
+    var response = await http.get(url);
+    setState(() {
+      var dataCovertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      result = dataCovertedJSON['result'];
+      if (result == 'OK') {
+        _deleteResultDialog(context);
+        // _DeleteShowDialog(context);
+      } else {
+        errorSnackBar(context);
+      }
+    });
+  }
+
+   _deleteShowDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('회원 탈퇴'),
+            content: const Text('정말로 탈퇴하시겠습니까?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  deleteAction();
+                  Navigator.pop(context);
+                },
+                child: const Text('예'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('아니오'),
+              ),
+            ],
+          );
+        });
+  }
+
+   _deleteResultDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('결과'),
+            content: const Text('탈퇴가 완료되었습니다!'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/Log_in');
+                },
+                child: const Text('예'),
+              ),
+            ],
+          );
+        });
+  }
+
+  errorSnackBar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('문제가 발생 하였습니다.'),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
 }
