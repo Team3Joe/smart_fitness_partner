@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:korean_fitness/Calendar/calender_write.dart';
+import 'package:korean_fitness/message.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:http/http.dart' as http;
 
@@ -50,7 +51,7 @@ class _CalenderState extends State<Calender> {
     cWits = '';
     cMuscularStrength = '';
     cCardiovascularEndurance = '';
-    uId = '';
+    uId = Message.uId;
     getJSONData();
   }
 
@@ -452,7 +453,7 @@ class _CalenderState extends State<Calender> {
   Future getJSONData() async {
     data.clear();
     var url = Uri.parse(
-        "http://localhost:8080/Flutter/fitness/calendar_select.jsp?uId=asdf&cDate=$cDate");
+        "http://localhost:8080/Flutter/fitness/calendar_select.jsp?uId=$uId&cDate=$cDate");
     var response = await http.get(url);
     setState(() {
       var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
@@ -467,7 +468,7 @@ class _CalenderState extends State<Calender> {
   Future getJSONDataAllDate() async {
     allDatedata.clear();
     var url = Uri.parse(
-        "http://localhost:8080/Flutter/fitness/calendar_allDateSelect.jsp?uId=asdf");
+        "http://localhost:8080/Flutter/fitness/calendar_allDateSelect.jsp?uId=$uId");
     var respons = await http.get(url);
     setState(() {
       var dataConvertedJSON = json.decode(utf8.decode(respons.bodyBytes));
