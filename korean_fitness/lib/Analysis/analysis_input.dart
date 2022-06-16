@@ -601,17 +601,21 @@ class _AnalysisDataState extends State<AnalysisData> {
         ((double.parse(heightController.text) / 100) *
             (double.parse(heightController.text) / 100));
     bmi = bmi2.toString();
+    Message2.bmi = bmi;
 
+    // 여자 bmr 계산법
     if (Message2.gender == "여") {
      var bmr2 = 655.1 +
           (9.56 * double.parse(weightController.text)) +
           (1.85 * double.parse(heightController.text)) -
           4.68 * int.parse(ageController.text);
       bmr = bmr2.toString();
+      Message2.bmr = bmr;
       ratingUri =
           "http://localhost:8080/Rserve/response_bodyF.jsp?age=$age&fatMass=$fatMass&grip=$grip&forwardBending=$forwardBending&situp=$situp&longJump=$longJump&bmi=$bmi&bmr=$bmr";
       print(ratingUri);
     } else {
+    // 남자 bmr 계산법
       int ageGroup2 = (int.parse(ageController.text) ~/ 4) - 3;
       String ageGroup = ageGroup2.toString();
 
@@ -620,6 +624,7 @@ class _AnalysisDataState extends State<AnalysisData> {
           (5 * double.parse(heightController.text)) -
           (6.76 * int.parse(ageController.text));
       bmr=bmr2.toString();
+      Message2.bmr = bmr;
       ratingUri =
           "http://localhost:8080/Rserve/response_mbp.jsp?age=$age&fatMass=$fatMass&grip=$grip&forwardBending=$forwardBending&situp=$situp&longJump=$longJump&bmi=$bmi&bmr=$bmr&ageGroup=$ageGroup";
     }
