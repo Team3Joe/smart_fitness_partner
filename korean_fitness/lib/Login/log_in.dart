@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:korean_fitness/message.dart';
 
 class LogIn extends StatefulWidget {
@@ -37,18 +39,15 @@ class _LogInState extends State<LogIn> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-         FocusScope.of(context).unfocus();
+        FocusScope.of(context).unfocus();
       },
       child: Container(
         decoration: const BoxDecoration(
-          color: Color.fromARGB(240, 255, 255, 255),
-          image: DecorationImage(
-            image: AssetImage(
-              "images/fitnesscenter4.png"
-            ), 
-            fit: BoxFit.fill,
-          )
-        ),
+            color: Color.fromARGB(240, 255, 255, 255),
+            image: DecorationImage(
+              image: AssetImage("images/fitnesscenter4.png"),
+              fit: BoxFit.fill,
+            )),
         child: Scaffold(
           backgroundColor: Colors.white,
           body: Center(
@@ -82,16 +81,21 @@ class _LogInState extends State<LogIn> {
                             color: Color.fromARGB(255, 69, 41, 152),
                           ),
                           hintStyle: TextStyle(
-                           color: Color.fromARGB(159, 101, 71, 191),
-                           fontSize: 14
-                          ),
+                              color: Color.fromARGB(159, 101, 71, 191),
+                              fontSize: 14),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                            borderSide: BorderSide(width: 2.5, color: Color.fromARGB(255, 61, 51, 133)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25.0)),
+                            borderSide: BorderSide(
+                                width: 2.5,
+                                color: Color.fromARGB(255, 61, 51, 133)),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                            borderSide: BorderSide(width: 2, color: Color.fromARGB(255, 91, 80, 177)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
+                            borderSide: BorderSide(
+                                width: 2,
+                                color: Color.fromARGB(255, 91, 80, 177)),
                           ),
                         ),
                         keyboardType: TextInputType.text,
@@ -117,16 +121,21 @@ class _LogInState extends State<LogIn> {
                             color: Color.fromARGB(255, 69, 41, 152),
                           ),
                           hintStyle: TextStyle(
-                           color: Color.fromARGB(159, 101, 71, 191),
-                           fontSize: 14
-                          ),
+                              color: Color.fromARGB(159, 101, 71, 191),
+                              fontSize: 14),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                            borderSide: BorderSide(width: 2.5, color: Color.fromARGB(255, 61, 51, 133)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25.0)),
+                            borderSide: BorderSide(
+                                width: 2.5,
+                                color: Color.fromARGB(255, 61, 51, 133)),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                            borderSide: BorderSide(width: 2, color: Color.fromARGB(255, 91, 80, 177)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
+                            borderSide: BorderSide(
+                                width: 2,
+                                color: Color.fromARGB(255, 91, 80, 177)),
                           ),
                         ),
                         keyboardType: TextInputType.text,
@@ -165,10 +174,9 @@ class _LogInState extends State<LogIn> {
                       child: const Text(
                         '로그인',
                         style: TextStyle(
-                          color: Color.fromARGB(255, 226, 207, 255),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600
-                        ),
+                            color: Color.fromARGB(255, 226, 207, 255),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
                     const SizedBox(
@@ -183,12 +191,11 @@ class _LogInState extends State<LogIn> {
                       children: [
                         const Text(
                           '아직 회원이 아니신가요?',
-                            style: TextStyle(
+                          style: TextStyle(
                               color: Color.fromARGB(255, 23, 0, 60),
                               fontSize: 15,
-                              fontWeight: FontWeight.w500
-                            ),
-                          ),
+                              fontWeight: FontWeight.w500),
+                        ),
                         SizedBox(
                           height: 40,
                           child: TextButton(
@@ -198,10 +205,9 @@ class _LogInState extends State<LogIn> {
                             child: const Text(
                               '회원가입 하기',
                               style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600
-                              ),
+                                  color: Colors.blue,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600),
                             ),
                           ),
                         ),
@@ -218,12 +224,11 @@ class _LogInState extends State<LogIn> {
                             },
                             child: const Text(
                               '아이디 찾기',
-                                style: TextStyle(
+                              style: TextStyle(
                                   color: Colors.blue,
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w600
-                                ),
-                              ),
+                                  fontWeight: FontWeight.w600),
+                            ),
                           ),
                           const SizedBox(
                             width: 35,
@@ -234,12 +239,11 @@ class _LogInState extends State<LogIn> {
                             },
                             child: const Text(
                               '비밀번호 찾기',
-                                style: TextStyle(
+                              style: TextStyle(
                                   color: Colors.blue,
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w600
-                                ),
-                              ),
+                                  fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ],
                       ),
@@ -249,10 +253,43 @@ class _LogInState extends State<LogIn> {
                 const SizedBox(
                   height: 30,
                 ),
-                Image.asset(
-                  "images/kakao_login_large_wide.png",
-                  width: 400,
-                  height: 50,
+                GestureDetector(
+                  onTap: () async {
+                    if (await isKakaoTalkInstalled()) {
+                      try {
+                        await UserApi.instance.loginWithKakaoTalk();
+                        print('카카오톡으로 로그인 성공');
+                      } catch (error) {
+                        print('카카오톡으로 로그인 실패 $error');
+
+                        // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
+                        // 의도적인 로그인 취소로 보고 카카오계정으로 로그인 시도 없이 로그인 취소로 처리 (예: 뒤로 가기)
+                        if (error is PlatformException &&
+                            error.code == 'CANCELED') {
+                          return;
+                        }
+                        // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인
+                        try {
+                          await UserApi.instance.loginWithKakaoAccount();
+                          print('카카오계정으로 로그인 성공');
+                        } catch (error) {
+                          print('카카오계정으로 로그인 실패 $error');
+                        }
+                      }
+                    } else {
+                      try {
+                        await UserApi.instance.loginWithKakaoAccount();
+                        print('카카오계정으로 로그인 성공');
+                      } catch (error) {
+                        print('카카오계정으로 로그인 실패 $error');
+                      }
+                    }
+                  },
+                  child: Image.asset(
+                    "images/kakao_login_large_wide.png",
+                    width: 400,
+                    height: 50,
+                  ),
                 )
               ],
             ),
