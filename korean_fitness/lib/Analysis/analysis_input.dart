@@ -106,24 +106,36 @@ class _AnalysisDataState extends State<AnalysisData> {
                       const SizedBox(
                         width: 120,
                       ),
-                      OutlinedButton(
+                      // OutlinedButton(
+                      //   onPressed: () {
+                      //     Navigator.pushNamed(context, '/Center_list');
+                      //   },
+                      //   style: OutlinedButton.styleFrom(
+                      //     primary: Color.fromARGB(255, 145, 108, 255),
+                      //     side: const BorderSide(
+                      //       color: Color.fromARGB(255, 145, 108, 255),
+                      //       width: 1.5,
+                      //     ),
+                      //   ),
+                      //   child: const Text('우리집 근처 체력측정센터',
+                      //       style: TextStyle(fontSize: 18)),
+                      // ),
+                      ElevatedButton(
                         onPressed: () {
                           Navigator.pushNamed(context, '/Center_list');
                         },
-                        style: OutlinedButton.styleFrom(
-                          primary: Color.fromARGB(255, 145, 108, 255),
-                          side: const BorderSide(
-                            color: Color.fromARGB(255, 145, 108, 255),
-                            width: 1.5,
-                          ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Color.fromARGB(189, 145, 108, 255),
                         ),
-                        child: const Text('우리집 근처 체력측정센터',
-                            style: TextStyle(fontSize: 18)),
-                      ),
+                        child: const Text(
+                          '우리집 근처 체력측정센터',
+                          style: TextStyle(fontSize: 18)
+                        ),
+                      )
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
+                    padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
                     child: TextField(
                       controller: weightController,
                       decoration: const InputDecoration(
@@ -156,7 +168,7 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
+                    padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
                     child: TextField(
                       controller: heightController,
                       decoration: const InputDecoration(
@@ -189,7 +201,7 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
+                    padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
                     child: TextField(
                       controller: situpController,
                       decoration: const InputDecoration(
@@ -222,7 +234,7 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
+                    padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
                     child: TextField(
                       controller: ageController,
                       decoration: const InputDecoration(
@@ -255,7 +267,7 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
+                    padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
                     child: TextField(
                       controller:  gripController,
                       decoration: const InputDecoration(
@@ -288,7 +300,7 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
+                    padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
                     child: TextField(
                       controller:  forwardBendingController,
                       decoration: const InputDecoration(
@@ -321,7 +333,7 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
+                    padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
                     child: TextField(
                       controller: longJumpController,
                       decoration: const InputDecoration(
@@ -354,7 +366,7 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 30),
+                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 20),
                     child: TextField(
                       controller: fatMassController,
                       decoration: const InputDecoration(
@@ -427,9 +439,6 @@ class _AnalysisDataState extends State<AnalysisData> {
                         situp = situpController.text;
 
                         getRatingResult();
-                        Timer(Duration(seconds: 3), () {
-                          Navigator.pushNamed(context, '/Analysis_result');
-                        });
                       },
                       label: const Text(
                         "티어분석",
@@ -454,7 +463,7 @@ class _AnalysisDataState extends State<AnalysisData> {
     );
   }
 
-  analysis() {
+  analysis() async{
     if (heightController.text.isEmpty == false &&
         weightController.text.isEmpty == false &&
         ageController.text.isEmpty == false &&
@@ -507,7 +516,7 @@ class _AnalysisDataState extends State<AnalysisData> {
         Message2.longJump = longJump;
         Message2.fatMass = fatMass;
         Message2.situp = situp;
-        Navigator.pushNamed(context, '/Analysis_result');
+        await Navigator.pushNamed(context, '/Analysis_result');
       }
     } else {
       errorSnackBar9(context);
@@ -605,6 +614,41 @@ class _AnalysisDataState extends State<AnalysisData> {
   }
 
   getRatingResult() async {
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Scaffold(
+          backgroundColor: Color.fromARGB(148, 0, 0, 0),
+          body: Center(
+            child: SizedBox(
+              width: 180,
+              height: 180,
+              child: Stack(
+                fit: StackFit.expand,
+                children: const [
+                  CircularProgressIndicator(
+                    strokeWidth: 12,
+                    backgroundColor: Colors.white,
+                    color: Color.fromARGB(255, 107, 47, 176),
+                  ),
+                  Center(
+                      child: Text(
+                    '\tSmart\nFitness\n\t\tTest',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight : FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  )),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+
     print(Message2.gender);
     //비동기 함수 == 작업하면서 화면구성도 같이하겠다!
     //이럴땐 (주소) var를 많이 씀.
@@ -655,5 +699,11 @@ class _AnalysisDataState extends State<AnalysisData> {
 
       //result[0]['code'] = S001 <- 리스트에 넣어준거 불러오는법
     });
+  
+    Timer(Duration(seconds: 1), () {
+      Navigator.pop(context);
+      Navigator.pushNamed(context, '/Analysis_result');
+    });
+  
   }
 }
