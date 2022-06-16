@@ -42,6 +42,7 @@ dependencies:
   easy_splash_screen: ^1.0.3
   table_calendar: ^3.0.6
   intl: ^0.17.0
+  google_sign_in: ^5.3.3
 
 dev_dependencies:
   flutter_test:
