@@ -4,21 +4,17 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:korean_fitness/Analysis/center_items.dart';
 import 'package:http/http.dart' as http;
-import 'package:korean_fitness/message.dart';
 import 'package:korean_fitness/message3.dart';
 
 class CenterList extends StatefulWidget {
   final List<CenterData> list;
-
-
-  CenterList({Key? key, required this.list}) : super(key: key);
+  const CenterList({Key? key, required this.list}) : super(key: key);
 
   @override
   State<CenterList> createState() => _CenterListState();
 }
 
 class _CenterListState extends State<CenterList> {
-
   final ScrollController _scrollController = ScrollController();
   late List data;
   late List mRegion;
@@ -27,7 +23,6 @@ class _CenterListState extends State<CenterList> {
   late String nowTap;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     data = [];
@@ -57,177 +52,154 @@ class _CenterListState extends State<CenterList> {
 
     getJSONData();
 
-  _scrollController.addListener(() {
-    if(_scrollController.offset >= _scrollController.position.maxScrollExtent &&
-        !_scrollController.position.outOfRange
-
-){    getJSONData();
-
-    }
-  });
-
+    _scrollController.addListener(() {
+      if (_scrollController.offset >=
+              _scrollController.position.maxScrollExtent &&
+          !_scrollController.position.outOfRange) {
+        getJSONData();
+      }
+    });
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    super.dispose();
     _scrollController.dispose();
+    super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('$nowTap'),
+        title: Text(nowTap),
       ),
       body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: [
-              Container(
-                height: 52,
-                child: data.isEmpty
-                    ? const Text("데이터가 없습니다.")
-                    : ListView.builder(
-                      
-                        scrollDirection: Axis.horizontal,
-                        itemCount: mRegion.length,
-                        itemBuilder: (context, position) {
-                          return GestureDetector(
-                            onTap: () {},
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: ElevatedButton(
-                                      onPressed: () {
-                                          setState(() {
-                                          nowTap = mRegion[position];
-                                        });
-                                        tap(position);
-                                      
-                                        
-                                      },
-                                      child: Text(
-                                        mRegion[position],
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 17.0,
-                                        ),
-                                      )),
-                                )
-                              ],
-                            ),
-                          );
-                        }),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Container(
-                height: 700,
-                child: ListView.builder(
-                  controller: _scrollController,
-                    scrollDirection: Axis.vertical,
-                    itemCount: data.length,
-                    itemBuilder: (context, position) {
-                      return GestureDetector(
-                        onTap: () {
-                          locateGetJSONData(data[position]['mid']);
-                  
-                        },
-                        child: Card(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 52,
+              child: data.isEmpty
+                  ? const Text("데이터가 없습니다.")
+                  : ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: mRegion.length,
+                      itemBuilder: (context, position) {
+                        return GestureDetector(
+                          onTap: () {},
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                              Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        nowTap = mRegion[position];
+                                      });
+                                      tap(position);
+                                    },
                                     child: Text(
-                                      data[position]['mName'],
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          letterSpacing: 2.0,
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Text(
-                                    " Tel: " + data[position]['mTell'],
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      letterSpacing: 2.0,
-                                      fontSize: 15.0,
-                                    ),
-                                  ),
-                                                               Padding(
-                                                padding: const EdgeInsets.all(5.0),
-                                                child: Text(data[position]['mAddress'],
-                                                style: TextStyle(
-                                    color: Colors.black,
-
-                                    fontSize: 15
-                                  ),),
-                                              ),
-                                ],
-                              ),
+                                      mRegion[position],
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 17.0,
+                                      ),
+                                    )),
+                              )
                             ],
                           ),
+                        );
+                      }),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            SizedBox(
+              height: 700,
+              child: ListView.builder(
+                  controller: _scrollController,
+                  scrollDirection: Axis.vertical,
+                  itemCount: data.length,
+                  itemBuilder: (context, position) {
+                    return GestureDetector(
+                      onTap: () {
+                        locateGetJSONData(data[position]['mid']);
+                      },
+                      child: Card(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    data[position]['mName'],
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        letterSpacing: 2.0,
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Text(
+                                  ' Tel: ${data[position]['mTell']}',
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    letterSpacing: 2.0,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(
+                                    data[position]['mAddress'],
+                                    style: const TextStyle(
+                                        color: Colors.black, fontSize: 15),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      );
-                    }),
-              ),
-            ],
-          ),
+                      ),
+                    );
+                  }),
+            ),
+          ],
         ),
       ),
     );
   }
 
   Future<bool> getJSONData() async {
-
-
-
-
-
-    if (nowTap == '전국'){
-   var url = Uri.parse('http://localhost:8080/Flutter/fitness/center_datas_all.jsp?page=$page');
-    var response = await http.get(url);
-
-    setState(() {
-      var dataConvertedJSOn = json.decode(utf8.decode(response.bodyBytes));
-
-      List result = dataConvertedJSOn['results'];
-
-      data.addAll(result);
-
-      page += 1;
-      
-    });
-    }else{
-
+    if (nowTap == '전국') {
       var url = Uri.parse(
-          'http://localhost:8080/Flutter/fitness/center_datas_region_offset.jsp?page=$page&mRegion=$nowTap'
-              );
+          'http://localhost:8080/Flutter/fitness/center_datas_all.jsp?page=$page');
+      var response = await http.get(url);
+
+      setState(() {
+        var dataConvertedJSOn = json.decode(utf8.decode(response.bodyBytes));
+
+        List result = dataConvertedJSOn['results'];
+
+        data.addAll(result);
+
+        page += 1;
+      });
+    } else {
+      var url = Uri.parse(
+          'http://localhost:8080/Flutter/fitness/center_datas_region_offset.jsp?page=$page&mRegion=$nowTap');
       var response = await http.get(url);
       setState(() {
-      var dataConvertedJSOn = json.decode(utf8.decode(response.bodyBytes));
+        var dataConvertedJSOn = json.decode(utf8.decode(response.bodyBytes));
 
-      List result = dataConvertedJSOn['results'];
+        List result = dataConvertedJSOn['results'];
 
-      data.addAll(result);
+        data.addAll(result);
 
-      page += 1;
-   
-
-    
-    });
-
-      
+        page += 1;
+      });
     }
-    
- 
 
     // print(result);
 
@@ -235,24 +207,17 @@ class _CenterListState extends State<CenterList> {
   }
 
   Future<bool> regionGetJSONData(int index) async {
-
     data = [];
 
-
-
-      var url = Uri.parse(
-          'http://localhost:8080/Flutter/fitness/center_datas.jsp?mRegion=' +
-              mRegion[index]);
-      var response = await http.get(url);
-      setState(() {
+    var url = Uri.parse(
+        'http://localhost:8080/Flutter/fitness/center_datas.jsp?mRegion=${mRegion[index]}');
+    var response = await http.get(url);
+    setState(() {
       var dataConvertedJSOn = json.decode(utf8.decode(response.bodyBytes));
 
       List result = dataConvertedJSOn['results'];
 
       data.addAll(result);
-   
-
-    
     });
 
     // print(result);
@@ -260,30 +225,24 @@ class _CenterListState extends State<CenterList> {
     return true;
   }
 
-
-  tap(int index){
-    if (mRegion[index] == '전국'){
+  tap(int index) {
+    if (mRegion[index] == '전국') {
       data = [];
       page = 0;
       getJSONData();
-
-    }else{
+    } else {
       page = 0;
       regionGetJSONData(index);
     }
-
-
   }
 
   Future<bool> locateGetJSONData(int mId) async {
-
-        showDialog(
-      context: context
-    , builder: (context){
-
-      return Center(child: CircularProgressIndicator());
-    },);
-
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
 
     locate_data = [];
 
@@ -306,11 +265,10 @@ class _CenterListState extends State<CenterList> {
 
     // print(result);
 
-            Timer(Duration(seconds: 1), () {
-       
-          Navigator.pop(context);
-          Navigator.pushNamed(context, '/Center_map');
-                          });
+    Timer(const Duration(seconds: 1), () {
+      Navigator.pop(context);
+      Navigator.pushNamed(context, '/Center_map');
+    });
 
     return true;
   }
