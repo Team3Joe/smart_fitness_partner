@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:korean_fitness/message2.dart';
@@ -38,6 +37,7 @@ class _AnalysisDataState extends State<AnalysisData> {
   late String ratingResult;
   @override
   void initState() {
+    
     // TODO: implement initState
     super.initState();
 
@@ -122,6 +122,7 @@ class _AnalysisDataState extends State<AnalysisData> {
                       // ),
                       ElevatedButton(
                         onPressed: () {
+                          
                           Navigator.pushNamed(context, '/Center_list');
                         },
                         style: ElevatedButton.styleFrom(
@@ -269,7 +270,7 @@ class _AnalysisDataState extends State<AnalysisData> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
                     child: TextField(
-                      controller:  gripController,
+                      controller: gripController,
                       decoration: const InputDecoration(
                         labelText: '악력(grip)',
                         hintText: '악력을 입력해주세요(Enter your grip)',
@@ -302,7 +303,7 @@ class _AnalysisDataState extends State<AnalysisData> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
                     child: TextField(
-                      controller:  forwardBendingController,
+                      controller: forwardBendingController,
                       decoration: const InputDecoration(
                         labelText: '앞으로 구부리기(forwardBending)',
                         hintText: '앞으로 구부리기(cm) 값을 입력해주세요',
@@ -438,6 +439,7 @@ class _AnalysisDataState extends State<AnalysisData> {
                         fatMass = fatMassController.text;
                         situp = situpController.text;
 
+                        
                         getRatingResult();
                       },
                       label: const Text(
@@ -650,6 +652,9 @@ class _AnalysisDataState extends State<AnalysisData> {
     );
 
     print(Message2.gender);
+
+
+
     //비동기 함수 == 작업하면서 화면구성도 같이하겠다!
     //이럴땐 (주소) var를 많이 씀.
     // result.clear();
@@ -662,7 +667,7 @@ class _AnalysisDataState extends State<AnalysisData> {
 
     // 여자 bmr 계산법
     if (Message2.gender == "여") {
-     var bmr2 = 655.1 +
+      var bmr2 = 655.1 +
           (9.56 * double.parse(weightController.text)) +
           (1.85 * double.parse(heightController.text)) -
           4.68 * int.parse(ageController.text);
@@ -672,7 +677,7 @@ class _AnalysisDataState extends State<AnalysisData> {
           "http://localhost:8080/Rserve/response_bodyF.jsp?age=$age&fatMass=$fatMass&grip=$grip&forwardBending=$forwardBending&situp=$situp&longJump=$longJump&bmi=$bmi&bmr=$bmr";
       print(ratingUri);
     } else {
-    // 남자 bmr 계산법
+      // 남자 bmr 계산법
       int ageGroup2 = (int.parse(ageController.text) ~/ 4) - 3;
       String ageGroup = ageGroup2.toString();
 
@@ -680,7 +685,7 @@ class _AnalysisDataState extends State<AnalysisData> {
           (13.75 * double.parse(weightController.text)) +
           (5 * double.parse(heightController.text)) -
           (6.76 * int.parse(ageController.text));
-      bmr=bmr2.toString();
+      bmr = bmr2.toString();
       Message2.bmr = bmr;
       ratingUri =
           "http://localhost:8080/Rserve/response_mbp.jsp?age=$age&fatMass=$fatMass&grip=$grip&forwardBending=$forwardBending&situp=$situp&longJump=$longJump&bmi=$bmi&bmr=$bmr&ageGroup=$ageGroup";
@@ -699,11 +704,12 @@ class _AnalysisDataState extends State<AnalysisData> {
 
       //result[0]['code'] = S001 <- 리스트에 넣어준거 불러오는법
     });
-  
-    Timer(Duration(seconds: 1), () {
+
+    Timer(Duration(seconds: 3), () {
       Navigator.pop(context);
       Navigator.pushNamed(context, '/Analysis_result');
     });
-  
+
+
   }
 }
