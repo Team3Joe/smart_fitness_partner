@@ -92,7 +92,6 @@ class MyApp extends StatelessWidget {
             '/Setting': (context) => const Setting(),
             '/Help': (context) => const Help(),
             '/Customer_service': (context) => const CustomerService(),
-            '/Terms_of_service': (context) => const TermsOfService(),
             '/Privacy_policy': (context) => const PrivacyPolicy(),
           },
           initialRoute: '/loading',

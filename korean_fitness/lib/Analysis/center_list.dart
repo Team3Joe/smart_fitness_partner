@@ -77,6 +77,7 @@ class _CenterListState extends State<CenterList> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(227, 249, 233, 255),
       appBar: AppBar(
         title: Text('$nowTap',
         style: TextStyle(
@@ -90,7 +91,7 @@ class _CenterListState extends State<CenterList> {
                 ]
               ),
         ),
-        backgroundColor: Color.fromARGB(230, 73, 39, 174),
+        backgroundColor: Color.fromARGB(230, 87, 51, 194),
         toolbarHeight: 75,
         elevation: 0,
       ),

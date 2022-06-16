@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:korean_fitness/message2.dart';
@@ -38,6 +37,7 @@ class _AnalysisDataState extends State<AnalysisData> {
   late String ratingResult;
   @override
   void initState() {
+    
     // TODO: implement initState
     super.initState();
 
@@ -106,24 +106,37 @@ class _AnalysisDataState extends State<AnalysisData> {
                       const SizedBox(
                         width: 120,
                       ),
-                      OutlinedButton(
+                      // OutlinedButton(
+                      //   onPressed: () {
+                      //     Navigator.pushNamed(context, '/Center_list');
+                      //   },
+                      //   style: OutlinedButton.styleFrom(
+                      //     primary: Color.fromARGB(255, 145, 108, 255),
+                      //     side: const BorderSide(
+                      //       color: Color.fromARGB(255, 145, 108, 255),
+                      //       width: 1.5,
+                      //     ),
+                      //   ),
+                      //   child: const Text('우리집 근처 체력측정센터',
+                      //       style: TextStyle(fontSize: 18)),
+                      // ),
+                      ElevatedButton(
                         onPressed: () {
+                          
                           Navigator.pushNamed(context, '/Center_list');
                         },
-                        style: OutlinedButton.styleFrom(
-                          primary: Color.fromARGB(255, 145, 108, 255),
-                          side: const BorderSide(
-                            color: Color.fromARGB(255, 145, 108, 255),
-                            width: 1.5,
-                          ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Color.fromARGB(189, 145, 108, 255),
                         ),
-                        child: const Text('우리집 근처 체력측정센터',
-                            style: TextStyle(fontSize: 18)),
-                      ),
+                        child: const Text(
+                          '우리집 근처 체력측정센터',
+                          style: TextStyle(fontSize: 18)
+                        ),
+                      )
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
+                    padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
                     child: TextField(
                       controller: weightController,
                       decoration: const InputDecoration(
@@ -156,7 +169,7 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
+                    padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
                     child: TextField(
                       controller: heightController,
                       decoration: const InputDecoration(
@@ -189,7 +202,7 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
+                    padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
                     child: TextField(
                       controller: situpController,
                       decoration: const InputDecoration(
@@ -222,7 +235,7 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
+                    padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
                     child: TextField(
                       controller: ageController,
                       decoration: const InputDecoration(
@@ -255,9 +268,9 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
+                    padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
                     child: TextField(
-                      controller:  gripController,
+                      controller: gripController,
                       decoration: const InputDecoration(
                         labelText: '악력(grip)',
                         hintText: '악력을 입력해주세요(Enter your grip)',
@@ -288,9 +301,9 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
+                    padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
                     child: TextField(
-                      controller:  forwardBendingController,
+                      controller: forwardBendingController,
                       decoration: const InputDecoration(
                         labelText: '앞으로 구부리기(forwardBending)',
                         hintText: '앞으로 구부리기(cm) 값을 입력해주세요',
@@ -321,7 +334,7 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 8),
+                    padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
                     child: TextField(
                       controller: longJumpController,
                       decoration: const InputDecoration(
@@ -354,7 +367,7 @@ class _AnalysisDataState extends State<AnalysisData> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 30),
+                    padding: const EdgeInsets.fromLTRB(40, 8, 40, 20),
                     child: TextField(
                       controller: fatMassController,
                       decoration: const InputDecoration(
@@ -426,10 +439,8 @@ class _AnalysisDataState extends State<AnalysisData> {
                         fatMass = fatMassController.text;
                         situp = situpController.text;
 
+                        
                         getRatingResult();
-                        Timer(Duration(seconds: 3), () {
-                          Navigator.pushNamed(context, '/Analysis_result');
-                        });
                       },
                       label: const Text(
                         "티어분석",
@@ -454,7 +465,7 @@ class _AnalysisDataState extends State<AnalysisData> {
     );
   }
 
-  analysis() {
+  analysis() async{
     if (heightController.text.isEmpty == false &&
         weightController.text.isEmpty == false &&
         ageController.text.isEmpty == false &&
@@ -507,7 +518,7 @@ class _AnalysisDataState extends State<AnalysisData> {
         Message2.longJump = longJump;
         Message2.fatMass = fatMass;
         Message2.situp = situp;
-        Navigator.pushNamed(context, '/Analysis_result');
+        await Navigator.pushNamed(context, '/Analysis_result');
       }
     } else {
       errorSnackBar9(context);
@@ -605,7 +616,45 @@ class _AnalysisDataState extends State<AnalysisData> {
   }
 
   getRatingResult() async {
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Scaffold(
+          backgroundColor: Color.fromARGB(148, 0, 0, 0),
+          body: Center(
+            child: SizedBox(
+              width: 180,
+              height: 180,
+              child: Stack(
+                fit: StackFit.expand,
+                children: const [
+                  CircularProgressIndicator(
+                    strokeWidth: 12,
+                    backgroundColor: Colors.white,
+                    color: Color.fromARGB(255, 107, 47, 176),
+                  ),
+                  Center(
+                      child: Text(
+                    '\tSmart\nFitness\n\t\tTest',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight : FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  )),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+
     print(Message2.gender);
+
+
+
     //비동기 함수 == 작업하면서 화면구성도 같이하겠다!
     //이럴땐 (주소) var를 많이 씀.
     // result.clear();
@@ -618,7 +667,7 @@ class _AnalysisDataState extends State<AnalysisData> {
 
     // 여자 bmr 계산법
     if (Message2.gender == "여") {
-     var bmr2 = 655.1 +
+      var bmr2 = 655.1 +
           (9.56 * double.parse(weightController.text)) +
           (1.85 * double.parse(heightController.text)) -
           4.68 * int.parse(ageController.text);
@@ -628,7 +677,7 @@ class _AnalysisDataState extends State<AnalysisData> {
           "http://localhost:8080/Rserve/response_bodyF.jsp?age=$age&fatMass=$fatMass&grip=$grip&forwardBending=$forwardBending&situp=$situp&longJump=$longJump&bmi=$bmi&bmr=$bmr";
       print(ratingUri);
     } else {
-    // 남자 bmr 계산법
+      // 남자 bmr 계산법
       int ageGroup2 = (int.parse(ageController.text) ~/ 4) - 3;
       String ageGroup = ageGroup2.toString();
 
@@ -636,7 +685,7 @@ class _AnalysisDataState extends State<AnalysisData> {
           (13.75 * double.parse(weightController.text)) +
           (5 * double.parse(heightController.text)) -
           (6.76 * int.parse(ageController.text));
-      bmr=bmr2.toString();
+      bmr = bmr2.toString();
       Message2.bmr = bmr;
       ratingUri =
           "http://localhost:8080/Rserve/response_mbp.jsp?age=$age&fatMass=$fatMass&grip=$grip&forwardBending=$forwardBending&situp=$situp&longJump=$longJump&bmi=$bmi&bmr=$bmr&ageGroup=$ageGroup";
@@ -655,5 +704,12 @@ class _AnalysisDataState extends State<AnalysisData> {
 
       //result[0]['code'] = S001 <- 리스트에 넣어준거 불러오는법
     });
+
+    Timer(Duration(seconds: 3), () {
+      Navigator.pop(context);
+      Navigator.pushNamed(context, '/Analysis_result');
+    });
+
+
   }
 }
