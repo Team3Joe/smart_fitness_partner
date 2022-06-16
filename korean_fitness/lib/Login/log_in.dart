@@ -323,7 +323,6 @@ class _LogInState extends State<LogIn> {
               ],
             );
           } else {
-            Navigator.pop(context);
             return AlertDialog(
               title: const Text(
                 '로그인 성공!',
@@ -341,6 +340,7 @@ class _LogInState extends State<LogIn> {
                       Message.uBirth = data[0]['uBirth'];
                       Message.uEmail = data[0]['uEmail'];
 
+                      Navigator.pop(context); // 다시 로그인페이지로 돌아가지 않도록
                       Navigator.popAndPushNamed(context, '/Mainpage');
                     },
                     child: const Text('OK'))

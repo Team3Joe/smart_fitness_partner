@@ -20,8 +20,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
           child: SingleChildScrollView(
             child: SizedBox(
               child: Column(
-                children: [
-                  GestureDetector(onTap: () {}, child: const Text('제1조')),
+                children: const [
                   Text(
                     "제1조 목적\n",
                     style: TextStyle(fontSize: 15),
