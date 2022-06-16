@@ -144,7 +144,7 @@ class _CalenderState extends State<Calender> {
                           height: 60,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: const Color.fromARGB(155, 224, 197, 255),
+                            color: Color.fromARGB(165, 81, 9, 164),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey
@@ -164,14 +164,19 @@ class _CalenderState extends State<Calender> {
                             children: const [
                               Icon(
                                 Icons.add,
-                                color: Color.fromARGB(255, 134, 132, 132),
+                                color: Color.fromARGB(255, 241, 228, 255),
+                                size: 25
                               ),
                               SizedBox(
-                                width: 3,
+                                width: 4,
                               ),
                               Text(
                                 '운동 기록 추가',
-                                style: TextStyle(fontSize: 16),
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromARGB(255, 241, 228, 255)
+                                ),
                               ),
                             ],
                           ),
@@ -192,7 +197,7 @@ class _CalenderState extends State<Calender> {
                           height: 60,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: const Color.fromARGB(144, 200, 220, 255),
+                            color: Color.fromARGB(144, 0, 58, 158),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey
@@ -212,11 +217,18 @@ class _CalenderState extends State<Calender> {
                             children: const [
                               Icon(
                                 Icons.bar_chart,
-                                color: Color.fromARGB(255, 116, 114, 114),
+                                color: Color.fromARGB(255, 237, 237, 255),
+                              ),
+                              SizedBox(
+                                width: 4,
                               ),
                               Text(
                                 '분석 결과',
-                                style: TextStyle(fontSize: 16),
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromARGB(255, 237, 237, 255)
+                                  ),
                               ),
                             ],
                           ),
@@ -280,7 +292,7 @@ class _CalenderState extends State<Calender> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
                                     color: const Color.fromARGB(
-                                        100, 224, 197, 255),
+                                        80, 224, 197, 255),
                                   ),
                                   margin: const EdgeInsets.only(bottom: 10),
                                   child: Column(
@@ -355,9 +367,7 @@ class _CalenderState extends State<Calender> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(10),
-                                                        color: const Color
-                                                                .fromARGB(
-                                                            129, 183, 191, 245),
+                                                        color: const Color.fromARGB(129, 227, 217, 142),
                                                       ),
                                                       width: 60,
                                                       height: 30,
@@ -377,9 +387,7 @@ class _CalenderState extends State<Calender> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(10),
-                                                        color: const Color
-                                                                .fromARGB(
-                                                            98, 116, 154, 252),
+                                                        color: Color.fromARGB(80, 116, 252, 195),
                                                       ),
                                                       width: 50,
                                                       height: 30,
@@ -401,7 +409,7 @@ class _CalenderState extends State<Calender> {
                                                                 .circular(10),
                                                         color: const Color
                                                                 .fromARGB(
-                                                            129, 245, 238, 183),
+                                                            98, 116, 154, 252),
                                                       ),
                                                       width: 90,
                                                       height: 30,

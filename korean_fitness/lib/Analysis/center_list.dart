@@ -134,9 +134,7 @@ class _CenterListState extends State<CenterList> {
                       return GestureDetector(
                         onTap: () {
                           locateGetJSONData(data[position]['mid']);
-                          Timer(Duration(seconds: 1), () {
-                            Navigator.pushNamed(context, '/Center_map');
-                          });
+                  
                         },
                         child: Card(
                           child: Column(
@@ -189,14 +187,12 @@ class _CenterListState extends State<CenterList> {
 
   Future<bool> getJSONData() async {
 
-      // showDialog(context: context, 
-      // builder: (context){
-      // return Center(child: CircularProgressIndicator());
-      // });
+
+
 
 
     if (nowTap == '전국'){
-   var url = Uri.parse('http://localhost:8080/Flutter/center_datas_all.jsp?page=$page');
+   var url = Uri.parse('http://localhost:8080/Flutter/fitness/center_datas_all.jsp?page=$page');
     var response = await http.get(url);
 
     setState(() {
@@ -212,7 +208,7 @@ class _CenterListState extends State<CenterList> {
     }else{
 
       var url = Uri.parse(
-          'http://localhost:8080/Flutter/center_datas_region_offset.jsp?page=$page&mRegion=$nowTap'
+          'http://localhost:8080/Flutter/fitness/center_datas_region_offset.jsp?page=$page&mRegion=$nowTap'
               );
       var response = await http.get(url);
       setState(() {
@@ -239,11 +235,13 @@ class _CenterListState extends State<CenterList> {
   }
 
   Future<bool> regionGetJSONData(int index) async {
-    
+
     data = [];
 
+
+
       var url = Uri.parse(
-          'http://localhost:8080/Flutter/center_datas.jsp?mRegion=' +
+          'http://localhost:8080/Flutter/fitness/center_datas.jsp?mRegion=' +
               mRegion[index]);
       var response = await http.get(url);
       setState(() {
@@ -278,10 +276,19 @@ class _CenterListState extends State<CenterList> {
   }
 
   Future<bool> locateGetJSONData(int mId) async {
+
+        showDialog(
+      context: context
+    , builder: (context){
+
+      return Center(child: CircularProgressIndicator());
+    },);
+
+
     locate_data = [];
 
     var url = Uri.parse(
-        "http://localhost:8080/Flutter/center_datas_locate.jsp?mId=$mId");
+        "http://localhost:8080/Flutter/fitness/center_datas_locate.jsp?mId=$mId");
     var response = await http.get(url);
 
     setState(() {
@@ -298,6 +305,12 @@ class _CenterListState extends State<CenterList> {
     //  print(double.parse(Message3.mLatitude));
 
     // print(result);
+
+            Timer(Duration(seconds: 1), () {
+       
+          Navigator.pop(context);
+          Navigator.pushNamed(context, '/Center_map');
+                          });
 
     return true;
   }
