@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:korean_fitness/Analysis/analysis.dart';
 import 'package:korean_fitness/Analysis/analysis_input.dart';
 import 'package:korean_fitness/Analysis/analysis_result.dart';
@@ -30,8 +31,9 @@ import 'package:korean_fitness/Setting/setting.dart';
 import 'package:korean_fitness/Setting/terms_of_service.dart';
 
 void main() {
+  KakaoSdk.init(nativeAppKey: '2f60e305b2d456f351a9c5e15e2fda25');
   runApp(const MyApp());
-  initializeDateFormatting().then((_) => runApp(MyApp()));
+  initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
