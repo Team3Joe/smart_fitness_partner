@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:korean_fitness/Analysis/select_gender.dart';
 import 'package:korean_fitness/Calendar/calender.dart';
 import 'package:korean_fitness/Main/mainpage.dart';
 import 'package:korean_fitness/Setting/mypage.dart';

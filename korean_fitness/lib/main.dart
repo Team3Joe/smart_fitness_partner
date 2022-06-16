@@ -5,7 +5,6 @@ import 'package:korean_fitness/Analysis/analysis_input.dart';
 import 'package:korean_fitness/Analysis/analysis_result.dart';
 import 'package:korean_fitness/Analysis/center_list.dart';
 import 'package:korean_fitness/Analysis/center_map.dart';
-import 'package:korean_fitness/Analysis/select_gender.dart';
 import 'package:korean_fitness/Calendar/calender.dart';
 import 'package:korean_fitness/Calendar/calender_analysis.dart';
 import 'package:korean_fitness/Calendar/calender_modify_delete.dart';
@@ -28,6 +27,7 @@ import 'package:korean_fitness/Setting/mypage.dart';
 import 'package:korean_fitness/Setting/privacy_policy.dart';
 import 'package:korean_fitness/Setting/setting.dart';
 import 'package:korean_fitness/Setting/terms_of_service.dart';
+import 'package:korean_fitness/select_gender.dart';
 
 void main() {
   runApp(const MyApp());
@@ -93,7 +93,7 @@ class MyApp extends StatelessWidget {
             '/Terms_of_service': (context) => const TermsOfService(),
             '/Privacy_policy': (context) => const PrivacyPolicy(),
           },
-          initialRoute: '/Analysis',
+          initialRoute: '/Log_in',
         );
       },
     );
