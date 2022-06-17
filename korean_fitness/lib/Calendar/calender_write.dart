@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:korean_fitness/message.dart';
 
 class CalenderWrite extends StatefulWidget {
   // final Map<DateTime, List<Event>> selectedEvents;
   final DateTime selectedDay;
-
+  
   const CalenderWrite({Key? key,required this.selectedDay}) : super(key: key);
 
   @override
@@ -120,7 +121,7 @@ class _CalenderWriteState extends State<CalenderWrite> {
                 cWits = _cWitsState;
                 cMuscularStrength = _cMuscularStrengthState;
                 cCardiovascularEndurance = _cCardiovascularEnduranceState;
-                uId = "asdf";
+                uId = Message.uId;
                 cDate = widget.selectedDay.toString().substring(0,10);
                 insertAction();
                 
