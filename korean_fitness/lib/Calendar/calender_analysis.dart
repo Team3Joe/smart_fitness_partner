@@ -16,9 +16,11 @@ const tier1Color = Color.fromARGB(255, 92, 209, 229);
 class PageViewDemo1 extends StatefulWidget {
   @override
   _PageViewDemo1State createState() => _PageViewDemo1State();
+
 }
 
 class _PageViewDemo1State extends State<PageViewDemo1> {
+
   PageController _controller = PageController(
     initialPage: 0,
   );
@@ -97,185 +99,189 @@ class _AnalysisResult1State extends State<AnalysisResult1> {
       ),
       body: SingleChildScrollView(
         child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Center(
-                  child: Column(
-                    children: [
-                      const Text(
-                        "다이아 / 골드 / 실버 / 브론즈\n\n 총 4개의 티어가 존재합니다.",
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        "당신의 티어는 '${rating}' 티어입니다.",
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                    ],
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedDataSetIndex = -1;
-                    });
-                  },
-                  child: Text(
-                    'Pentagon status'.toUpperCase(),
-                    style: const TextStyle(
-                      color: titleColor,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: rawDataSets()
-                      .asMap()
-                      .map((index, value) {
-                        final isSelected = index == selectedDataSetIndex;
-                        return MapEntry(
-                          index,
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedDataSetIndex = index;
-                              });
-                            },
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 300),
-                              margin: const EdgeInsets.symmetric(vertical: 2),
-                              height: 30,
-                              decoration: BoxDecoration(
-                                color: isSelected
-                                    ? gridColor.withOpacity(0.5)
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(46),
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 4.0, horizontal: 6),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  AnimatedContainer(
-                                    duration: const Duration(milliseconds: 400),
-                                    curve: Curves.easeInToLinear,
-                                    padding: EdgeInsets.all(isSelected ? 8 : 6),
-                                    decoration: BoxDecoration(
-                                      color: value.color,
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  AnimatedDefaultTextStyle(
-                                    duration: const Duration(milliseconds: 300),
-                                    curve: Curves.easeInToLinear,
-                                    style: TextStyle(
-                                      color:
-                                          isSelected ? value.color : gridColor,
-                                    ),
-                                    child: Text(value.title),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      })
-                      .values
-                      .toList(),
-                ),
-                AspectRatio(
-                  aspectRatio: 1.3,
-                  child: RadarChart(
-                    RadarChartData(
-                      radarTouchData: RadarTouchData(
-                          touchCallback: (FlTouchEvent event, response) {
-                        if (!event.isInterestedForInteractions) {
-                          setState(() {
-                            selectedDataSetIndex = -1;
-                          });
-                          return;
-                        }
-                        setState(() {
-                          selectedDataSetIndex =
-                              response?.touchedSpot?.touchedDataSetIndex ?? -1;
-                        });
-                      }),
-                      dataSets: showingDataSets(),
-                      radarBackgroundColor: Colors.white,
-                      borderData: FlBorderData(show: false),
-                      radarBorderData: const BorderSide(color: Colors.white24),
-                      titlePositionPercentageOffset: 0.18,
-                      titleTextStyle:
-                          const TextStyle(color: titleColor, fontSize: 17),
-                      getTitle: (index) {
-                        switch (index) {
-                          case 0:
-                            return '신체조성';
-                          case 4:
-                            return '근지구력';
-                          case 3:
-                            return '근력';
-                          case 2:
-                            return '유연성';
-                          case 1:
-                            return '순발력';
-                          default:
-                            return '';
-                        }
-                      },
-                      tickCount: 1,
-                      ticksTextStyle: const TextStyle(
-                          color: Colors.transparent, fontSize: 15),
-                      tickBorderData: const BorderSide(color: Colors.white),
-                      gridBorderData:
-                          const BorderSide(color: gridColor, width: 2),
-                    ),
-                    swapAnimationDuration: const Duration(milliseconds: 400),
-                  ),
-                ),
-                //---------------------------------------------------------------------------
-                const SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RotatedBox(
-                        quarterTurns: 1,
-                        child: Image.asset(
-                          "images/slide.gif",
-                          width: 70,
-                          height: 70,
-                        )),
-                    const SizedBox(
-                      width: 10,
-                    ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Center(
+                child: Column(
+                  children:  [
                     const Text(
-                      "밑으로 넘기면서 결과를 확인해보세요!",
+                      "다이아 / 골드 / 실버 / 브론즈\n\n 총 4개의 티어가 존재합니다.",
                       style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w400,
-                      ),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    ),
+                    const SizedBox(
+                      height : 20
+                    ),
+                    Text(
+                      "당신의 티어는 '${rating}' 티어입니다.",
+                      style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    ),
+                    const SizedBox(
+                      height : 30
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedDataSetIndex = -1;
+                  });
+                },
+                child: Text(
+                  'Pentagon status'.toUpperCase(),
+                  style: const TextStyle(
+                    color: titleColor,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 4),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: rawDataSets()
+                    .asMap()
+                    .map((index, value) {
+                      final isSelected = index == selectedDataSetIndex;
+                      return MapEntry(
+                        index,
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedDataSetIndex = index;
+                            });
+                          },
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            margin: const EdgeInsets.symmetric(vertical: 2),
+                            height: 30,
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? gridColor.withOpacity(0.5)
+                                  : Colors.white,
+                              borderRadius: BorderRadius.circular(46),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 4.0, horizontal: 6),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                AnimatedContainer(
+                                  duration: const Duration(milliseconds: 400),
+                                  curve: Curves.easeInToLinear,
+                                  padding: EdgeInsets.all(isSelected ? 8 : 6),
+                                  decoration: BoxDecoration(
+                                    color: value.color,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                AnimatedDefaultTextStyle(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInToLinear,
+                                  style: TextStyle(
+                                    color: isSelected ? value.color : gridColor,
+                                  ),
+                                  child: Text(value.title),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    })
+                    .values
+                    .toList(),
+              ),
+              AspectRatio(
+                aspectRatio: 1.3,
+                child: RadarChart(
+                  RadarChartData(
+                    radarTouchData: RadarTouchData(
+                        touchCallback: (FlTouchEvent event, response) {
+                      if (!event.isInterestedForInteractions) {
+                        setState(() {
+                          selectedDataSetIndex = -1;
+                        });
+                        return;
+                      }
+                      setState(() {
+                        selectedDataSetIndex =
+                            response?.touchedSpot?.touchedDataSetIndex ?? -1;
+                      });
+                    }),
+                    dataSets: showingDataSets(),
+                    radarBackgroundColor: Colors.white,
+                    borderData: FlBorderData(show: false),
+                    radarBorderData: const BorderSide(color: Colors.white24),
+                    titlePositionPercentageOffset: 0.18,
+                    titleTextStyle:
+                        const TextStyle(color: titleColor, fontSize: 17),
+                    getTitle: (index) {
+                      switch (index) {
+                        case 0:
+                          return '신체조성';
+                        case 4:
+                          return '근지구력';  
+                        case 3:
+                          return '근력';
+                        case 2:
+                          return '유연성';
+                        case 1:
+                          return '순발력';
+                        default:
+                          return '';
+                      }
+                    },
+                    tickCount: 1,
+                    ticksTextStyle:
+                        const TextStyle(color: Colors.transparent, fontSize: 15),
+                    tickBorderData: const BorderSide(color: Colors.white),
+                    gridBorderData: const BorderSide(color: gridColor, width: 2),
+                  ),
+                  swapAnimationDuration: const Duration(milliseconds: 400),
+                ),
+              ),
+              //---------------------------------------------------------------------------
+              const SizedBox(
+                height: 30,
+              ),
+              Row(
+                mainAxisAlignment : MainAxisAlignment.center,
+                children: [
+                  RotatedBox(
+                    quarterTurns: 1,
+                    child: 
+                      Image.asset(
+                        "images/slide.gif",
+                        width: 70,
+                        height: 70,
+                      )
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  const Text(
+                    "밑으로 넘기면서 결과를 확인해보세요!",
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
           ),
         ),
       ),
@@ -313,33 +319,33 @@ class _AnalysisResult1State extends State<AnalysisResult1> {
         title: '다이아티어 평균 능력치',
         color: tier1Color,
         values: [
-          21, //bmi
-          18, //멀리뛰기
-          24, //앞으로 구부리기
-          29, //악력
-          45, //윗몸 일으키기
+          21,//bmi
+          18,//멀리뛰기
+          24,//앞으로 구부리기
+          29,//악력
+          45,//윗몸 일으키기
         ],
       ),
       RawDataSet(
         title: '나이대 평균 능력치',
         color: meanColor,
         values: [
-          22, //bmi
-          17, //멀리뛰기
-          20, //앞으로 구부리기
-          27, //악력
-          39, //윗몸 일으키기
+          22,//bmi
+          17,//멀리뛰기
+          20,//앞으로 구부리기
+          27,//악력
+          39,//윗몸 일으키기
         ],
       ),
       RawDataSet(
         title: '나의 능력치',
         color: myColor,
         values: [
-          bmi, //bmi
-          longJump / 10, //멀리뛰기 155
-          forwardBending, //앞으로 구부리기 25
-          grip, //악력 28
-          situp, //윗몸 일으키기 39
+          bmi,//bmi 
+          longJump/10,//멀리뛰기 155
+          forwardBending,//앞으로 구부리기 25
+          grip,//악력 28
+          situp,//윗몸 일으키기 39
         ],
       ),
     ];
@@ -367,6 +373,7 @@ class _AnalysisResult1State extends State<AnalysisResult1> {
       print(forwardBending);
       print(grip);
       print(situp);
+      
     });
   }
 }
@@ -381,6 +388,7 @@ class RawDataSet {
     required this.color,
     required this.values,
   });
+  
 }
 
 // -------------------------------------------------------------------------------------------
@@ -417,7 +425,7 @@ class BarChartResult1State extends State<BarChartResult1> {
   late double fatmass;
   late String rating;
   int touchedIndex1 = -1;
-
+ 
   bool isPlaying1 = true;
 
   @override
@@ -446,21 +454,23 @@ class BarChartResult1State extends State<BarChartResult1> {
         title: const Text(
           "신체조성 분석 결과",
           style: TextStyle(
-              color: Color.fromARGB(255, 0, 43, 20),
-              fontSize: 30,
-              fontWeight: FontWeight.w600),
+            color: Color.fromARGB(255, 0, 43, 20),
+            fontSize: 30,
+            fontWeight: FontWeight.w600
+          ),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
         toolbarHeight: 75,
       ),
       body: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          AspectRatio(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AspectRatio(
             aspectRatio: 1,
             child: Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
               color: Color.fromARGB(255, 223, 227, 97),
               child: Stack(
                 children: <Widget>[
@@ -493,8 +503,7 @@ class BarChartResult1State extends State<BarChartResult1> {
                         ),
                         Expanded(
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
                             child: BarChart(
                               isPlaying1 ? randomData1() : mainBarData1(),
                               swapAnimationDuration: animDuration1,
@@ -514,11 +523,11 @@ class BarChartResult1State extends State<BarChartResult1> {
                       child: ElevatedButton(
                         child: isPlaying1 ? Text("결과확인하기") : Text("결과확인완료"),
                         style: ElevatedButton.styleFrom(
-                          primary: Color.fromARGB(156, 7, 86, 39),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
+                            primary: Color.fromARGB(156, 7, 86, 39),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
                           ),
-                        ),
                         onPressed: () {
                           setState(() {
                             isPlaying1 = !isPlaying1;
@@ -542,7 +551,8 @@ class BarChartResult1State extends State<BarChartResult1> {
             width: 70,
             height: 70,
           )
-        ]),
+          ]
+        ),
       ),
     );
   }
@@ -795,9 +805,13 @@ class BarChartResult1State extends State<BarChartResult1> {
       print(forwardBending);
       print(grip);
       print(situp);
+      
     });
   }
+  
+
 }
+
 
 //------------------------------------------------------------------------------------------
 
@@ -860,21 +874,23 @@ class BarChartResult2State extends State<BarChartResult2> {
         title: const Text(
           "유연성 분석 결과",
           style: TextStyle(
-              color: Color.fromARGB(255, 43, 35, 70),
-              fontSize: 30,
-              fontWeight: FontWeight.w600),
+            color: Color.fromARGB(255, 43, 35, 70),
+            fontSize: 30,
+            fontWeight: FontWeight.w600
+          ),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
         toolbarHeight: 75,
       ),
       body: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          AspectRatio(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AspectRatio(
             aspectRatio: 1,
             child: Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
               color: Color.fromARGB(255, 184, 114, 216),
               child: Stack(
                 children: <Widget>[
@@ -907,8 +923,7 @@ class BarChartResult2State extends State<BarChartResult2> {
                         ),
                         Expanded(
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
                             child: BarChart(
                               isPlaying2 ? randomData2() : mainBarData2(),
                               swapAnimationDuration: animDuration2,
@@ -928,11 +943,11 @@ class BarChartResult2State extends State<BarChartResult2> {
                       child: ElevatedButton(
                         child: isPlaying2 ? Text("결과확인하기") : Text("결과확인완료"),
                         style: ElevatedButton.styleFrom(
-                          primary: Color.fromARGB(156, 111, 0, 255),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
+                            primary: Color.fromARGB(156, 111, 0, 255),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
                           ),
-                        ),
                         onPressed: () {
                           setState(() {
                             isPlaying2 = !isPlaying2;
@@ -956,7 +971,8 @@ class BarChartResult2State extends State<BarChartResult2> {
             width: 70,
             height: 70,
           )
-        ]),
+          ]
+        ),
       ),
     );
   }
@@ -993,8 +1009,7 @@ class BarChartResult2State extends State<BarChartResult2> {
   List<BarChartGroupData> showingGroups2() => List.generate(3, (i) {
         switch (i) {
           case 0:
-            return makeGroupData2(0, forwardBending,
-                isTouched2: i == touchedIndex2);
+            return makeGroupData2(0, forwardBending, isTouched2: i == touchedIndex2);
           case 1:
             return makeGroupData2(1, 20, isTouched2: i == touchedIndex2);
           case 2:
@@ -1197,8 +1212,10 @@ class BarChartResult2State extends State<BarChartResult2> {
       print(forwardBending);
       print(grip);
       print(situp);
+      
     });
   }
+
 }
 
 //------------------------------------------------------------------------------------------
@@ -1240,7 +1257,7 @@ class BarChartResult3State extends State<BarChartResult3> {
   @override
   void initState() {
     super.initState();
-
+    
     uId = Message.uId;
     bDate = Message4.selectedDay;
     data = [];
@@ -1251,7 +1268,7 @@ class BarChartResult3State extends State<BarChartResult3> {
     longJump = 0;
     situp = 0;
     bmi = 0;
-    rating = "";
+    rating = ""; 
   }
 
   @override
@@ -1262,21 +1279,23 @@ class BarChartResult3State extends State<BarChartResult3> {
         title: const Text(
           "순발력 분석 결과",
           style: TextStyle(
-              color: Color.fromARGB(255, 85, 33, 80),
-              fontSize: 30,
-              fontWeight: FontWeight.w600),
+            color: Color.fromARGB(255, 85, 33, 80),
+            fontSize: 30,
+            fontWeight: FontWeight.w600
+          ),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
         toolbarHeight: 75,
       ),
       body: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          AspectRatio(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AspectRatio(
             aspectRatio: 1,
             child: Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
               color: Color.fromARGB(255, 216, 114, 151),
               child: Stack(
                 children: <Widget>[
@@ -1309,8 +1328,7 @@ class BarChartResult3State extends State<BarChartResult3> {
                         ),
                         Expanded(
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
                             child: BarChart(
                               isPlaying3 ? randomData3() : mainBarData3(),
                               swapAnimationDuration: animDuration3,
@@ -1330,11 +1348,11 @@ class BarChartResult3State extends State<BarChartResult3> {
                       child: ElevatedButton(
                         child: isPlaying3 ? Text("결과확인하기") : Text("결과확인완료"),
                         style: ElevatedButton.styleFrom(
-                          primary: Color.fromARGB(146, 187, 0, 255),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
+                            primary: Color.fromARGB(146, 187, 0, 255),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
                           ),
-                        ),
                         onPressed: () {
                           setState(() {
                             isPlaying3 = !isPlaying3;
@@ -1358,7 +1376,8 @@ class BarChartResult3State extends State<BarChartResult3> {
             width: 70,
             height: 70,
           )
-        ]),
+          ]
+        ),
       ),
     );
   }
@@ -1598,6 +1617,7 @@ class BarChartResult3State extends State<BarChartResult3> {
       print(forwardBending);
       print(grip);
       print(situp);
+      
     });
   }
 }
@@ -1663,21 +1683,23 @@ class BarChartResult4State extends State<BarChartResult4> {
         title: const Text(
           "근력 분석 결과",
           style: TextStyle(
-              color: Color.fromARGB(255, 32, 69, 71),
-              fontSize: 30,
-              fontWeight: FontWeight.w600),
+            color: Color.fromARGB(255, 32, 69, 71),
+            fontSize: 30,
+            fontWeight: FontWeight.w600
+          ),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
         toolbarHeight: 75,
       ),
       body: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          AspectRatio(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+           AspectRatio(
             aspectRatio: 1,
             child: Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
               color: const Color(0xff81e5cd),
               child: Stack(
                 children: <Widget>[
@@ -1710,8 +1732,7 @@ class BarChartResult4State extends State<BarChartResult4> {
                         ),
                         Expanded(
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
                             child: BarChart(
                               isPlaying4 ? randomData4() : mainBarData4(),
                               swapAnimationDuration: animDuration4,
@@ -1731,11 +1752,11 @@ class BarChartResult4State extends State<BarChartResult4> {
                       child: ElevatedButton(
                         child: isPlaying4 ? Text("결과확인하기") : Text("결과확인완료"),
                         style: ElevatedButton.styleFrom(
-                          primary: Color.fromARGB(183, 7, 86, 81),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
+                            primary: Color.fromARGB(183, 7, 86, 81),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
                           ),
-                        ),
                         onPressed: () {
                           setState(() {
                             isPlaying4 = !isPlaying4;
@@ -1759,7 +1780,8 @@ class BarChartResult4State extends State<BarChartResult4> {
             width: 70,
             height: 70,
           )
-        ]),
+          ]
+        ),
       ),
     );
   }
@@ -1999,6 +2021,7 @@ class BarChartResult4State extends State<BarChartResult4> {
       print(forwardBending);
       print(grip);
       print(situp);
+      
     });
   }
 }
@@ -2056,6 +2079,7 @@ class BarChartResult5State extends State<BarChartResult5> {
     rating = "";
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -2064,21 +2088,23 @@ class BarChartResult5State extends State<BarChartResult5> {
         title: const Text(
           "근지구력 분석 결과",
           style: TextStyle(
-              color: Color.fromARGB(255, 13, 42, 89),
-              fontSize: 30,
-              fontWeight: FontWeight.w600),
+            color: Color.fromARGB(255, 13, 42, 89),
+            fontSize: 30,
+            fontWeight: FontWeight.w600
+          ),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
         toolbarHeight: 75,
       ),
       body: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          AspectRatio(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AspectRatio(
             aspectRatio: 1,
             child: Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
               color: Color.fromARGB(255, 129, 222, 229),
               child: Stack(
                 children: <Widget>[
@@ -2111,8 +2137,7 @@ class BarChartResult5State extends State<BarChartResult5> {
                         ),
                         Expanded(
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
                             child: BarChart(
                               isPlaying5 ? randomData5() : mainBarData5(),
                               swapAnimationDuration: animDuration5,
@@ -2132,11 +2157,11 @@ class BarChartResult5State extends State<BarChartResult5> {
                       child: ElevatedButton(
                         child: isPlaying5 ? Text("결과확인하기") : Text("결과확인완료"),
                         style: ElevatedButton.styleFrom(
-                          primary: Color.fromARGB(196, 7, 33, 86),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
+                            primary: Color.fromARGB(196, 7, 33, 86),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
                           ),
-                        ),
                         onPressed: () {
                           setState(() {
                             isPlaying5 = !isPlaying5;
@@ -2155,7 +2180,8 @@ class BarChartResult5State extends State<BarChartResult5> {
           const SizedBox(
             height: 50,
           )
-        ]),
+          ]
+        ),
       ),
     );
   }
@@ -2395,6 +2421,9 @@ class BarChartResult5State extends State<BarChartResult5> {
       print(forwardBending);
       print(grip);
       print(situp);
+      
     });
   }
+  
 }
+

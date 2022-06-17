@@ -1207,15 +1207,15 @@ class BarChartSample3State extends State<BarChartSample3> {
       barGroups: List.generate(3, (i) {
         switch (i) {
           case 0:
-            return makeGroupData3(0, Random().nextInt(20).toDouble() + 6,
+            return makeGroupData3(0, Random().nextInt(170).toDouble() + 6,
                 barColor: widget.availableColors[
                     Random().nextInt(widget.availableColors.length)]);
           case 1:
-            return makeGroupData3(1, Random().nextInt(20).toDouble() + 6,
+            return makeGroupData3(1, Random().nextInt(170).toDouble() + 6,
                 barColor: widget.availableColors[
                     Random().nextInt(widget.availableColors.length)]);
           case 2:
-            return makeGroupData3(2, Random().nextInt(20).toDouble() + 6,
+            return makeGroupData3(2, Random().nextInt(170).toDouble() + 6,
                 barColor: widget.availableColors[
                     Random().nextInt(widget.availableColors.length)]);
           default:

@@ -149,7 +149,7 @@ class _CalenderState extends State<Calender> {
                           height: 60,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: Color.fromARGB(165, 81, 9, 164),
+                            color: const Color.fromARGB(165, 81, 9, 164),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey
@@ -157,7 +157,7 @@ class _CalenderState extends State<Calender> {
                                 spreadRadius: 1, //spread radius
                                 blurRadius: 1, // blur radius
                                 offset:
-                                    Offset(0, 2), // changes position of shadow
+                                    const Offset(0, 2), // changes position of shadow
                                 //first paramerter of offset is left-right
                                 //second parameter is top to down
                               ),
@@ -393,7 +393,7 @@ class _CalenderState extends State<Calender> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(10),
-                                                        color: Color.fromARGB(
+                                                        color: const Color.fromARGB(
                                                             80, 116, 252, 195),
                                                       ),
                                                       width: 50,

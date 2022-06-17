@@ -42,7 +42,14 @@ dependencies:
   easy_splash_screen: ^1.0.3
   table_calendar: ^3.0.6
   intl: ^0.17.0
+  shared_preferences: ^2.0.15
+  get: ^4.6.5
   google_sign_in: ^5.3.3
+  animated_card: ^2.0.0
+  card_loading: ^0.1.5
+  card_flip: ^0.0.5
+  reveal_card: ^1.0.0
+  favorite_button: ^0.0.4
 
 dev_dependencies:
   flutter_test:
