@@ -41,12 +41,19 @@ Future getData() async{
     return EasySplashScreen(
       logo: Image.network(
           'https://cdn4.iconfinder.com/data/icons/logos-brands-5/24/flutter-512.png'),
-      title: const Text(
+      title: Text(
         "스마트 운동 파트너",
         style: TextStyle(
           fontSize: 45,
           fontWeight: FontWeight.bold,
-          color: Color.fromARGB(255, 47, 40, 100),
+          color: Color.fromARGB(255, 48, 30, 90),
+          shadows: [
+                  Shadow(
+                    color: Colors.white.withOpacity(0.7),
+                    offset: const Offset(3, 3),
+                    blurRadius:12
+                  )
+                ]
         ),
       ),
       backgroundImage: const AssetImage(

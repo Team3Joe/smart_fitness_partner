@@ -30,6 +30,7 @@ class _SettingState extends State<Setting> {
           '설정',
           style: TextStyle(
                 fontWeight: FontWeight.w600,
+                fontSize: 24,
                 shadows: [
                   Shadow(
                     color: Colors.black.withOpacity(0.5),
@@ -39,7 +40,7 @@ class _SettingState extends State<Setting> {
                 ]
               ),
         ),
-        backgroundColor: Color.fromARGB(166, 69, 53, 116),
+        backgroundColor: Color.fromARGB(198, 58, 34, 131),
         toolbarHeight: 75,
         actions: [
           Row(
@@ -76,7 +77,7 @@ class _SettingState extends State<Setting> {
                     width: 350,
                     height: 70,
                     child: Card(
-                      color: Color.fromARGB(60, 159, 145, 203),
+                      color: Color.fromARGB(100, 158, 145, 203),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -86,7 +87,8 @@ class _SettingState extends State<Setting> {
                             ),
                             Icon(
                               Icons.circle,
-                              // color: Colors.white,
+                              size: 15,
+                              // color: Color.fromARGB(186, 30, 22, 56),
                             ),
                             SizedBox(
                               width: 20,
@@ -95,6 +97,8 @@ class _SettingState extends State<Setting> {
                               '도움말',
                               style: TextStyle(
                                 fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                //color: Color.fromARGB(174, 17, 1, 65),
                                 // color: Colors.white,
                               ),
                             ),
@@ -115,7 +119,7 @@ class _SettingState extends State<Setting> {
                     width: 350,
                     height: 70,
                     child: Card(
-                      color: Color.fromARGB(60, 159, 145, 203),
+                      color: Color.fromARGB(100, 158, 145, 203),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -125,15 +129,18 @@ class _SettingState extends State<Setting> {
                             ),
                             Icon(
                               Icons.circle,
-                              // color: Colors.white,
+                              size: 15,
+                              //color: Color.fromARGB(186, 30, 22, 56),
                             ),
                             SizedBox(
-                              width: 10,
+                              width: 20,
                             ),
                             Text(
                               '고객센터',
                               style: TextStyle(
                                 fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                //color: Color.fromARGB(174, 17, 1, 65),
                                 // color: Colors.white,
                               ),
                             ),
@@ -150,7 +157,7 @@ class _SettingState extends State<Setting> {
                   width: 350,
                   height: 70,
                   child: Card(
-                    color: Color.fromARGB(60, 159, 145, 203),
+                    color: Color.fromARGB(100, 158, 145, 203),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -160,20 +167,23 @@ class _SettingState extends State<Setting> {
                           ),
                           const Icon(
                             Icons.circle,
-                            // color: Colors.white,
+                            size: 15,
+                            //color: Color.fromARGB(186, 30, 22, 56),
                           ),
                           const SizedBox(
-                            width: 10,
+                            width: 20,
                           ),
                           const Text(
                             '다크모드',
                             style: TextStyle(
                               fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              //color: Color.fromARGB(174, 17, 1, 65),
                               // color: Colors.white,
                             ),
                           ),
                           const SizedBox(
-                            width: 130,
+                            width: 100,
                           ),
                           Switch(
                             value: darkModeSwitch,
@@ -206,7 +216,7 @@ class _SettingState extends State<Setting> {
                     width: 350,
                     height: 70,
                     child: Card(
-                      color: Color.fromARGB(60, 159, 145, 203),
+                      color: Color.fromARGB(100, 158, 145, 203),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -216,15 +226,18 @@ class _SettingState extends State<Setting> {
                             ),
                             Icon(
                               Icons.circle,
-                              // color: Colors.white,
+                              size: 15,
+                              //color: Color.fromARGB(186, 30, 22, 56),
                             ),
                             SizedBox(
-                              width: 10,
+                              width: 20,
                             ),
                             Text(
                               '버전 확인',
                               style: TextStyle(
                                 fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                //color: Color.fromARGB(174, 17, 1, 65),
                                 // color: Colors.white,
                               ),
                             ),
@@ -245,7 +258,7 @@ class _SettingState extends State<Setting> {
                     width: 350,
                     height: 70,
                     child: Card(
-                      color: Color.fromARGB(60, 159, 145, 203),
+                      color: Color.fromARGB(100, 158, 145, 203),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -255,15 +268,18 @@ class _SettingState extends State<Setting> {
                             ),
                             Icon(
                               Icons.circle,
-                              // color: Colors.white,
+                              size: 15,
+                              //color: Color.fromARGB(186, 30, 22, 56),
                             ),
                             SizedBox(
-                              width: 10,
+                              width: 20,
                             ),
                             Text(
                               '이용약관 & 개인정보 보호방침',
                               style: TextStyle(
                                 fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                //color: Color.fromARGB(195, 27, 18, 52),
                                 // color: Colors.white,
                               ),
                             ),

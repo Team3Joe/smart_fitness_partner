@@ -12,8 +12,22 @@ class _HelpState extends State<Help> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('도움말 & 사용설명서'),
-        elevation: 0,
+        title: Text(
+          '도움말 & 사용설명서',
+          style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 23,
+                shadows: [
+                  Shadow(
+                    color: Colors.black.withOpacity(0.5),
+                    offset: const Offset(3, 3),
+                    blurRadius:10
+                  )
+                ]
+              ),
+          ),
+        backgroundColor: Color.fromARGB(198, 58, 34, 131),
+        toolbarHeight: 75,
       ),
     );
   }
