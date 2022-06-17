@@ -144,6 +144,7 @@ class _CalenderState extends State<Calender> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(19.0),
@@ -158,7 +159,7 @@ class _CalenderState extends State<Calender> {
                               .then((value) => getJSONData());
                         },
                         child: Container(
-                          width: 170,
+                          width: 150,
                           height: 60,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
@@ -211,7 +212,7 @@ class _CalenderState extends State<Calender> {
                           analysisDataCheck();
                         },
                         child: Container(
-                          width: 170,
+                          width: 150,
                           height: 60,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),

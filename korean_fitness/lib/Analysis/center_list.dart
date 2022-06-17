@@ -10,7 +10,6 @@ import 'package:korean_fitness/message3.dart';
 class CenterList extends StatefulWidget {
   final List<CenterData> list;
 
-
   CenterList({Key? key, required this.list}) : super(key: key);
 
   @override
@@ -18,7 +17,6 @@ class CenterList extends StatefulWidget {
 }
 
 class _CenterListState extends State<CenterList> {
-
   final ScrollController _scrollController = ScrollController();
   late List data;
   late List mRegion;
@@ -57,15 +55,13 @@ class _CenterListState extends State<CenterList> {
 
     getJSONData();
 
-  _scrollController.addListener(() {
-    if(_scrollController.offset >= _scrollController.position.maxScrollExtent &&
-        !_scrollController.position.outOfRange
-
-){    getJSONData();
-
-    }
-  });
-
+    _scrollController.addListener(() {
+      if (_scrollController.offset >=
+              _scrollController.position.maxScrollExtent &&
+          !_scrollController.position.outOfRange) {
+        getJSONData();
+      }
+    });
   }
 
   @override
@@ -79,17 +75,14 @@ class _CenterListState extends State<CenterList> {
     return Scaffold(
       backgroundColor: Color.fromARGB(227, 249, 233, 255),
       appBar: AppBar(
-        title: Text('$nowTap',
-        style: TextStyle(
-                fontWeight: FontWeight.w600,
-                shadows: [
-                  Shadow(
-                    color: Colors.black.withOpacity(0.3),
-                    offset: const Offset(5, 5),
-                    blurRadius:10
-                  )
-                ]
-              ),
+        title: Text(
+          '$nowTap',
+          style: TextStyle(fontWeight: FontWeight.w600, shadows: [
+            Shadow(
+                color: Colors.black.withOpacity(0.3),
+                offset: const Offset(5, 5),
+                blurRadius: 10)
+          ]),
         ),
         backgroundColor: Color.fromARGB(230, 87, 51, 194),
         toolbarHeight: 75,
@@ -118,13 +111,14 @@ class _CenterListState extends State<CenterList> {
                                 padding: const EdgeInsets.all(2.0),
                                 child: ElevatedButton(
                                     onPressed: () {
-                                        setState(() {
+                                      setState(() {
                                         nowTap = mRegion[position];
                                       });
                                       tap(position);
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      primary: const Color.fromARGB(200, 96, 60, 205),
+                                      primary: const Color.fromARGB(
+                                          200, 96, 60, 205),
                                     ),
                                     child: Text(
                                       mRegion[position],
@@ -132,8 +126,7 @@ class _CenterListState extends State<CenterList> {
                                         color: Colors.white,
                                         fontSize: 17.0,
                                       ),
-                                    )
-                                  ),
+                                    )),
                               )
                             ],
                           ),
@@ -144,14 +137,13 @@ class _CenterListState extends State<CenterList> {
               width: 400,
               height: 700,
               child: ListView.builder(
-                controller: _scrollController,
+                  controller: _scrollController,
                   scrollDirection: Axis.vertical,
                   itemCount: data.length,
                   itemBuilder: (context, position) {
                     return GestureDetector(
                       onTap: () {
                         locateGetJSONData(data[position]['mid']);
-                
                       },
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 3, 8, 3),
@@ -173,36 +165,40 @@ class _CenterListState extends State<CenterList> {
                                           fit: BoxFit.fill,
                                         ),
                                       ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Text(
-                                          "  "+data[position]['mName'],
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 17.0,
-                                            fontWeight: FontWeight.bold),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: Text(
+                                              "  " + data[position]['mName'],
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 17.0,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
-                                      ),
-                                        SizedBox(
-                                          height: 3,
-                                        ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          " Tel: " + data[position]['mTell'],
-                                          style: TextStyle(
-                                            color: Color.fromARGB(255, 103, 103, 103),
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14.0,
+                                          SizedBox(
+                                            height: 3,
                                           ),
-                                        ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              " Tel: " +
+                                                  data[position]['mTell'],
+                                              style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 103, 103, 103),
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14.0,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
                                     ],
                                   ),
                                 ],
@@ -212,13 +208,14 @@ class _CenterListState extends State<CenterList> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.all(5.0),
-                                    child: Text(data[position]['mAddress'],
-                                    style: const TextStyle(
-                                      color: Color.fromARGB(255, 89, 89, 89),
-                                      fontSize: 11
+                                    child: Text(
+                                      data[position]['mAddress'],
+                                      style: const TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 89, 89, 89),
+                                          fontSize: 11),
                                     ),
                                   ),
-                            ),
                                 ],
                               ),
                             ],
@@ -235,48 +232,34 @@ class _CenterListState extends State<CenterList> {
   }
 
   Future<bool> getJSONData() async {
-
-
-
-
-
-    if (nowTap == '전국'){
-   var url = Uri.parse('http://localhost:8080/Flutter/fitness/center_datas_all.jsp?page=$page');
-    var response = await http.get(url);
-
-    setState(() {
-      var dataConvertedJSOn = json.decode(utf8.decode(response.bodyBytes));
-
-      List result = dataConvertedJSOn['results'];
-
-      data.addAll(result);
-
-      page += 1;
-      
-    });
-    }else{
-
+    if (nowTap == '전국') {
       var url = Uri.parse(
-          'http://localhost:8080/Flutter/fitness/center_datas_region_offset.jsp?page=$page&mRegion=$nowTap'
-              );
+          'http://localhost:8080/Flutter/fitness/center_datas_all.jsp?page=$page');
+      var response = await http.get(url);
+
+      setState(() {
+        var dataConvertedJSOn = json.decode(utf8.decode(response.bodyBytes));
+
+        List result = dataConvertedJSOn['results'];
+
+        data.addAll(result);
+
+        page += 1;
+      });
+    } else {
+      var url = Uri.parse(
+          'http://localhost:8080/Flutter/fitness/center_datas_region_offset.jsp?page=$page&mRegion=$nowTap');
       var response = await http.get(url);
       setState(() {
-      var dataConvertedJSOn = json.decode(utf8.decode(response.bodyBytes));
+        var dataConvertedJSOn = json.decode(utf8.decode(response.bodyBytes));
 
-      List result = dataConvertedJSOn['results'];
+        List result = dataConvertedJSOn['results'];
 
-      data.addAll(result);
+        data.addAll(result);
 
-      page += 1;
-   
-
-    
-    });
-
-      
+        page += 1;
+      });
     }
-    
- 
 
     // print(result);
 
@@ -284,24 +267,18 @@ class _CenterListState extends State<CenterList> {
   }
 
   Future<bool> regionGetJSONData(int index) async {
-
     data = [];
 
-
-
-      var url = Uri.parse(
-          'http://localhost:8080/Flutter/fitness/center_datas.jsp?mRegion=' +
-              mRegion[index]);
-      var response = await http.get(url);
-      setState(() {
+    var url = Uri.parse(
+        'http://localhost:8080/Flutter/fitness/center_datas.jsp?mRegion=' +
+            mRegion[index]);
+    var response = await http.get(url);
+    setState(() {
       var dataConvertedJSOn = json.decode(utf8.decode(response.bodyBytes));
 
       List result = dataConvertedJSOn['results'];
 
       data.addAll(result);
-   
-
-    
     });
 
     // print(result);
@@ -309,30 +286,24 @@ class _CenterListState extends State<CenterList> {
     return true;
   }
 
-
-  tap(int index){
-    if (mRegion[index] == '전국'){
+  tap(int index) {
+    if (mRegion[index] == '전국') {
       data = [];
       page = 0;
       getJSONData();
-
-    }else{
+    } else {
       page = 0;
       regionGetJSONData(index);
     }
-
-
   }
 
   Future<bool> locateGetJSONData(int mId) async {
-
-        showDialog(
-      context: context
-    , builder: (context){
-
-      return Center(child: CircularProgressIndicator());
-    },);
-
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Center(child: CircularProgressIndicator());
+      },
+    );
 
     locate_data = [];
 
@@ -355,11 +326,10 @@ class _CenterListState extends State<CenterList> {
 
     // print(result);
 
-            Timer(Duration(seconds: 1), () {
-       
-          Navigator.pop(context);
-          Navigator.pushNamed(context, '/Center_map');
-                          });
+    Timer(Duration(seconds: 1), () {
+      Navigator.pop(context);
+      Navigator.pushNamed(context, '/Center_map');
+    });
 
     return true;
   }

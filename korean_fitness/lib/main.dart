@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:korean_fitness/Admin/customer_list.dart';
 import 'package:korean_fitness/Analysis/analysis.dart';
 import 'package:korean_fitness/Analysis/analysis_input.dart';
 import 'package:korean_fitness/Analysis/analysis_result.dart';
@@ -8,32 +10,24 @@ import 'package:korean_fitness/Analysis/center_map.dart';
 import 'package:korean_fitness/Analysis/select_gender.dart';
 import 'package:korean_fitness/Calendar/calender.dart';
 import 'package:korean_fitness/Calendar/calender_analysis.dart';
-import 'package:korean_fitness/Calendar/calender_modify_delete.dart';
-import 'package:korean_fitness/Calendar/calender_write.dart';
 import 'package:korean_fitness/Login/findMain.dart';
 import 'package:korean_fitness/Login/findMain2.dart';
-import 'package:korean_fitness/Login/find_id.dart';
-import 'package:korean_fitness/Login/find_pw.dart';
 import 'package:korean_fitness/Login/log_in.dart';
 import 'package:korean_fitness/Login/sign_up.dart';
 import 'package:korean_fitness/Main/mainpage.dart';
 import 'package:korean_fitness/Main/splashscreen.dart';
 import 'package:korean_fitness/Program/cardiovascular_endurance.dart';
 import 'package:korean_fitness/Program/flexibility.dart';
-import 'package:korean_fitness/Program/muscular_strength.dart';
 import 'package:korean_fitness/Program/speed_strength.dart';
 import 'package:korean_fitness/Setting/customer_service.dart';
 import 'package:korean_fitness/Setting/help.dart';
 import 'package:korean_fitness/Setting/mypage.dart';
 import 'package:korean_fitness/Setting/privacy_policy.dart';
 import 'package:korean_fitness/Setting/setting.dart';
-import 'package:korean_fitness/Setting/terms_of_service.dart';
-import 'package:korean_fitness/Analysis/select_gender.dart';
-import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
-  initializeDateFormatting().then((_) => runApp(MyApp()));
+  initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -60,7 +54,7 @@ class MyApp extends StatelessWidget {
             '/Analysis_data': (context) => const AnalysisData(),
             '/Analysis_result': (context) => PageViewDemo(),
             '/Center_list': (context) => CenterList(
-                  list: [],
+                  list: const [],
                 ),
             '/Center_map': (context) => CenterMap(),
 
@@ -74,9 +68,12 @@ class MyApp extends StatelessWidget {
             '/Find_id': (context) => const FindMain(),
             '/Find_pw': (context) => const FindMain2(),
 
+            // Admin
+            '/Customer_list': (context) => const CustomerList(),
+
             // Main
             '/Mainpage': (context) => const MainPage(),
-            '/loading': (context) => SplashPage(),
+            '/loading': (context) => const SplashPage(),
 
             // My page
             '/Mypage': (context) => const MyPage(),
