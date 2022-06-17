@@ -1,10 +1,11 @@
 import 'dart:ui';
-
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:korean_fitness/Calendar/calender.dart';
 import 'package:korean_fitness/Main/mainpage.dart';
 import 'package:korean_fitness/Setting/mypage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 
 class Analysis extends StatefulWidget {
   const Analysis({Key? key}) : super(key: key);
@@ -22,6 +23,17 @@ class _AnalysisState extends State<Analysis> {
     getData();
     super.initState();
   }
+  GoogleSignIn _googleSignIn = GoogleSignIn(
+    // Optional clientId
+    // clientId: '479882132969-9i9aqik3jfjd7qhci1nqf0bm2g71rm1u.apps.googleusercontent.com',
+    scopes: <String>[
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ],
+  );
+
+
+  Future<void> _handleSignOut() => _googleSignIn.disconnect();
 
  Future getData() async{
   final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -34,6 +46,7 @@ class _AnalysisState extends State<Analysis> {
   });
   print("분석메인 $finalid");
 }
+  
   @override
   Widget build(BuildContext context) {  
     return Scaffold(
@@ -303,7 +316,8 @@ class _AnalysisState extends State<Analysis> {
               onTap: () async{
                 final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
                 sharedPreferences.remove("id");
-                //Navigator.pushNamed(context, '/Log_in');
+                _handleSignOut();
+                Navigator.pushNamed(context, '/Log_in');
               },
               leading: const Icon(
                 Icons.logout,
