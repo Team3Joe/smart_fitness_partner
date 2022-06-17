@@ -6,7 +6,7 @@ class CalenderWrite extends StatefulWidget {
   // final Map<DateTime, List<Event>> selectedEvents;
   final DateTime selectedDay;
 
-  const CalenderWrite({Key? key,required this.selectedDay}) : super(key: key);
+  const CalenderWrite({Key? key, required this.selectedDay}) : super(key: key);
 
   @override
   State<CalenderWrite> createState() => _CalenderWriteState();
@@ -50,7 +50,6 @@ class _CalenderWriteState extends State<CalenderWrite> {
   late String result;
   late String uId;
 
-
   @override
   void initState() {
     super.initState();
@@ -77,8 +76,6 @@ class _CalenderWriteState extends State<CalenderWrite> {
     _cWitsColors = Colors.grey.shade200;
     _cMuscularStrengthColors = Colors.grey.shade200;
     _cCardiovascularEnduranceColors = Colors.grey.shade200;
-
-
   }
 
   @override
@@ -109,7 +106,7 @@ class _CalenderWriteState extends State<CalenderWrite> {
           ),
           toolbarHeight: 100,
           elevation: 0,
-          backgroundColor:  Colors.white,
+          backgroundColor: Colors.white,
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -121,9 +118,8 @@ class _CalenderWriteState extends State<CalenderWrite> {
                 cMuscularStrength = _cMuscularStrengthState;
                 cCardiovascularEndurance = _cCardiovascularEnduranceState;
                 uId = "asdf";
-                cDate = widget.selectedDay.toString().substring(0,10);
+                cDate = widget.selectedDay.toString().substring(0, 10);
                 insertAction();
-                
               },
               child: const Text(
                 '저장',
@@ -135,7 +131,7 @@ class _CalenderWriteState extends State<CalenderWrite> {
             ),
           ],
         ),
-    
+
         //body
         body: SingleChildScrollView(
           child: Padding(
@@ -181,10 +177,11 @@ class _CalenderWriteState extends State<CalenderWrite> {
                       child: Text(_cFlexibilityName),
                       onPressed: () {
                         setState(() {
-                          if(_cFlexibilityColors == Colors.grey.shade200){
-                            _cFlexibilityColors = Color.fromARGB(129, 245, 183, 183);
+                          if (_cFlexibilityColors == Colors.grey.shade200) {
+                            _cFlexibilityColors =
+                                const Color.fromARGB(129, 245, 183, 183);
                             _cFlexibilityState = '1';
-                          }else{
+                          } else {
                             _cFlexibilityColors = Colors.grey.shade200;
                             _cFlexibilityState = '0';
                           }
@@ -192,7 +189,7 @@ class _CalenderWriteState extends State<CalenderWrite> {
                       },
                     ),
                     const SizedBox(
-                      width: 28,
+                      width: 20,
                     ),
                     ElevatedButton(
                       style: ButtonStyle(
@@ -209,7 +206,7 @@ class _CalenderWriteState extends State<CalenderWrite> {
                           if (_cEnduranceColors == Colors.grey.shade200) {
                             _cEnduranceColors =
                                 Color.fromARGB(129, 240, 183, 245);
-                                _cEnduranceState = '1';
+                            _cEnduranceState = '1';
                           } else {
                             _cEnduranceColors = Colors.grey.shade200;
                             _cEnduranceState = '0';
@@ -218,7 +215,7 @@ class _CalenderWriteState extends State<CalenderWrite> {
                       },
                     ),
                     const SizedBox(
-                      width: 28,
+                      width: 20,
                     ),
                     ElevatedButton(
                       style: ButtonStyle(
@@ -233,7 +230,8 @@ class _CalenderWriteState extends State<CalenderWrite> {
                       onPressed: () {
                         setState(() {
                           if (_cWitsColors == Colors.grey.shade200) {
-                            _cWitsColors = Color.fromARGB(129, 183, 191, 245);
+                            _cWitsColors =
+                                const Color.fromARGB(129, 183, 191, 245);
                             _cWitsState = '1';
                           } else {
                             _cWitsColors = Colors.grey.shade200;
@@ -243,7 +241,7 @@ class _CalenderWriteState extends State<CalenderWrite> {
                       },
                     ),
                     const SizedBox(
-                      width: 28,
+                      width: 20,
                     ),
                     ElevatedButton(
                       style: ButtonStyle(
@@ -255,9 +253,11 @@ class _CalenderWriteState extends State<CalenderWrite> {
                           )),
                       child: Text(_cMuscularStrengthName),
                       onPressed: () {
-                         setState(() {
-                          if (_cMuscularStrengthColors == Colors.grey.shade200) {
-                            _cMuscularStrengthColors = Color.fromARGB(98, 116, 154, 252);
+                        setState(() {
+                          if (_cMuscularStrengthColors ==
+                              Colors.grey.shade200) {
+                            _cMuscularStrengthColors =
+                                const Color.fromARGB(98, 116, 154, 252);
                             _cMuscularStrengthState = '1';
                           } else {
                             _cMuscularStrengthColors = Colors.grey.shade200;
@@ -269,7 +269,7 @@ class _CalenderWriteState extends State<CalenderWrite> {
                   ],
                 ),
                 const SizedBox(
-                  height: 12,
+                  height: 10,
                 ),
                 Row(
                   children: [
@@ -284,12 +284,14 @@ class _CalenderWriteState extends State<CalenderWrite> {
                       child: Text(_cCardiovascularEnduranceName),
                       onPressed: () {
                         setState(() {
-                          if (_cCardiovascularEnduranceColors == Colors.grey.shade200) {
+                          if (_cCardiovascularEnduranceColors ==
+                              Colors.grey.shade200) {
                             _cCardiovascularEnduranceColors =
-                                Color.fromARGB(129, 245, 238, 183);
-                                _cCardiovascularEnduranceState = '1';
+                                const Color.fromARGB(129, 245, 238, 183);
+                            _cCardiovascularEnduranceState = '1';
                           } else {
-                            _cCardiovascularEnduranceColors = Colors.grey.shade200;
+                            _cCardiovascularEnduranceColors =
+                                Colors.grey.shade200;
                             _cCardiovascularEnduranceState = '0';
                           }
                         });
@@ -300,13 +302,17 @@ class _CalenderWriteState extends State<CalenderWrite> {
                 const SizedBox(
                   height: 70,
                 ),
-                const Text('운동 메모 :',),
-                const SizedBox(height: 20,),
+                const Text(
+                  '운동 메모 :',
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
                 TextField(
                   controller: cContentController,
                   decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.symmetric(vertical: 40),
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.symmetric(vertical: 40),
                   ),
                 ),
               ],
@@ -317,9 +323,8 @@ class _CalenderWriteState extends State<CalenderWrite> {
     );
   }
 
-
   // function
-   insertAction() async {
+  insertAction() async {
     var url = Uri.parse(
         'http://localhost:8080/Flutter/fitness/calendar_write.jsp?cTitle=$cTitle&cContent=$cContent&cFlexibility=$cFlexibility&cEndurance=$cEndurance&cWits=$cWits&cMuscularStrength=$cMuscularStrength&cCardiovascularEndurance=$cCardiovascularEndurance&uId=$uId&cDate=$cDate');
     var response = await http.get(url);
@@ -328,13 +333,13 @@ class _CalenderWriteState extends State<CalenderWrite> {
       result = dataConvertedJSON['result'];
 
       if (result == 'OK') {
-      //  _showDialog(context);
+        //  _showDialog(context);
         Navigator.pop(context);
       } else {
         errorSnackBar(context);
       }
     });
-}
+  }
 
   _showDialog(BuildContext ctx) {
     showDialog(
@@ -364,7 +369,4 @@ class _CalenderWriteState extends State<CalenderWrite> {
       ),
     );
   }
-
-
-
 }

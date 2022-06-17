@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:korean_fitness/Admin/customer_list.dart';
+import 'package:korean_fitness/Admin/customer_service.dart';
 import 'package:korean_fitness/Analysis/analysis.dart';
 import 'package:korean_fitness/Analysis/analysis_input.dart';
 import 'package:korean_fitness/Analysis/analysis_result.dart';
@@ -66,6 +68,9 @@ class MyApp extends StatelessWidget {
             '/Log_in': (context) => const LogIn(),
             '/Find_id': (context) => const FindMain(),
             '/Find_pw': (context) => const FindMain2(),
+
+            // Admin
+            '/Customer_list': (context) => const CustomerList(),
 
             // Main
             '/Mainpage': (context) => const MainPage(),

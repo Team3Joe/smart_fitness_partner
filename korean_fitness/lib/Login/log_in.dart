@@ -17,8 +17,8 @@ class _LogInState extends State<LogIn> {
   late TextEditingController pwController;
   late String id;
   late String pw;
-  late int uq; //user탈퇴여부
-
+  late int quit; //user탈퇴여부
+  late int admin; // admin check
   late List data;
 
   @override
@@ -28,7 +28,8 @@ class _LogInState extends State<LogIn> {
     pwController = TextEditingController();
     id = '';
     pw = '';
-    uq = 0;
+    quit = 0;
+    admin = 0;
     data = [];
   }
 
@@ -305,7 +306,7 @@ class _LogInState extends State<LogIn> {
                     child: const Text('OK'))
               ],
             );
-          } else if (uq == 1) {
+          } else if (quit == 1) {
             return AlertDialog(
               title: const Text(
                 '로그인 실패!',
@@ -322,6 +323,30 @@ class _LogInState extends State<LogIn> {
                     child: const Text('OK'))
               ],
             );
+          } else if (admin == 1) {
+            return AlertDialog(
+              title: const Text(
+                '관리자 로그인 성공!',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              content: const Text('관리자로 로그인했습니다.'),
+              actions: [
+                ElevatedButton(
+                    onPressed: () {
+                      Message.uId = data[0]['uId'];
+                      Message.uPw = data[0]['uPw'];
+                      Message.uName = data[0]['uName'];
+                      Message.uBirth = data[0]['uBirth'];
+                      Message.uEmail = data[0]['uEmail'];
+
+                      Navigator.pop(context); // 다시 로그인페이지로 돌아가지 않도록
+                      Navigator.popAndPushNamed(context, '/Customer_list');
+                    },
+                    child: const Text('OK'))
+              ],
+            );
           } else {
             return AlertDialog(
               title: const Text(
@@ -330,7 +355,7 @@ class _LogInState extends State<LogIn> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              content: const Text('로그인에 성공하였습니다.'),
+              content: const Text('로그인에 성공했습니다.'),
               actions: [
                 ElevatedButton(
                     onPressed: () {
@@ -350,7 +375,7 @@ class _LogInState extends State<LogIn> {
         });
   }
 
-  Future<bool> _getJSONData() async {
+  Future _getJSONData() async {
     var url = Uri.parse(
         'http://localhost:8080/Flutter/fitness/user_select.jsp?id=$id&pw=$pw');
     var response = await http.get(url);
@@ -360,15 +385,15 @@ class _LogInState extends State<LogIn> {
       data = [];
       data.addAll(result);
     });
-    if (data.isEmpty) {
+    if (data.isNotEmpty) {
       // 탈퇴한 계정 입력시
-      return true;
-    } else {
-      var userquite = data[0]['uQuit']; //탈퇴여부 값 받아오기
-      uq = userquite;
-      return true;
+      var userQuit = data[0]['uQuit']; //탈퇴여부 값 받아오기
+      var userAdmin = data[0]['uAdmin']; //관리자여부 값 받아오기
+      setState(() {
+        quit = userQuit;
+        admin = userAdmin;
+      });
     }
+    print(admin);
   }
 }//end
-
-

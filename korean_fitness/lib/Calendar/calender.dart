@@ -126,6 +126,7 @@ class _CalenderState extends State<Calender> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(19.0),
@@ -140,19 +141,19 @@ class _CalenderState extends State<Calender> {
                               .then((value) => getJSONData());
                         },
                         child: Container(
-                          width: 170,
+                          width: 150,
                           height: 60,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: Color.fromARGB(165, 81, 9, 164),
+                            color: const Color.fromARGB(165, 81, 9, 164),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey
                                     .withOpacity(0.5), //color of shadow
                                 spreadRadius: 1, //spread radius
                                 blurRadius: 1, // blur radius
-                                offset:
-                                    Offset(0, 2), // changes position of shadow
+                                offset: const Offset(
+                                    0, 2), // changes position of shadow
                                 //first paramerter of offset is left-right
                                 //second parameter is top to down
                               ),
@@ -162,21 +163,18 @@ class _CalenderState extends State<Calender> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
-                              Icon(
-                                Icons.add,
-                                color: Color.fromARGB(255, 241, 228, 255),
-                                size: 25
-                              ),
+                              Icon(Icons.add,
+                                  color: Color.fromARGB(255, 241, 228, 255),
+                                  size: 25),
                               SizedBox(
                                 width: 4,
                               ),
                               Text(
                                 '운동 기록 추가',
                                 style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color.fromARGB(255, 241, 228, 255)
-                                ),
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromARGB(255, 241, 228, 255)),
                               ),
                             ],
                           ),
@@ -193,19 +191,19 @@ class _CalenderState extends State<Calender> {
                         // onTap: () =>
                         //     Navigator.pushNamed(context, '/Calender_write'),
                         child: Container(
-                          width: 170,
+                          width: 150,
                           height: 60,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: Color.fromARGB(144, 0, 58, 158),
+                            color: const Color.fromARGB(144, 0, 58, 158),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey
                                     .withOpacity(0.5), //color of shadow
                                 spreadRadius: 1, //spread radius
                                 blurRadius: 1, // blur radius
-                                offset:
-                                    Offset(0, 2), // changes position of shadow
+                                offset: const Offset(
+                                    0, 2), // changes position of shadow
                                 //first paramerter of offset is left-right
                                 //second parameter is top to down
                               ),
@@ -223,12 +221,11 @@ class _CalenderState extends State<Calender> {
                                 width: 4,
                               ),
                               Text(
-                                '분석 결과',
+                                '분석 결과 보기',
                                 style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color.fromARGB(255, 237, 237, 255)
-                                  ),
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromARGB(255, 237, 237, 255)),
                               ),
                             ],
                           ),
@@ -239,7 +236,7 @@ class _CalenderState extends State<Calender> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             data.isEmpty
@@ -291,8 +288,8 @@ class _CalenderState extends State<Calender> {
                                   height: 120,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
-                                    color: const Color.fromARGB(
-                                        80, 224, 197, 255),
+                                    color:
+                                        const Color.fromARGB(80, 224, 197, 255),
                                   ),
                                   margin: const EdgeInsets.only(bottom: 10),
                                   child: Column(
@@ -367,7 +364,9 @@ class _CalenderState extends State<Calender> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(10),
-                                                        color: const Color.fromARGB(129, 227, 217, 142),
+                                                        color: const Color
+                                                                .fromARGB(
+                                                            129, 227, 217, 142),
                                                       ),
                                                       width: 60,
                                                       height: 30,
@@ -387,7 +386,9 @@ class _CalenderState extends State<Calender> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(10),
-                                                        color: Color.fromARGB(80, 116, 252, 195),
+                                                        color: const Color
+                                                                .fromARGB(
+                                                            80, 116, 252, 195),
                                                       ),
                                                       width: 50,
                                                       height: 30,
@@ -508,7 +509,7 @@ class _CalenderState extends State<Calender> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text('아니오'),
+                child: const Text('아니오'),
               ),
               TextButton(
                 onPressed: () {
@@ -555,7 +556,7 @@ class _CalenderState extends State<Calender> {
     Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Color.fromARGB(129, 183, 191, 245),
+        color: const Color.fromARGB(129, 183, 191, 245),
       ),
       width: 70,
       height: 30,
