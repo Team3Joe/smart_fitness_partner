@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:get/instance_manager.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:korean_fitness/Main/splashscreen.dart';
@@ -50,7 +49,8 @@ class _LogInState extends State<LogIn> {
                    // print(user.displayName);
                    // print(user.email);
                     final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-                  sharedPreferences.setString('id', user.email.toString() );
+                  sharedPreferences.setString('id', user.email.toString());
+                  sharedPreferences.setString('name', user.displayName.toString());
                   Get.to(SplashPage());
                     }
       if (_currentUser != null) {
@@ -242,7 +242,7 @@ class _LogInState extends State<LogIn> {
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Color.fromARGB(255, 102, 90, 190),
+                        primary: const Color.fromARGB(255, 102, 90, 190),
                         minimumSize: const Size(100, 46),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
@@ -449,10 +449,10 @@ class _LogInState extends State<LogIn> {
                       final SharedPreferences sharedPreferences =
                           await SharedPreferences.getInstance();
                       sharedPreferences.setString( 'id', idController.text.trim());
-                      
-                      
+                      sharedPreferences.setString( 'name', data[0]['uName']);
+                      sharedPreferences.setString( 'email', data[0]['uEmail']);
                       Get.to(SplashPage());
-                      Navigator.popAndPushNamed(context, '/Mainpage');
+                      //Navigator.popAndPushNamed(context, '/Mainpage');
                     },
                     child: const Text('OK'))
               ],

@@ -17,12 +17,10 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   String? finalId;
+  String? finalName;
+  String? finalEmail;
   
-  late String id;
-  late String pw;
-  late int uq; //user탈퇴여부
-
-  late List data;
+  
   
 
 @override
@@ -30,25 +28,22 @@ class _SplashPageState extends State<SplashPage> {
     getData().whenComplete(() async{
      Timer(Duration(seconds: 2),() => Get.to(finalId == "" ? Navigator.pushNamed(context,'/Log_in') : Navigator.pushNamed(context, '/Mainpage')));
     });
-
-     id = '';
-    pw = '';
-    uq = 0;
-    data = [];
     super.initState();
   }
 
 Future getData() async{
   final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   var obitainedId = sharedPreferences.getString('id');
-
+  var obitainedName = sharedPreferences.getString('name');
+  var obitainedEmail = sharedPreferences.getString('email');
 
   setState(() {
     if(obitainedId == null){
       finalId = "";
     }else{
     finalId = obitainedId;
-    
+    finalName = obitainedName;
+    finalEmail = obitainedEmail; 
     }
   });
   print("로딩 : $finalId");
@@ -86,28 +81,26 @@ Future getData() async{
       loadingTextPadding: EdgeInsets.fromLTRB(20, 20, 20, 100),
     );
   }
-  Future<bool> _getJSONData() async {
-    var url = Uri.parse(
-        'http://localhost:8080/Flutter/fitness/user_select.jsp?id=$id&pw=$pw');
-    var response = await http.get(url);
-    var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
-    List result = dataConvertedJSON['results'];
-    setState(() {
-      data = [];
-      data.addAll(result);
-    });
-    if (data.isEmpty) {
-      //없는 계정입력시
-      return true;
-    } else {
-      var userquite = data[0]['uQuit']; //탈퇴여부 값 받아오기
-      uq = userquite;
-      Message.uId = data[0]['uId'];
-      Message.uPw = data[0]['uPw'];
-      Message.uName = data[0]['uName'];
-      Message.uBirth = data[0]['uBirth'];
-      Message.uEmail = data[0]['uEmail'];
-      return true;
-    }
-  }
+  // Future<bool> _getJSONData() async {
+  //   var url = Uri.parse(
+  //       'http://localhost:8080/Flutter/fitness/user_select.jsp?id=$id&pw=$pw');
+  //   var response = await http.get(url);
+  //   var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+  //   List result = dataConvertedJSON['results'];
+  //   setState(() {
+  //     data = [];
+  //     data.addAll(result);
+  //   });
+  //   if (data.isEmpty) {
+  //     //없는 계정입력시
+  //     return true;
+  //   } else {
+  //     var userquite = data[0]['uQuit']; //탈퇴여부 값 받아오기
+  //     uq = userquite;
+  //     Message.uId = data[0]['uId']; 
+  //     Message.uName = data[0]['uName'];
+  //     Message.uEmail = data[0]['uEmail'];
+  //     return true;
+  //   }
+  // }
 }//end
