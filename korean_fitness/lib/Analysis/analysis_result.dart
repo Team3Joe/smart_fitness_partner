@@ -2573,7 +2573,7 @@ class _resultState extends State<result> {
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  Navigator.pushNamed(context, '/Calender');
+                  Navigator.pushNamed(context, '/Mainpage');
                 },
                 child: const Text('OK'),
               ),
