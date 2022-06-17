@@ -164,31 +164,41 @@ class _CenterListState extends State<CenterList> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Image.asset(
-                                        "images/korea.png",
-                                        width: 180,
-                                        height: 80,
+                                      Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Image.network(
+                                          data[position]['mPic'],
+                                          width: 120,
+                                          height: 80,
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        data[position]['mName'],
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 17.0,
-                                          fontWeight: FontWeight.bold),
-                                        ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Text(
+                                          "  "+data[position]['mName'],
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 17.0,
+                                            fontWeight: FontWeight.bold),
+                                          ),
+                                      ),
                                         SizedBox(
                                           height: 3,
                                         ),
-                                      Text(
-                                        " Tel: " + data[position]['mTell'],
-                                        style: TextStyle(
-                                          color: Color.fromARGB(255, 103, 103, 103),
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14.0,
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          " Tel: " + data[position]['mTell'],
+                                          style: TextStyle(
+                                            color: Color.fromARGB(255, 103, 103, 103),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14.0,
+                                          ),
                                         ),
                                       ),
                                     ],

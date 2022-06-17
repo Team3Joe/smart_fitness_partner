@@ -41,6 +41,7 @@ class _LogInState extends State<LogIn> {
 
   @override
   void initState() {
+    _handleSignOut();//Google-Log-Out
     super.initState();
 //Google API initState
     _googleSignIn.onCurrentUserChanged

@@ -58,7 +58,6 @@ class AnalysisResult1 extends StatefulWidget {
 }
 
 class _AnalysisResult1State extends State<AnalysisResult1> {
-  
   int selectedDataSetIndex = -1;
 
   late List data;
@@ -71,7 +70,6 @@ class _AnalysisResult1State extends State<AnalysisResult1> {
   late double situp;
   late double bmi;
   late String rating;
-  
 
   @override
   void initState() {
@@ -394,7 +392,6 @@ class RawDataSet {
 }
 
 // -------------------------------------------------------------------------------------------
-
 
 class BarChartResult1 extends StatefulWidget {
   final List<Color> availableColors = const [
@@ -817,7 +814,6 @@ class BarChartResult1State extends State<BarChartResult1> {
 
 
 //------------------------------------------------------------------------------------------
-
 
 class BarChartResult2 extends StatefulWidget {
   final List<Color> availableColors2 = const [
