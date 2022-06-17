@@ -53,8 +53,8 @@ class MyApp extends StatelessWidget {
             '/SelectGender': (context) => const SelectGender(),
             '/Analysis_data': (context) => const AnalysisData(),
             '/Analysis_result': (context) => PageViewDemo(),
-            '/Center_list': (context) => const CenterList(
-                  list: [],
+            '/Center_list': (context) => CenterList(
+                  list: const [],
                 ),
             '/Center_map': (context) => CenterMap(),
 

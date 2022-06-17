@@ -167,7 +167,7 @@ class _CustomerListState extends State<CustomerList> {
                   ),
                   SingleChildScrollView(
                     child: SizedBox(
-                      height: (data.length - uQuitCount) * 55 -
+                      height: (data.length - uQuitCount) * 45 -
                           MediaQuery.of(context).viewInsets.bottom,
                       // 키보드 올라오는 공간 고려
                       child: ListView.builder(
@@ -306,7 +306,7 @@ class _CustomerListState extends State<CustomerList> {
                   ),
                   SingleChildScrollView(
                     child: SizedBox(
-                      height: uQuitCount * 55 -
+                      height: uQuitCount * 45 -
                           MediaQuery.of(context).viewInsets.bottom,
                       // 키보드 올라오는 공간 고려
                       child: ListView.builder(
