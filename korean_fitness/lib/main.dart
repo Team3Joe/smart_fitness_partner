@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
 
             // Calendar
             '/Calender': (context) => const Calender(),
-            '/Calender_alnalysis': (context) => const CalenderAnalysis(),
+            '/Calender_alnalysis': (context) => PageViewDemo1(),
 
             // Login
             '/Sign_up': (context) => const SignUp(),
@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
             '/Mypage': (context) => const MyPage(),
 
             // Program
-            '/Muscular_strength': (context) => const MuscularStrength(),
+            //'/Muscular_strength': (context) => const MuscularStrength(),
             '/Cardiovascular_endurance': (context) =>
                 const CardiovascularEndurance(),
             '/Flexibility': (context) => const Flexibility(),

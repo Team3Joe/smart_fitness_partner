@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:korean_fitness/message.dart';
 
 class CalenderWrite extends StatefulWidget {
   // final Map<DateTime, List<Event>> selectedEvents;
@@ -117,7 +118,7 @@ class _CalenderWriteState extends State<CalenderWrite> {
                 cWits = _cWitsState;
                 cMuscularStrength = _cMuscularStrengthState;
                 cCardiovascularEndurance = _cCardiovascularEnduranceState;
-                uId = "asdf";
+                uId = Message.uId;
                 cDate = widget.selectedDay.toString().substring(0, 10);
                 insertAction();
               },
@@ -205,7 +206,7 @@ class _CalenderWriteState extends State<CalenderWrite> {
                         setState(() {
                           if (_cEnduranceColors == Colors.grey.shade200) {
                             _cEnduranceColors =
-                                Color.fromARGB(129, 240, 183, 245);
+                                const Color.fromARGB(129, 240, 183, 245);
                             _cEnduranceState = '1';
                           } else {
                             _cEnduranceColors = Colors.grey.shade200;
@@ -333,7 +334,7 @@ class _CalenderWriteState extends State<CalenderWrite> {
       result = dataConvertedJSON['result'];
 
       if (result == 'OK') {
-        //  _showDialog(context);
+        //  _insertCompleteDialog(context);
         Navigator.pop(context);
       } else {
         errorSnackBar(context);
@@ -341,24 +342,24 @@ class _CalenderWriteState extends State<CalenderWrite> {
     });
   }
 
-  _showDialog(BuildContext ctx) {
-    showDialog(
-        context: context,
-        builder: (BuildContext ctx) {
-          return AlertDialog(
-            title: const Text('입력결과'),
-            content: const Text('입력이 완료되었습니다'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        });
-  }
+  // _insertCompleteDialog(BuildContext ctx) {
+  //   showDialog(
+  //       context: context,
+  //       builder: (BuildContext ctx) {
+  //         return AlertDialog(
+  //           title: const Text('입력결과'),
+  //           content: const Text('입력이 완료되었습니다'),
+  //           actions: [
+  //             TextButton(
+  //               onPressed: () {
+  //                 Navigator.pop(context);
+  //               },
+  //               child: const Text('OK'),
+  //             ),
+  //           ],
+  //         );
+  //       });
+  // }
 
   errorSnackBar(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(

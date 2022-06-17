@@ -41,8 +41,22 @@ class _CustomerServiceState extends State<CustomerService> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('고객센터'),
-        elevation: 0,
+        title: Text(
+          '고객센터',
+          style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 23,
+                shadows: [
+                  Shadow(
+                    color: Colors.black.withOpacity(0.5),
+                    offset: const Offset(3, 3),
+                    blurRadius:10
+                  )
+                ]
+              ),
+          ),
+          backgroundColor: Color.fromARGB(198, 58, 34, 131),
+        toolbarHeight: 75,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),

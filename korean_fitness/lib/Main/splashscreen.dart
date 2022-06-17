@@ -1,28 +1,27 @@
 import 'dart:async';
-
 import 'package:easy_splash_screen/easy_splash_screen.dart';
-import 'package:korean_fitness/Login/log_in.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:korean_fitness/message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashPage extends StatefulWidget {
-  SplashPage({Key? key}) : super(key: key);
+  const SplashPage({Key? key}) : super(key: key);
 
   @override
-  _SplashPageState createState() => _SplashPageState();
+  State<SplashPage> createState() => _SplashPageState();
 }
 
 class _SplashPageState extends State<SplashPage> {
-  String? finalid;
+  String? finalId;
+  String? finalName;
+  String? finalEmail;
 
   @override
   void initState() {
     getData().whenComplete(() async {
       Timer(
           const Duration(seconds: 2),
-          () => Get.to(finalid == ""
+          () => Get.to(finalId == ""
               ? Navigator.pushNamed(context, '/Log_in')
               : Navigator.pushNamed(context, '/Mainpage')));
     });
@@ -32,16 +31,20 @@ class _SplashPageState extends State<SplashPage> {
   Future getData() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
-    var obitainedid = sharedPreferences.getString('id');
+    var obitainedId = sharedPreferences.getString('id');
+    var obitainedName = sharedPreferences.getString('name');
+    var obitainedEmail = sharedPreferences.getString('email');
+
     setState(() {
-      if (obitainedid == null) {
-        finalid = "";
+      if (obitainedId == null) {
+        finalId = "";
       } else {
-        finalid = obitainedid;
-        Message.uId = finalid!;
+        finalId = obitainedId;
+        finalName = obitainedName;
+        finalEmail = obitainedEmail;
       }
     });
-    print("로딩 : $finalid");
+    print("로딩 : $finalId");
   }
 
   @override
@@ -49,13 +52,18 @@ class _SplashPageState extends State<SplashPage> {
     return EasySplashScreen(
       logo: Image.network(
           'https://cdn4.iconfinder.com/data/icons/logos-brands-5/24/flutter-512.png'),
-      title: const Text(
+      title: Text(
         "스마트 운동 파트너",
         style: TextStyle(
-          fontSize: 45,
-          fontWeight: FontWeight.bold,
-          color: Color.fromARGB(255, 47, 40, 100),
-        ),
+            fontSize: 45,
+            fontWeight: FontWeight.bold,
+            color: const Color.fromARGB(255, 48, 30, 90),
+            shadows: [
+              Shadow(
+                  color: Colors.white.withOpacity(0.7),
+                  offset: const Offset(3, 3),
+                  blurRadius: 12)
+            ]),
       ),
       backgroundImage: const AssetImage(
         // "images/fitnesscenter1.png",
@@ -71,7 +79,7 @@ class _SplashPageState extends State<SplashPage> {
       ),
       loaderColor: Colors.black,
       logoSize: 0,
-      loadingTextPadding: EdgeInsets.fromLTRB(20, 20, 20, 100),
+      loadingTextPadding: const EdgeInsets.fromLTRB(20, 20, 20, 100),
     );
   }
 }

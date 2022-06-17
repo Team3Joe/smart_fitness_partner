@@ -51,6 +51,8 @@ class _LogInState extends State<LogIn> {
         final SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
         sharedPreferences.setString('id', user.email.toString());
+        sharedPreferences.setString('name', user.displayName.toString());
+        sharedPreferences.setString('email', user.email.toString());
         Get.to(SplashPage());
       }
       if (_currentUser != null) {
@@ -467,10 +469,10 @@ class _LogInState extends State<LogIn> {
                           await SharedPreferences.getInstance();
                       sharedPreferences.setString(
                           'id', idController.text.trim());
-                      sharedPreferences.setString(
-                          'pw', pwController.text.trim());
+                      sharedPreferences.setString('name', data[0]['uName']);
+                      sharedPreferences.setString('email', data[0]['uEmail']);
                       Get.to(SplashPage());
-                      // Navigator.popAndPushNamed(context, '/Mainpage');
+                      //Navigator.popAndPushNamed(context, '/Mainpage');
                     },
                     child: const Text('OK'))
               ],

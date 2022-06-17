@@ -13,10 +13,15 @@ class Analysis extends StatefulWidget {
 }
 
 class _AnalysisState extends State<Analysis> {
-  String? finalid;
+  late String finalId;
+  late String finalName;
+  late String finalEmail;
 
   @override
   void initState() {
+    finalId = "";
+    finalName = "";
+    finalEmail = "";
     getData();
     super.initState();
   }
@@ -30,20 +35,27 @@ class _AnalysisState extends State<Analysis> {
     ],
   );
 
-  Future<void> _handleSignOut() => googleSignIn.disconnect();
+  Future<void> handleSignOut() => googleSignIn.disconnect();
 
   Future getData() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     var obitainedid = sharedPreferences.getString('id');
+    var obitainedEmail = sharedPreferences.getString('email');
+    var obitainedName = sharedPreferences.getString('name');
+
     setState(() {
       if (obitainedid == null) {
-        finalid = "";
+        finalId = "";
       } else {
-        finalid = obitainedid;
+        finalId = obitainedid;
+        finalEmail = obitainedEmail!;
+        finalName = obitainedName!;
       }
     });
-    print("분석메인 $finalid");
+    Message.uId = finalId;
+    Message.uEmail = finalEmail;
+    Message.uName = finalName;
   }
 
   @override
@@ -66,15 +78,8 @@ class _AnalysisState extends State<Analysis> {
               height: 35,
             ),
             Text(
-              "$finalid 스마트 체력 테스트",
+              "$finalId님의 스마트 체력 테스트",
               style: const TextStyle(
-                  fontSize: 20,
-                  color: Color.fromARGB(255, 92, 29, 181),
-                  fontWeight: FontWeight.bold),
-            ),
-            const Text(
-              "스마트 체력 테스트",
-              style: TextStyle(
                   fontSize: 20,
                   color: Color.fromARGB(255, 92, 29, 181),
                   fontWeight: FontWeight.bold),
@@ -266,7 +271,7 @@ class _AnalysisState extends State<Analysis> {
                 backgroundImage: AssetImage('images/korea.png'),
               ),
               //이미지 밑에 이름 & 이메일
-              accountName: Text(Message.uId),
+              accountName: Text('${Message.uName}님'),
               accountEmail: Text(Message.uEmail),
               decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 164, 154, 239),
@@ -302,7 +307,7 @@ class _AnalysisState extends State<Analysis> {
                 final SharedPreferences sharedPreferences =
                     await SharedPreferences.getInstance();
                 sharedPreferences.remove("id");
-                _handleSignOut()
+                handleSignOut()
                     .then((value) => Navigator.pushNamed(context, '/Log_in'));
               },
               leading: const Icon(

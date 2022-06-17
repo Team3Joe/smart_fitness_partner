@@ -25,9 +25,17 @@ class _SettingState extends State<Setting> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: const Text(
+        title: Text(
           '설정',
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24, shadows: [
+            Shadow(
+                color: Colors.black.withOpacity(0.5),
+                offset: const Offset(3, 3),
+                blurRadius: 10)
+          ]),
         ),
+        backgroundColor: Color.fromARGB(198, 58, 34, 131),
+        toolbarHeight: 75,
         actions: [
           Row(
             children: [
@@ -45,185 +53,240 @@ class _SettingState extends State<Setting> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
+      body: Container(
+        color: Color.fromARGB(140, 103, 91, 141),
         child: Center(
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, '/Help');
-                },
-                child: Card(
-                  // color: const Color.fromARGB(255, 164, 154, 239),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: const [
-                        SizedBox(
-                          width: 20,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 30,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/Help');
+                  },
+                  child: SizedBox(
+                    width: 350,
+                    height: 70,
+                    child: Card(
+                      color: Color.fromARGB(100, 158, 145, 203),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: const [
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Icon(
+                              Icons.circle,
+                              size: 15,
+                              // color: Color.fromARGB(186, 30, 22, 56),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              '도움말',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                //color: Color.fromARGB(174, 17, 1, 65),
+                                // color: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
-                        Icon(
-                          Icons.circle,
-                          // color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          '도움말',
-                          style: TextStyle(
-                            fontSize: 20,
-                            // color: Colors.white,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, '/Customer_service');
-                },
-                child: Card(
-                  // color: const Color.fromARGB(255, 164, 154, 239),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: const [
-                        SizedBox(
-                          width: 20,
+                const SizedBox(
+                  height: 15,
+                ),
+                GestureDetector(
+                  onTap: (() {
+                    Navigator.pushNamed(context, '/Customer_service');
+                  }),
+                  child: SizedBox(
+                    width: 350,
+                    height: 70,
+                    child: Card(
+                      color: const Color.fromARGB(100, 158, 145, 203),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: const [
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Icon(
+                              Icons.circle,
+                              size: 15,
+                              //color: Color.fromARGB(186, 30, 22, 56),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              '고객센터',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                //color: Color.fromARGB(174, 17, 1, 65),
+                                // color: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
-                        Icon(
-                          Icons.circle,
-                          // color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          '고객센터',
-                          style: TextStyle(
-                            fontSize: 20,
-                            // color: Colors.white,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Card(
-                // color: const Color.fromARGB(255, 164, 154, 239),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      const Icon(
-                        Icons.circle,
-                        // color: Colors.white,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text(
-                        '다크모드',
-                        style: TextStyle(
-                          fontSize: 20,
-                          // color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 130,
-                      ),
-                      Switch(
-                        value: darkModeSwitch,
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        // activeColor: Colors.deepPurple,
-                        onChanged: (value) {
-                          setState(() {
-                            darkModeSwitch = value;
-                            if (MyApp.themeNotifier.value == ThemeMode.dark) {
-                              MyApp.themeNotifier.value = ThemeMode.light;
-                            } else {
-                              MyApp.themeNotifier.value = ThemeMode.dark;
-                            }
-                          });
-                        },
-                      ),
-                    ],
-                  ),
+                const SizedBox(
+                  height: 15,
                 ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  _versionCheck();
-                },
-                child: Card(
-                  // color: const Color.fromARGB(255, 164, 154, 239),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: const [
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Icon(
-                          Icons.circle,
-                          // color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          '버전 확인',
-                          style: TextStyle(
-                            fontSize: 20,
-                            // color: Colors.white,
+                SizedBox(
+                  width: 350,
+                  height: 70,
+                  child: Card(
+                    color: const Color.fromARGB(100, 158, 145, 203),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          const SizedBox(
+                            width: 20,
                           ),
-                        ),
-                      ],
+                          const Icon(
+                            Icons.circle,
+                            size: 15,
+                            //color: Color.fromARGB(186, 30, 22, 56),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          const Text(
+                            '다크모드',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              //color: Color.fromARGB(174, 17, 1, 65),
+                              // color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 100,
+                          ),
+                          Switch(
+                            value: darkModeSwitch,
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                            // activeColor: Colors.deepPurple,
+                            onChanged: (value) {
+                              setState(() {
+                                darkModeSwitch = value;
+                                if (MyApp.themeNotifier.value ==
+                                    ThemeMode.dark) {
+                                  MyApp.themeNotifier.value = ThemeMode.light;
+                                } else {
+                                  MyApp.themeNotifier.value = ThemeMode.dark;
+                                }
+                              });
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, '/Privacy_policy');
-                },
-                child: Card(
-                  // color: const Color.fromARGB(255, 164, 154, 239),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: const [
-                        SizedBox(
-                          width: 20,
+                const SizedBox(
+                  height: 15,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    _versionCheck();
+                  },
+                  child: SizedBox(
+                    width: 350,
+                    height: 70,
+                    child: Card(
+                      color: Color.fromARGB(100, 158, 145, 203),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: const [
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Icon(
+                              Icons.circle,
+                              size: 15,
+                              //color: Color.fromARGB(186, 30, 22, 56),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              '버전 확인',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                //color: Color.fromARGB(174, 17, 1, 65),
+                                // color: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
-                        Icon(
-                          Icons.circle,
-                          // color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          '이용약관 & 개인정보 보호방침',
-                          style: TextStyle(
-                            fontSize: 20,
-                            // color: Colors.white,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(
+                  height: 15,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/Privacy_policy');
+                  },
+                  child: SizedBox(
+                    width: 350,
+                    height: 70,
+                    child: Card(
+                      color: const Color.fromARGB(100, 158, 145, 203),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: const [
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Icon(
+                              Icons.circle,
+                              size: 15,
+                              //color: Color.fromARGB(186, 30, 22, 56),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              '이용약관 & 개인정보 보호방침',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                //color: Color.fromARGB(195, 27, 18, 52),
+                                // color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
