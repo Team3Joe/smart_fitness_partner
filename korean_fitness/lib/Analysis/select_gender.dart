@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:korean_fitness/Analysis/analysis_input.dart';
+import 'package:korean_fitness/message2.dart';
 
 class SelectGender extends StatefulWidget {
   const SelectGender({Key? key}) : super(key: key);
@@ -31,6 +32,7 @@ class _SelectGenderState extends State<SelectGender> {
             children: [
               GestureDetector(
                 onTap: (){
+                  Message2.gender = "남";
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const AnalysisData())
@@ -62,6 +64,7 @@ class _SelectGenderState extends State<SelectGender> {
               ),
               GestureDetector(
                 onTap: (){
+                  Message2.gender = "여";
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const AnalysisData())

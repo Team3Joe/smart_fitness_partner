@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:korean_fitness/Login/find_id.dart';
 import 'package:korean_fitness/Login/find_pw.dart';
 
 class FindMain extends StatefulWidget {
   const FindMain({Key? key}) : super(key: key);
 
+  
+
   @override
   State<FindMain> createState() => _FindMainState();
+  
 }
 
 class _FindMainState extends State<FindMain>
     with SingleTickerProviderStateMixin {
+
+  
   // Property
   late TabController controller;
 

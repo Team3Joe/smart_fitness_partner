@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:korean_fitness/message.dart';
 import 'package:korean_fitness/message2.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'dart:math';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 const gridColor = Color.fromARGB(255, 129, 66, 219);
 const titleColor = Color.fromARGB(255, 129, 66, 219);
@@ -12,6 +15,7 @@ const tier1Color = Color.fromARGB(255, 92, 209, 229);
 class PageViewDemo extends StatefulWidget {
   @override
   _PageViewDemoState createState() => _PageViewDemoState();
+
 }
 
 class _PageViewDemoState extends State<PageViewDemo> {
@@ -64,9 +68,52 @@ class BarChartSample1State extends State<BarChartSample1> {
   final Color barBackgroundColor1 = const Color.fromARGB(255, 211, 216, 114);
   final Duration animDuration1 = const Duration(milliseconds: 250);
 
+  late double height;
+  late double weight;
+  late double age;
+  late double grip;
+  late double forwardBending;
+  late double longJump;
+  late double fatMass;
+  late double situp;
+  late double bmi;
+  late String bmi2;
+  late double bmi3;
+  late String rating;
   int touchedIndex1 = -1;
-
+ 
   bool isPlaying1 = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    height = double.parse(Message2.height);
+    weight = double.parse(Message2.weight);
+    age = double.parse(Message2.age);
+    grip = double.parse(Message2.grip);
+    forwardBending = double.parse(Message2.forwardBending);
+    longJump = double.parse(Message2.longJump);
+    fatMass = double.parse(Message2.fatMass);
+    situp = double.parse(Message2.situp);
+    rating = Message2.ratingResult;
+    bmi = double.parse(Message2.bmi);
+    bmi2 = bmi.toStringAsFixed(1); 
+    bmi3 = double.parse(bmi2);
+    
+
+    setState(() {
+      if(rating=="A"){
+        rating = "다이아";
+      }else if(rating=="B"){
+        rating="골드";
+      }else if(rating=="C"){
+        rating=="실버";
+      }else{
+        rating="브론즈";
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -211,11 +258,11 @@ class BarChartSample1State extends State<BarChartSample1> {
   List<BarChartGroupData> showingGroups1() => List.generate(4, (i) {
         switch (i) {
           case 0:
-            return makeGroupData1(0, 21, isTouched1: i == touchedIndex1);
+            return makeGroupData1(0, bmi3, isTouched1: i == touchedIndex1);
           case 1:
             return makeGroupData1(1, 22, isTouched1: i == touchedIndex1);
           case 2:
-            return makeGroupData1(2, 26, isTouched1: i == touchedIndex1);
+            return makeGroupData1(2, fatMass, isTouched1: i == touchedIndex1);
           case 3:
             return makeGroupData1(3, 27, isTouched1: i == touchedIndex1);
           default:
@@ -430,9 +477,48 @@ class BarChartSample2State extends State<BarChartSample2> {
   final Color barBackgroundColor2 = Color.fromARGB(255, 184, 114, 216);
   final Duration animDuration2 = const Duration(milliseconds: 250);
 
+  late double height;
+  late double weight;
+  late double age;
+  late double grip;
+  late double forwardBending;
+  late double longJump;
+  late double fatMass;
+  late double situp;
+  late double bmi;
+  late String rating;
   int touchedIndex2 = -1;
 
   bool isPlaying2 = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    height = double.parse(Message2.height);
+    weight = double.parse(Message2.weight);
+    age = double.parse(Message2.age);
+    grip = double.parse(Message2.grip);
+    forwardBending = double.parse(Message2.forwardBending);
+    longJump = double.parse(Message2.longJump);
+    fatMass = double.parse(Message2.fatMass);
+    situp = double.parse(Message2.situp);
+    rating = Message2.ratingResult;
+    bmi = double.parse(Message2.bmi);
+    
+
+    setState(() {
+      if(rating=="A"){
+        rating = "다이아";
+      }else if(rating=="B"){
+        rating="골드";
+      }else if(rating=="C"){
+        rating=="실버";
+      }else{
+        rating="브론즈";
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -577,7 +663,7 @@ class BarChartSample2State extends State<BarChartSample2> {
   List<BarChartGroupData> showingGroups2() => List.generate(3, (i) {
         switch (i) {
           case 0:
-            return makeGroupData2(0, 25, isTouched2: i == touchedIndex2);
+            return makeGroupData2(0, forwardBending, isTouched2: i == touchedIndex2);
           case 1:
             return makeGroupData2(1, 20, isTouched2: i == touchedIndex2);
           case 2:
@@ -602,7 +688,7 @@ class BarChartSample2State extends State<BarChartSample2> {
                   weekDay = '동나이대\n 평균\n 앞으로구부르기';
                   break;
                 case 2:
-                  weekDay = '다이아등급\n 평균\n앞으로구부르기';
+                  weekDay = '다이아티어\n 평균\n앞으로구부르기';
                   break;
                 default:
                   throw Error();
@@ -682,7 +768,7 @@ class BarChartSample2State extends State<BarChartSample2> {
         text = const Text('동나이대 평균', style: style);
         break;
       case 2:
-        text = const Text('다이아등급 평균', style: style);
+        text = const Text('다이아티어 평균', style: style);
         break;
       default:
         text = const Text('', style: style);
@@ -782,9 +868,47 @@ class BarChartSample3State extends State<BarChartSample3> {
   final Color barBackgroundColor3 = Color.fromARGB(255, 216, 114, 165);
   final Duration animDuration3 = const Duration(milliseconds: 250);
 
+  late double height;
+  late double weight;
+  late double age;
+  late double grip;
+  late double forwardBending;
+  late double longJump;
+  late double fatMass;
+  late double situp;
+  late double bmi;
+  late String rating;
   int touchedIndex3 = -1;
 
   bool isPlaying3 = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    height = double.parse(Message2.height);
+    weight = double.parse(Message2.weight);
+    age = double.parse(Message2.age);
+    grip = double.parse(Message2.grip);
+    forwardBending = double.parse(Message2.forwardBending);
+    longJump = double.parse(Message2.longJump);
+    fatMass = double.parse(Message2.fatMass);
+    situp = double.parse(Message2.situp);
+    rating = Message2.ratingResult;
+    bmi = double.parse(Message2.bmi);
+
+    setState(() {
+      if(rating=="A"){
+        rating = "다이아";
+      }else if(rating=="B"){
+        rating="골드";
+      }else if(rating=="C"){
+        rating=="실버";
+      }else{
+        rating="브론즈";
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -917,7 +1041,7 @@ class BarChartSample3State extends State<BarChartSample3> {
               : const BorderSide(color: Colors.white, width: 0),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            toY: 25,
+            toY: 230,
             color: barBackgroundColor3,
           ),
         ),
@@ -929,11 +1053,11 @@ class BarChartSample3State extends State<BarChartSample3> {
   List<BarChartGroupData> showingGroups3() => List.generate(3, (i) {
         switch (i) {
           case 0:
-            return makeGroupData3(0, 15, isTouched: i == touchedIndex3);
+            return makeGroupData3(0, longJump, isTouched: i == touchedIndex3);
           case 1:
-            return makeGroupData3(1, 17, isTouched: i == touchedIndex3);
+            return makeGroupData3(1, 170, isTouched: i == touchedIndex3);
           case 2:
-            return makeGroupData3(2, 18, isTouched: i == touchedIndex3);
+            return makeGroupData3(2, 180, isTouched: i == touchedIndex3);
           default:
             return throw Error();
         }
@@ -954,7 +1078,7 @@ class BarChartSample3State extends State<BarChartSample3> {
                   weekDay = '동나이대\n 평균 멀리뛰기(cm)';
                   break;
                 case 2:
-                  weekDay = '다이아등급\n 평균 멀리뛰기(cm)';
+                  weekDay = '다이아티어\n 평균 멀리뛰기(cm)';
                   break;
                 default:
                   throw Error();
@@ -1034,7 +1158,7 @@ class BarChartSample3State extends State<BarChartSample3> {
         text = const Text('동나이대 평균', style: style);
         break;
       case 2:
-        text = const Text('다이아등급 평균', style: style);
+        text = const Text('다이아티어 평균', style: style);
         break;
       default:
         text = const Text('', style: style);
@@ -1083,15 +1207,15 @@ class BarChartSample3State extends State<BarChartSample3> {
       barGroups: List.generate(3, (i) {
         switch (i) {
           case 0:
-            return makeGroupData3(0, Random().nextInt(20).toDouble() + 6,
+            return makeGroupData3(0, Random().nextInt(170).toDouble() + 6,
                 barColor: widget.availableColors[
                     Random().nextInt(widget.availableColors.length)]);
           case 1:
-            return makeGroupData3(1, Random().nextInt(20).toDouble() + 6,
+            return makeGroupData3(1, Random().nextInt(170).toDouble() + 6,
                 barColor: widget.availableColors[
                     Random().nextInt(widget.availableColors.length)]);
           case 2:
-            return makeGroupData3(2, Random().nextInt(20).toDouble() + 6,
+            return makeGroupData3(2, Random().nextInt(170).toDouble() + 6,
                 barColor: widget.availableColors[
                     Random().nextInt(widget.availableColors.length)]);
           default:
@@ -1134,9 +1258,47 @@ class BarChartSample4State extends State<BarChartSample4> {
   final Color barBackgroundColor4 = const Color(0xff72d8bf);
   final Duration animDuration4 = const Duration(milliseconds: 250);
 
+  late double height;
+  late double weight;
+  late double age;
+  late double grip;
+  late double forwardBending;
+  late double longJump;
+  late double fatMass;
+  late double situp;
+  late double bmi;
+  late String rating;
   int touchedIndex4 = -1;
 
   bool isPlaying4 = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    height = double.parse(Message2.height);
+    weight = double.parse(Message2.weight);
+    age = double.parse(Message2.age);
+    grip = double.parse(Message2.grip);
+    forwardBending = double.parse(Message2.forwardBending);
+    longJump = double.parse(Message2.longJump);
+    fatMass = double.parse(Message2.fatMass);
+    situp = double.parse(Message2.situp);
+    rating = Message2.ratingResult;
+    bmi = double.parse(Message2.bmi);
+
+    setState(() {
+      if(rating=="A"){
+        rating = "다이아";
+      }else if(rating=="B"){
+        rating="골드";
+      }else if(rating=="C"){
+        rating=="실버";
+      }else{
+        rating="브론즈";
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1281,7 +1443,7 @@ class BarChartSample4State extends State<BarChartSample4> {
   List<BarChartGroupData> showingGroups4() => List.generate(3, (i) {
         switch (i) {
           case 0:
-            return makeGroupData4(0, 25, isTouched: i == touchedIndex4);
+            return makeGroupData4(0, grip, isTouched: i == touchedIndex4);
           case 1:
             return makeGroupData4(1, 27, isTouched: i == touchedIndex4);
           case 2:
@@ -1306,7 +1468,7 @@ class BarChartSample4State extends State<BarChartSample4> {
                   weekDay = '동나이대\n 평균 악력';
                   break;
                 case 2:
-                  weekDay = '다이아등급\n 평균 악력';
+                  weekDay = '다이아티어\n 평균 악력';
                   break;
                 default:
                   throw Error();
@@ -1386,7 +1548,7 @@ class BarChartSample4State extends State<BarChartSample4> {
         text = const Text('동나이대 평균', style: style);
         break;
       case 2:
-        text = const Text('다이아등급 평균', style: style);
+        text = const Text('다이아티어 평균', style: style);
         break;
       default:
         text = const Text('', style: style);
@@ -1486,9 +1648,48 @@ class BarChartSample5State extends State<BarChartSample5> {
   final Color barBackgroundColor5 = Color.fromARGB(255, 114, 209, 216);
   final Duration animDuration5 = const Duration(milliseconds: 250);
 
+  late double height;
+  late double weight;
+  late double age;
+  late double grip;
+  late double forwardBending;
+  late double longJump;
+  late double fatMass;
+  late double situp;
+  late double bmi;
+  late String rating;
   int touchedIndex5 = -1;
 
   bool isPlaying5 = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    height = double.parse(Message2.height);
+    weight = double.parse(Message2.weight);
+    age = double.parse(Message2.age);
+    grip = double.parse(Message2.grip);
+    forwardBending = double.parse(Message2.forwardBending);
+    longJump = double.parse(Message2.longJump);
+    fatMass = double.parse(Message2.fatMass);
+    situp = double.parse(Message2.situp);
+    rating = Message2.ratingResult;
+    bmi = double.parse(Message2.bmi);
+
+    setState(() {
+      if(rating=="A"){
+        rating = "다이아";
+      }else if(rating=="B"){
+        rating="골드";
+      }else if(rating=="C"){
+        rating=="실버";
+      }else{
+        rating="브론즈";
+      }
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -1633,7 +1834,7 @@ class BarChartSample5State extends State<BarChartSample5> {
   List<BarChartGroupData> showingGroups5() => List.generate(3, (i) {
         switch (i) {
           case 0:
-            return makeGroupData5(0, 50, isTouched: i == touchedIndex5);
+            return makeGroupData5(0, situp, isTouched: i == touchedIndex5);
           case 1:
             return makeGroupData5(1, 39, isTouched: i == touchedIndex5);
           case 2:
@@ -1658,7 +1859,7 @@ class BarChartSample5State extends State<BarChartSample5> {
                   weekDay = '동나이대\n 평균\n 윗몸일으키기';
                   break;
                 case 2:
-                  weekDay = '다이아등급\n 평균\n 윗몸일으키기';
+                  weekDay = '다이아티어\n 평균\n 윗몸일으키기';
                   break;
                 default:
                   throw Error();
@@ -1738,7 +1939,7 @@ class BarChartSample5State extends State<BarChartSample5> {
         text = const Text('동나이대 평균', style: style);
         break;
       case 2:
-        text = const Text('다이아등급 평균', style: style);
+        text = const Text('다이아티어 평균', style: style);
         break;
       default:
         text = const Text('', style: style);
@@ -1837,21 +2038,36 @@ class _AnalysisResultState extends State<AnalysisResult> {
   late double longJump;
   late double fatMass;
   late double situp;
+  late double bmi;
+  late String rating;
+  
 
   @override
   void initState() {
     super.initState();
-    
-  height = double.parse(Message2.height);
-  weight = double.parse(Message2.weight);
-  age = double.parse(Message2.age);
-  grip = double.parse(Message2.grip);
-  forwardBending = double.parse(Message2.forwardBending);
-  longJump = double.parse(Message2.longJump);
-  fatMass = double.parse(Message2.fatMass);
-  situp = double.parse(Message2.situp);
 
+    height = double.parse(Message2.height);
+    weight = double.parse(Message2.weight);
+    age = double.parse(Message2.age);
+    grip = double.parse(Message2.grip);
+    forwardBending = double.parse(Message2.forwardBending);
+    longJump = double.parse(Message2.longJump);
+    fatMass = double.parse(Message2.fatMass);
+    situp = double.parse(Message2.situp);
+    rating = Message2.ratingResult;
+    bmi = double.parse(Message2.bmi);
 
+    setState(() {
+      if(rating=="A"){
+        rating = "다이아";
+      }else if(rating=="B"){
+        rating="골드";
+      }else if(rating=="C"){
+        rating=="실버";
+      }else{
+        rating="브론즈";
+      }
+    });
   }
 
   @override
@@ -1874,25 +2090,25 @@ class _AnalysisResultState extends State<AnalysisResult> {
             children: [
               Center(
                 child: Column(
-                  children: const [
-                    Text(
+                  children:  [
+                    const Text(
                       "다이아 / 골드 / 실버 / 브론즈\n\n 총 4개의 티어가 존재합니다.",
                       style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
                     ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height : 20
                     ),
                     Text(
-                      "당신은 골드 티어 입니다!",
-                      style: TextStyle(
+                      "당신의 티어는 '${rating}' 티어입니다.",
+                      style: const TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.w600,
                     ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height : 30
                     ),
                   ],
@@ -2083,7 +2299,7 @@ class _AnalysisResultState extends State<AnalysisResult> {
   List<RawDataSet> rawDataSets() {
     return [
       RawDataSet(
-        title: '1등급 평균 능력치',
+        title: '다이아티어 평균 능력치',
         color: tier1Color,
         values: [
           21,//bmi
@@ -2108,8 +2324,8 @@ class _AnalysisResultState extends State<AnalysisResult> {
         title: '나의 능력치',
         color: myColor,
         values: [
-          19,//bmi 
-          longJump*0.9,//멀리뛰기 155
+          bmi,//bmi 
+          longJump/10,//멀리뛰기 155
           forwardBending,//앞으로 구부리기 25
           grip,//악력 28
           situp,//윗몸 일으키기 39
@@ -2141,6 +2357,60 @@ class result extends StatefulWidget {
 }
 
 class _resultState extends State<result> {
+
+  late String height;
+  late String weight;
+  late String age;
+  late String grip;
+  late String forwardBending;
+  late String longJump;
+  late String fatMass;
+  late String situp;
+  late double bmi;
+  late String bmi2;
+  late double bmi3;
+  late String rating;
+  late String gender;
+  late String tier;
+  late String uId;
+  
+  late String result;
+
+  @override
+  void initState() {
+    super.initState();
+
+    height = Message2.height;
+    weight = Message2.weight;
+    age = Message2.age;
+    grip = Message2.grip;
+    forwardBending = Message2.forwardBending;
+    longJump = Message2.longJump;
+    fatMass = Message2.fatMass;
+    situp = Message2.situp;
+    rating = Message2.ratingResult;
+    gender = Message2.gender;
+    bmi = double.parse(Message2.bmi);
+    bmi2 = bmi.toStringAsFixed(1); 
+    bmi3 = double.parse(bmi2);
+
+    setState(() {
+      if(rating=="A"){
+        rating = "다이아";
+        Message2.tier = rating;
+      }else if(rating=="B"){
+        rating="골드";
+        Message2.tier = rating;
+      }else if(rating=="C"){
+        rating=="실버";
+        Message2.tier = rating;
+      }else{
+        rating="브론즈";
+        Message2.tier = rating;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -2164,7 +2434,7 @@ class _resultState extends State<result> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              "images/letter1.png"
+              "images/letter_save.png"
             ),
             const SizedBox(
               height: 10,
@@ -2173,8 +2443,8 @@ class _resultState extends State<result> {
                decoration: BoxDecoration(
                gradient: const LinearGradient(
                   colors: [
-                    Color.fromARGB(255, 0, 198, 251),
-                    Color.fromARGB(255, 99, 124, 236),
+                    Color.fromARGB(255, 3, 137, 250),
+                    Color.fromARGB(255, 10, 36, 170),
                     //add more colors
                   ]
                 ),
@@ -2193,7 +2463,19 @@ class _resultState extends State<result> {
                   //make color or elevated button transparent
                 ),
                 onPressed: (){
-
+                  gender = Message2.gender;
+                  height = Message2.height;
+                  weight = Message2.weight;
+                  age = Message2.age;
+                  grip = Message2.grip;
+                  forwardBending = Message2.forwardBending;
+                  longJump = Message2.longJump;
+                  fatMass = Message2.fatMass;
+                  situp = Message2.situp;
+                  bmi = bmi3;
+                  rating = Message2.tier;
+                  uId = Message.uId;
+                  insert_result();
                 },
                 label: const Text(
                   "분석결과 저장하기",
@@ -2213,7 +2495,7 @@ class _resultState extends State<result> {
               height: 20,
             ),
             Image.asset(
-              "images/letter2.png"
+              "images/letter_program.png"
             ),
             const SizedBox(
               height: 10,
@@ -2222,8 +2504,8 @@ class _resultState extends State<result> {
               decoration: BoxDecoration(
                gradient: const LinearGradient(
                   colors: [
-                    Color.fromARGB(255, 138, 225, 171),
-                    Color.fromARGB(255, 30, 155, 233),
+                    Color.fromARGB(255, 60, 197, 113),
+                    Color.fromARGB(255, 11, 135, 79),
                     //add more colors
                   ]
                 ),
@@ -2231,7 +2513,7 @@ class _resultState extends State<result> {
                 boxShadow: const <BoxShadow>[
                   BoxShadow(
                     color: Color.fromRGBO(0, 0, 0, 0.57), //shadow for button
-                    blurRadius: 5) //blur radius of shadow
+                    blurRadius: 10) //blur radius of shadow
                 ]
               ),
               child: ElevatedButton.icon(
@@ -2263,4 +2545,53 @@ class _resultState extends State<result> {
       ),
     );
   }
+// function
+   insert_result() async {
+    var url = Uri.parse(
+        'http://localhost:8080/Flutter/fitness/analysis_result_insert.jsp?gender=$gender&height=$height&weight=$weight&age=$age&grip=$grip&forwardBending=$forwardBending&longJump=$longJump&fatMass=$fatMass&situp=$situp&bmi=$bmi&rating=$rating&uId=$uId');
+    var response = await http.get(url);
+    setState(() {
+      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      result = dataConvertedJSON['result'];
+
+      if (result == 'OK') {
+       _showDialog(context);
+      } else {
+        errorSnackBar(context);
+      }
+    });
+  }
+
+  _showDialog(BuildContext ctx) {
+    showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            title: const Text('분석결과 입력'),
+            content: const Text('입력이 완료되었습니다'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/Calender');
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        });
+  }
+
+
+  errorSnackBar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('사용자 정보 입력에 문제가 발생하였습니다.'),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
 }
+

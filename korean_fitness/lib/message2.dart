@@ -9,5 +9,10 @@ class Message2 {
   static String fatMass = "";
   static String situp = "";
   static String bmi = "";
+  static String bmr = "";
 
+  static String ratingResult = "";
+  static String gender = "";
+
+  static String tier = "";
 }

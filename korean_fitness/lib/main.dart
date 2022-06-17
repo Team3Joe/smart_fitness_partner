@@ -28,6 +28,8 @@ import 'package:korean_fitness/Setting/mypage.dart';
 import 'package:korean_fitness/Setting/privacy_policy.dart';
 import 'package:korean_fitness/Setting/setting.dart';
 import 'package:korean_fitness/Setting/terms_of_service.dart';
+import 'package:korean_fitness/Analysis/select_gender.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
@@ -45,7 +47,7 @@ class MyApp extends StatelessWidget {
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: themeNotifier,
       builder: (context, ThemeMode currentMode, __) {
-        return MaterialApp(
+        return GetMaterialApp(
           // debug banner
           debugShowCheckedModeBanner: false,
           theme: ThemeData(primarySwatch: Colors.deepPurple),
@@ -64,7 +66,7 @@ class MyApp extends StatelessWidget {
 
             // Calendar
             '/Calender': (context) => const Calender(),
-            '/Calender_alnalysis': (context) => const CalenderAnalysis(),
+            '/Calender_alnalysis': (context) => PageViewDemo1(),
 
             // Login
             '/Sign_up': (context) => const SignUp(),
@@ -90,7 +92,6 @@ class MyApp extends StatelessWidget {
             '/Setting': (context) => const Setting(),
             '/Help': (context) => const Help(),
             '/Customer_service': (context) => const CustomerService(),
-            '/Terms_of_service': (context) => const TermsOfService(),
             '/Privacy_policy': (context) => const PrivacyPolicy(),
           },
           initialRoute: '/loading',
