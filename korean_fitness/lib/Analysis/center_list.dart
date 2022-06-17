@@ -4,11 +4,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:korean_fitness/Analysis/center_items.dart';
 import 'package:http/http.dart' as http;
+import 'package:korean_fitness/message.dart';
 import 'package:korean_fitness/message3.dart';
 
 class CenterList extends StatefulWidget {
   final List<CenterData> list;
-  const CenterList({Key? key, required this.list}) : super(key: key);
+
+  CenterList({Key? key, required this.list}) : super(key: key);
 
   @override
   State<CenterList> createState() => _CenterListState();
@@ -23,6 +25,7 @@ class _CenterListState extends State<CenterList> {
   late String nowTap;
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
 
     data = [];
@@ -63,17 +66,17 @@ class _CenterListState extends State<CenterList> {
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    // TODO: implement dispose
     super.dispose();
+    _scrollController.dispose();
   }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(227, 249, 233, 255),
+      backgroundColor: Color.fromARGB(227, 249, 233, 255),
       appBar: AppBar(
         title: Text(
-          nowTap,
+          '$nowTap',
           style: TextStyle(fontWeight: FontWeight.w600, shadows: [
             Shadow(
                 color: Colors.black.withOpacity(0.3),
@@ -81,7 +84,7 @@ class _CenterListState extends State<CenterList> {
                 blurRadius: 10)
           ]),
         ),
-        backgroundColor: const Color.fromARGB(230, 87, 51, 194),
+        backgroundColor: Color.fromARGB(230, 87, 51, 194),
         toolbarHeight: 75,
         elevation: 0,
       ),
@@ -89,7 +92,7 @@ class _CenterListState extends State<CenterList> {
         child: Column(
           children: [
             Container(
-              color: const Color.fromARGB(220, 200, 167, 238),
+              color: Color.fromARGB(220, 200, 167, 238),
               height: 65,
               child: data.isEmpty
                   ? const Text("데이터가 없습니다.")
@@ -130,7 +133,7 @@ class _CenterListState extends State<CenterList> {
                         );
                       }),
             ),
-            SizedBox(
+            Container(
               width: 400,
               height: 700,
               child: ListView.builder(
@@ -146,16 +149,21 @@ class _CenterListState extends State<CenterList> {
                         padding: const EdgeInsets.fromLTRB(8, 3, 8, 3),
                         child: Card(
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Column(
                                 children: [
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Image.asset(
-                                        "images/korea.png",
-                                        width: 180,
-                                        height: 80,
+                                      Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Image.network(
+                                          data[position]['mPic'],
+                                          width: 120,
+                                          height: 80,
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
                                       Column(
                                         mainAxisAlignment:
@@ -163,23 +171,30 @@ class _CenterListState extends State<CenterList> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            data[position]['mName'],
-                                            style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 17.0,
-                                                fontWeight: FontWeight.bold),
+                                          Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: Text(
+                                              "  " + data[position]['mName'],
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 17.0,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
-                                          const SizedBox(
+                                          SizedBox(
                                             height: 3,
                                           ),
-                                          Text(
-                                            " Tel: ${data[position]['mTell']}",
-                                            style: const TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 103, 103, 103),
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 14.0,
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              " Tel: " +
+                                                  data[position]['mTell'],
+                                              style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 103, 103, 103),
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14.0,
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -205,61 +220,6 @@ class _CenterListState extends State<CenterList> {
                               ),
                             ],
                           ),
-                        ),
-                      ),
-                    );
-                  }),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            SizedBox(
-              height: 700,
-              child: ListView.builder(
-                  controller: _scrollController,
-                  scrollDirection: Axis.vertical,
-                  itemCount: data.length,
-                  itemBuilder: (context, position) {
-                    return GestureDetector(
-                      onTap: () {
-                        locateGetJSONData(data[position]['mid']);
-                      },
-                      child: Card(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    data[position]['mName'],
-                                    style: const TextStyle(
-                                        color: Colors.black,
-                                        letterSpacing: 2.0,
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                Text(
-                                  ' Tel: ${data[position]['mTell']}',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    letterSpacing: 2.0,
-                                    fontSize: 15.0,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Text(
-                                    data[position]['mAddress'],
-                                    style: const TextStyle(
-                                        color: Colors.black, fontSize: 15),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
                         ),
                       ),
                     );
@@ -310,7 +270,8 @@ class _CenterListState extends State<CenterList> {
     data = [];
 
     var url = Uri.parse(
-        'http://localhost:8080/Flutter/fitness/center_datas.jsp?mRegion=${mRegion[index]}');
+        'http://localhost:8080/Flutter/fitness/center_datas.jsp?mRegion=' +
+            mRegion[index]);
     var response = await http.get(url);
     setState(() {
       var dataConvertedJSOn = json.decode(utf8.decode(response.bodyBytes));
@@ -340,7 +301,7 @@ class _CenterListState extends State<CenterList> {
     showDialog(
       context: context,
       builder: (context) {
-        return const Center(child: CircularProgressIndicator());
+        return Center(child: CircularProgressIndicator());
       },
     );
 
@@ -365,7 +326,7 @@ class _CenterListState extends State<CenterList> {
 
     // print(result);
 
-    Timer(const Duration(seconds: 1), () {
+    Timer(Duration(seconds: 1), () {
       Navigator.pop(context);
       Navigator.pushNamed(context, '/Center_map');
     });

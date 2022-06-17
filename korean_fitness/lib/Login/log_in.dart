@@ -24,21 +24,28 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
+  // Property
   GoogleSignInAccount? _currentUser;
   String contactText = '';
-  // Property
   late TextEditingController idController;
   late TextEditingController pwController;
   late String id;
   late String pw;
   late int quit; //user탈퇴여부
   late int admin; // admin check
+  late String name;
+  late int uq; //user탈퇴여부
+  late String result;
+  late String gid;
+  late String gname;
+  late List gdata;
   late List data;
 
   @override
   void initState() {
+    _handleSignOut(); //Google-Log-Out
     super.initState();
-
+//Google API initState
     _googleSignIn.onCurrentUserChanged
         .listen((GoogleSignInAccount? account) async {
       setState(() {
@@ -48,12 +55,18 @@ class _LogInState extends State<LogIn> {
       if (user != null) {
         // print(user.displayName);
         // print(user.email);
+
+        //google info save
+        gid = user.email.toString();
+        gname = user.displayName.toString();
+
+        //SharedPreferences Set data
         final SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
         sharedPreferences.setString('id', user.email.toString());
         sharedPreferences.setString('name', user.displayName.toString());
         sharedPreferences.setString('email', user.email.toString());
-        Get.to(SplashPage());
+        Get.to(const SplashPage());
       }
       if (_currentUser != null) {
         _handleGetContact(_currentUser!);
@@ -61,13 +74,19 @@ class _LogInState extends State<LogIn> {
     });
     _googleSignIn.signInSilently();
 
+    //Propert initState
     idController = TextEditingController();
     pwController = TextEditingController();
     id = '';
     pw = '';
     quit = 0;
     admin = 0;
+    name = '';
+    uq = 0;
+    gid = '';
+    gname = '';
     data = [];
+    gdata = [];
   }
 
   Future<void> _handleGetContact(GoogleSignInAccount user) async {
@@ -120,12 +139,13 @@ class _LogInState extends State<LogIn> {
   Future<void> _handleSignIn(BuildContext context) async {
     try {
       await _googleSignIn.signIn();
+      _getJSONGData();
     } catch (error) {
       print(error);
     }
   }
 
-  Future<void> handleSignOut() => _googleSignIn.disconnect();
+  Future<void> _handleSignOut() => _googleSignIn.disconnect();
 
   @override
   Widget build(BuildContext context) {
@@ -501,4 +521,39 @@ class _LogInState extends State<LogIn> {
       });
     }
   }
+
+  Future<bool> _getJSONGData() async {
+    //google id select
+    var url = Uri.parse(
+        'http://localhost:8080/Flutter/fitness/google_user_select.jsp?id=$gid&name=$gname');
+    var response = await http.get(url);
+    var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+    List result = dataConvertedJSON['results'];
+    setState(() {
+      gdata = [];
+      gdata.addAll(result);
+    });
+    if (gdata.isEmpty) {
+      //google id 없는 계정입력시 -> insert
+      googleInsertAction();
+      return true;
+    } else {
+      var userquite = gdata[0]['uQuit']; //탈퇴여부 값 받아오기
+      uq = userquite;
+      return true;
+    }
+  }
+
+  googleInsertAction() async {
+    //google id insert
+    var url = Uri.parse(
+        'http://localhost:8080/Flutter/fitness/google_user_insert.jsp?id=$gid&name=$gname&email=$gid');
+    var response = await http.get(url);
+    setState(() {
+      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      result = dataConvertedJSON['result'];
+    });
+  }
 }//end
+
+

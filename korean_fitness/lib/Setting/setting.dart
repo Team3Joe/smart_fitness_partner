@@ -34,7 +34,7 @@ class _SettingState extends State<Setting> {
                 blurRadius: 10)
           ]),
         ),
-        backgroundColor: Color.fromARGB(198, 58, 34, 131),
+        backgroundColor: Color.fromARGB(180, 58, 34, 131),
         toolbarHeight: 75,
         actions: [
           Row(
@@ -54,7 +54,7 @@ class _SettingState extends State<Setting> {
         ],
       ),
       body: Container(
-        color: Color.fromARGB(140, 103, 91, 141),
+        color: Color.fromARGB(63, 150, 131, 213),
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -71,7 +71,7 @@ class _SettingState extends State<Setting> {
                     width: 350,
                     height: 70,
                     child: Card(
-                      color: Color.fromARGB(100, 158, 145, 203),
+                      color: Color.fromARGB(134, 182, 167, 239),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -212,7 +212,7 @@ class _SettingState extends State<Setting> {
                     width: 350,
                     height: 70,
                     child: Card(
-                      color: Color.fromARGB(100, 158, 145, 203),
+                      color: Color.fromARGB(134, 182, 167, 239),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
