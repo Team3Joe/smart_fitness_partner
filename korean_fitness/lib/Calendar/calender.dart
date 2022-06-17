@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:korean_fitness/Calendar/calender_analysis.dart';
 import 'package:korean_fitness/Calendar/calender_write.dart';
 import 'package:korean_fitness/message.dart';
+import 'package:korean_fitness/message4.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,6 +20,7 @@ class _CalenderState extends State<Calender> {
   //property
   late List allDatedata;
   late List data;
+  late List analysisData;
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
@@ -43,6 +44,7 @@ class _CalenderState extends State<Calender> {
     super.initState();
     data = [];
     allDatedata = [];
+    analysisData = [];
     cDate = DateTime.now().toString().substring(0, 10);
     cCode = '';
     cTitle = '';
@@ -87,6 +89,7 @@ class _CalenderState extends State<Calender> {
                   cDate = selectedDay.toString().substring(0, 10);
                 });
                 getJSONData();
+                getAnalysisData();
               },
 
               selectedDayPredicate: (DateTime day) {
@@ -164,21 +167,18 @@ class _CalenderState extends State<Calender> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
-                              Icon(
-                                Icons.add,
-                                color: Color.fromARGB(255, 241, 228, 255),
-                                size: 25
-                              ),
+                              Icon(Icons.add,
+                                  color: Color.fromARGB(255, 241, 228, 255),
+                                  size: 25),
                               SizedBox(
                                 width: 4,
                               ),
                               Text(
                                 '운동 기록 추가',
                                 style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color.fromARGB(255, 241, 228, 255)
-                                ),
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromARGB(255, 241, 228, 255)),
                               ),
                             ],
                           ),
@@ -192,20 +192,17 @@ class _CalenderState extends State<Calender> {
                       padding: const EdgeInsets.all(8.0),
                       //
                       child: GestureDetector(
-                        onTap:() {
-                           Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => PageViewDemo1(
-                                          selectedDay: selectedDay)))
-                              .then((value) => getJSONData());
+                        onTap: () {
+                          Message4.selectedDay =
+                              selectedDay.toString().substring(0, 10);
+                          analysisDataCheck();
                         },
                         child: Container(
                           width: 170,
                           height: 60,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: Color.fromARGB(144, 0, 58, 158),
+                            color: const Color.fromARGB(144, 0, 58, 158),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey
@@ -213,7 +210,7 @@ class _CalenderState extends State<Calender> {
                                 spreadRadius: 1, //spread radius
                                 blurRadius: 1, // blur radius
                                 offset:
-                                    Offset(0, 2), // changes position of shadow
+                                    const Offset(0, 2), // changes position of shadow
                                 //first paramerter of offset is left-right
                                 //second parameter is top to down
                               ),
@@ -231,12 +228,11 @@ class _CalenderState extends State<Calender> {
                                 width: 4,
                               ),
                               Text(
-                                '분석 결과',
+                                '분석 결과 보기',
                                 style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color.fromARGB(255, 237, 237, 255)
-                                  ),
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromARGB(255, 237, 237, 255)),
                               ),
                             ],
                           ),
@@ -247,7 +243,7 @@ class _CalenderState extends State<Calender> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             data.isEmpty
@@ -299,8 +295,8 @@ class _CalenderState extends State<Calender> {
                                   height: 120,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
-                                    color: const Color.fromARGB(
-                                        80, 224, 197, 255),
+                                    color:
+                                        const Color.fromARGB(80, 224, 197, 255),
                                   ),
                                   margin: const EdgeInsets.only(bottom: 10),
                                   child: Column(
@@ -375,7 +371,9 @@ class _CalenderState extends State<Calender> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(10),
-                                                        color: const Color.fromARGB(129, 227, 217, 142),
+                                                        color: const Color
+                                                                .fromARGB(
+                                                            129, 227, 217, 142),
                                                       ),
                                                       width: 60,
                                                       height: 30,
@@ -395,7 +393,8 @@ class _CalenderState extends State<Calender> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(10),
-                                                        color: Color.fromARGB(80, 116, 252, 195),
+                                                        color: Color.fromARGB(
+                                                            80, 116, 252, 195),
                                                       ),
                                                       width: 50,
                                                       height: 30,
@@ -458,6 +457,8 @@ class _CalenderState extends State<Calender> {
 
   // function
   Future getJSONData() async {
+    print(uId);
+    print(cDate);
     data.clear();
     var url = Uri.parse(
         "http://localhost:8080/Flutter/fitness/calendar_select.jsp?uId=$uId&cDate=$cDate");
@@ -484,6 +485,19 @@ class _CalenderState extends State<Calender> {
       // List value = dataConvertedJSON['results'];
       //데이터에 넣기
       allDatedata.addAll(value);
+    });
+  }
+
+  Future getAnalysisData() async {
+    var url = Uri.parse(
+        "http://localhost:8080/Flutter/fitness/calendar_analysis_select.jsp?uId=$uId&bDate=$cDate");
+    var response = await http.get(url);
+    setState(() {
+      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      //키값
+      List value = dataConvertedJSON['results'];
+      //데이터에 넣기
+      analysisData.addAll(value);
     });
   }
 
@@ -516,7 +530,7 @@ class _CalenderState extends State<Calender> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text('아니오'),
+                child: const Text('아니오'),
               ),
               TextButton(
                 onPressed: () {
@@ -529,24 +543,15 @@ class _CalenderState extends State<Calender> {
         });
   }
 
-  _showDialog(BuildContext ctx) {
-    showDialog(
-        context: context,
-        builder: (BuildContext ctx) {
-          return AlertDialog(
-            title: const Text('결과'),
-            content: const Text('삭제가 완료되었습니다'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(ctx).pop();
-                  Navigator.of(context).pop();
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        });
+  snackBarFuntion(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('분석결과가 존재하지 않습니다!'),
+        //얼마동안 떠있게 할건지 설정
+        duration: Duration(seconds: 1),
+        backgroundColor: Color.fromARGB(255, 179, 13, 129),
+      ),
+    );
   }
 
   errorSnackBar(BuildContext context) {
@@ -563,10 +568,18 @@ class _CalenderState extends State<Calender> {
     Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Color.fromARGB(129, 183, 191, 245),
+        color: const Color.fromARGB(129, 183, 191, 245),
       ),
       width: 70,
       height: 30,
     );
+  }
+
+  analysisDataCheck(){
+    if (analysisData.isNotEmpty) {
+      Navigator.pushNamed(context, '/Calender_alnalysis').then((value) => Navigator.popAndPushNamed(context, '/Calender'));
+    } else {
+      snackBarFuntion(context);
+    }
   }
 }

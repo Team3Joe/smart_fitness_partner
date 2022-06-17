@@ -14,28 +14,15 @@ const meanColor = Color.fromARGB(255, 183, 120, 255);
 const tier1Color = Color.fromARGB(255, 92, 209, 229);
 
 class PageViewDemo1 extends StatefulWidget {
-  final DateTime selectedDay;
-  const PageViewDemo1({Key? key, required this.selectedDay}) : super(key: key);
-
   @override
   _PageViewDemo1State createState() => _PageViewDemo1State();
 }
 
 class _PageViewDemo1State extends State<PageViewDemo1> {
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    Message4.selectedDay = widget.selectedDay.toString().substring(0, 10);
-    print(Message4.selectedDay);
-
-    super.initState();
-  }
   PageController _controller = PageController(
     initialPage: 0,
   );
 
-  
   @override
   void dispose() {
     _controller.dispose();
@@ -48,18 +35,357 @@ class _PageViewDemo1State extends State<PageViewDemo1> {
       controller: _controller,
       scrollDirection: Axis.vertical,
       children: const [
-        AnalysisResult(),
-        // BarChartSample1(),
-        // BarChartSample2(),
-        // BarChartSample3(),
-        // BarChartSample4(),
-        // BarChartSample5(),
+        AnalysisResult1(),
+        BarChartResult1(),
+        BarChartResult2(),
+        BarChartResult3(),
+        BarChartResult4(),
+        BarChartResult5(),
       ],
     );
   }
 }
 
-class BarChartSample1 extends StatefulWidget {
+// ----------------------------------------------------------------------------------------------------
+
+class AnalysisResult1 extends StatefulWidget {
+  const AnalysisResult1({Key? key}) : super(key: key);
+
+  @override
+  State<AnalysisResult1> createState() => _AnalysisResult1State();
+}
+
+class _AnalysisResult1State extends State<AnalysisResult1> {
+  int selectedDataSetIndex = -1;
+
+  late List data;
+  late String uId;
+  late String bDate;
+
+  late double grip;
+  late double forwardBending;
+  late double longJump;
+  late double situp;
+  late double bmi;
+  late String rating;
+
+  @override
+  void initState() {
+    super.initState();
+    uId = Message.uId;
+    bDate = Message4.selectedDay;
+    data = [];
+    getJSONData();
+
+    grip = 0;
+    forwardBending = 0;
+    longJump = 0;
+    situp = 0;
+    bmi = 0;
+    rating = "";
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text("스마트 체력 테스트 분석 결과"),
+        backgroundColor: Color.fromARGB(255, 92, 209, 229),
+        elevation: 0,
+        toolbarHeight: 75,
+      ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Center(
+                  child: Column(
+                    children: [
+                      const Text(
+                        "다이아 / 골드 / 실버 / 브론즈\n\n 총 4개의 티어가 존재합니다.",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        "당신의 티어는 '${rating}' 티어입니다.",
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedDataSetIndex = -1;
+                    });
+                  },
+                  child: Text(
+                    'Pentagon status'.toUpperCase(),
+                    style: const TextStyle(
+                      color: titleColor,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: rawDataSets()
+                      .asMap()
+                      .map((index, value) {
+                        final isSelected = index == selectedDataSetIndex;
+                        return MapEntry(
+                          index,
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedDataSetIndex = index;
+                              });
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 300),
+                              margin: const EdgeInsets.symmetric(vertical: 2),
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: isSelected
+                                    ? gridColor.withOpacity(0.5)
+                                    : Colors.white,
+                                borderRadius: BorderRadius.circular(46),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 4.0, horizontal: 6),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  AnimatedContainer(
+                                    duration: const Duration(milliseconds: 400),
+                                    curve: Curves.easeInToLinear,
+                                    padding: EdgeInsets.all(isSelected ? 8 : 6),
+                                    decoration: BoxDecoration(
+                                      color: value.color,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  AnimatedDefaultTextStyle(
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeInToLinear,
+                                    style: TextStyle(
+                                      color:
+                                          isSelected ? value.color : gridColor,
+                                    ),
+                                    child: Text(value.title),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      })
+                      .values
+                      .toList(),
+                ),
+                AspectRatio(
+                  aspectRatio: 1.3,
+                  child: RadarChart(
+                    RadarChartData(
+                      radarTouchData: RadarTouchData(
+                          touchCallback: (FlTouchEvent event, response) {
+                        if (!event.isInterestedForInteractions) {
+                          setState(() {
+                            selectedDataSetIndex = -1;
+                          });
+                          return;
+                        }
+                        setState(() {
+                          selectedDataSetIndex =
+                              response?.touchedSpot?.touchedDataSetIndex ?? -1;
+                        });
+                      }),
+                      dataSets: showingDataSets(),
+                      radarBackgroundColor: Colors.white,
+                      borderData: FlBorderData(show: false),
+                      radarBorderData: const BorderSide(color: Colors.white24),
+                      titlePositionPercentageOffset: 0.18,
+                      titleTextStyle:
+                          const TextStyle(color: titleColor, fontSize: 17),
+                      getTitle: (index) {
+                        switch (index) {
+                          case 0:
+                            return '신체조성';
+                          case 4:
+                            return '근지구력';
+                          case 3:
+                            return '근력';
+                          case 2:
+                            return '유연성';
+                          case 1:
+                            return '순발력';
+                          default:
+                            return '';
+                        }
+                      },
+                      tickCount: 1,
+                      ticksTextStyle: const TextStyle(
+                          color: Colors.transparent, fontSize: 15),
+                      tickBorderData: const BorderSide(color: Colors.white),
+                      gridBorderData:
+                          const BorderSide(color: gridColor, width: 2),
+                    ),
+                    swapAnimationDuration: const Duration(milliseconds: 400),
+                  ),
+                ),
+                //---------------------------------------------------------------------------
+                const SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RotatedBox(
+                        quarterTurns: 1,
+                        child: Image.asset(
+                          "images/slide.gif",
+                          width: 70,
+                          height: 70,
+                        )),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const Text(
+                      "밑으로 넘기면서 결과를 확인해보세요!",
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  List<RadarDataSet> showingDataSets() {
+    return rawDataSets().asMap().entries.map((entry) {
+      var index = entry.key;
+      var rawDataSet = entry.value;
+
+      final isSelected = index == selectedDataSetIndex
+          ? true
+          : selectedDataSetIndex == -1
+              ? true
+              : false;
+
+      return RadarDataSet(
+        fillColor: isSelected
+            ? rawDataSet.color.withOpacity(0.6)
+            : rawDataSet.color.withOpacity(0.02),
+        borderColor:
+            isSelected ? rawDataSet.color : rawDataSet.color.withOpacity(0.25),
+        entryRadius: isSelected ? 5 : 2,
+        dataEntries:
+            rawDataSet.values.map((e) => RadarEntry(value: e)).toList(),
+        borderWidth: isSelected ? 5 : 2,
+      );
+    }).toList();
+  }
+
+  List<RawDataSet> rawDataSets() {
+    return [
+      RawDataSet(
+        title: '다이아티어 평균 능력치',
+        color: tier1Color,
+        values: [
+          21, //bmi
+          18, //멀리뛰기
+          24, //앞으로 구부리기
+          29, //악력
+          45, //윗몸 일으키기
+        ],
+      ),
+      RawDataSet(
+        title: '나이대 평균 능력치',
+        color: meanColor,
+        values: [
+          22, //bmi
+          17, //멀리뛰기
+          20, //앞으로 구부리기
+          27, //악력
+          39, //윗몸 일으키기
+        ],
+      ),
+      RawDataSet(
+        title: '나의 능력치',
+        color: myColor,
+        values: [
+          bmi, //bmi
+          longJump / 10, //멀리뛰기 155
+          forwardBending, //앞으로 구부리기 25
+          grip, //악력 28
+          situp, //윗몸 일으키기 39
+        ],
+      ),
+    ];
+  }
+
+  Future getJSONData() async {
+    var url = Uri.parse(
+        "http://localhost:8080/Flutter/fitness/calendar_analysis_select.jsp?uId=$uId&bDate=$bDate");
+    var response = await http.get(url);
+    setState(() {
+      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      //키값
+      List value = dataConvertedJSON['results'];
+      //데이터에 넣기
+      data.addAll(value);
+      rating = data[0]['bRating'];
+      bmi = data[0]['bBmi'];
+      longJump = data[0]['bJump'];
+      forwardBending = data[0]['bBend'];
+      grip = data[0]['bGrip'];
+      situp = data[0]['bSitup'];
+      print(rating);
+      print(bmi);
+      print(longJump);
+      print(forwardBending);
+      print(grip);
+      print(situp);
+    });
+  }
+}
+
+class RawDataSet {
+  final String title;
+  final Color color;
+  final List<double> values;
+
+  RawDataSet({
+    required this.title,
+    required this.color,
+    required this.values,
+  });
+}
+
+// -------------------------------------------------------------------------------------------
+
+class BarChartResult1 extends StatefulWidget {
   final List<Color> availableColors = const [
     Colors.purpleAccent,
     Colors.yellow,
@@ -69,27 +395,26 @@ class BarChartSample1 extends StatefulWidget {
     Colors.redAccent,
   ];
 
-  const BarChartSample1({Key? key}) : super(key: key);
+  const BarChartResult1({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => BarChartSample1State();
+  State<StatefulWidget> createState() => BarChartResult1State();
 }
 
-class BarChartSample1State extends State<BarChartSample1> {
+class BarChartResult1State extends State<BarChartResult1> {
   final Color barBackgroundColor1 = const Color.fromARGB(255, 211, 216, 114);
   final Duration animDuration1 = const Duration(milliseconds: 250);
 
-  late double height;
-  late double weight;
-  late double age;
+  late List data;
+  late String uId;
+  late String bDate;
+
   late double grip;
   late double forwardBending;
   late double longJump;
-  late double fatMass;
   late double situp;
   late double bmi;
-  late String bmi2;
-  late double bmi3;
+  late double fatmass;
   late String rating;
   int touchedIndex1 = -1;
 
@@ -99,30 +424,18 @@ class BarChartSample1State extends State<BarChartSample1> {
   void initState() {
     super.initState();
 
-    height = double.parse(Message2.height);
-    weight = double.parse(Message2.weight);
-    age = double.parse(Message2.age);
-    grip = double.parse(Message2.grip);
-    forwardBending = double.parse(Message2.forwardBending);
-    longJump = double.parse(Message2.longJump);
-    fatMass = double.parse(Message2.fatMass);
-    situp = double.parse(Message2.situp);
-    rating = Message2.ratingResult;
-    bmi = double.parse(Message2.bmi);
-    bmi2 = bmi.toStringAsFixed(1);
-    bmi3 = double.parse(bmi2);
+    uId = Message.uId;
+    bDate = Message4.selectedDay;
+    data = [];
+    getJSONData();
 
-    setState(() {
-      if (rating == "A") {
-        rating = "다이아";
-      } else if (rating == "B") {
-        rating = "골드";
-      } else if (rating == "C") {
-        rating = "실버";
-      } else {
-        rating = "브론즈";
-      }
-    });
+    grip = 0;
+    forwardBending = 0;
+    longJump = 0;
+    situp = 0;
+    bmi = 0;
+    fatmass = 0;
+    rating = "";
   }
 
   @override
@@ -266,11 +579,11 @@ class BarChartSample1State extends State<BarChartSample1> {
   List<BarChartGroupData> showingGroups1() => List.generate(4, (i) {
         switch (i) {
           case 0:
-            return makeGroupData1(0, bmi3, isTouched1: i == touchedIndex1);
+            return makeGroupData1(0, bmi, isTouched1: i == touchedIndex1);
           case 1:
             return makeGroupData1(1, 22, isTouched1: i == touchedIndex1);
           case 2:
-            return makeGroupData1(2, fatMass, isTouched1: i == touchedIndex1);
+            return makeGroupData1(2, fatmass, isTouched1: i == touchedIndex1);
           case 3:
             return makeGroupData1(3, 27, isTouched1: i == touchedIndex1);
           default:
@@ -459,11 +772,36 @@ class BarChartSample1State extends State<BarChartSample1> {
   //     await refreshState1();
   //   }
   // }
+  Future getJSONData() async {
+    var url = Uri.parse(
+        "http://localhost:8080/Flutter/fitness/calendar_analysis_select.jsp?uId=$uId&bDate=$bDate");
+    var response = await http.get(url);
+    setState(() {
+      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      //키값
+      List value = dataConvertedJSON['results'];
+      //데이터에 넣기
+      data.addAll(value);
+      rating = data[0]['bRating'];
+      bmi = data[0]['bBmi'];
+      longJump = data[0]['bJump'];
+      forwardBending = data[0]['bBend'];
+      grip = data[0]['bGrip'];
+      situp = data[0]['bSitup'];
+      fatmass = data[0]['bFat'];
+      print(rating);
+      print(bmi);
+      print(longJump);
+      print(forwardBending);
+      print(grip);
+      print(situp);
+    });
+  }
 }
 
 //------------------------------------------------------------------------------------------
 
-class BarChartSample2 extends StatefulWidget {
+class BarChartResult2 extends StatefulWidget {
   final List<Color> availableColors2 = const [
     Colors.purpleAccent,
     Colors.yellow,
@@ -473,23 +811,23 @@ class BarChartSample2 extends StatefulWidget {
     Colors.redAccent,
   ];
 
-  const BarChartSample2({Key? key}) : super(key: key);
+  const BarChartResult2({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => BarChartSample2State();
+  State<StatefulWidget> createState() => BarChartResult2State();
 }
 
-class BarChartSample2State extends State<BarChartSample2> {
+class BarChartResult2State extends State<BarChartResult2> {
   final Color barBackgroundColor2 = Color.fromARGB(255, 184, 114, 216);
   final Duration animDuration2 = const Duration(milliseconds: 250);
 
-  late double height;
-  late double weight;
-  late double age;
+  late List data;
+  late String uId;
+  late String bDate;
+
   late double grip;
   late double forwardBending;
   late double longJump;
-  late double fatMass;
   late double situp;
   late double bmi;
   late String rating;
@@ -501,28 +839,17 @@ class BarChartSample2State extends State<BarChartSample2> {
   void initState() {
     super.initState();
 
-    height = double.parse(Message2.height);
-    weight = double.parse(Message2.weight);
-    age = double.parse(Message2.age);
-    grip = double.parse(Message2.grip);
-    forwardBending = double.parse(Message2.forwardBending);
-    longJump = double.parse(Message2.longJump);
-    fatMass = double.parse(Message2.fatMass);
-    situp = double.parse(Message2.situp);
-    rating = Message2.ratingResult;
-    bmi = double.parse(Message2.bmi);
+    uId = Message.uId;
+    bDate = Message4.selectedDay;
+    data = [];
+    getJSONData();
 
-    setState(() {
-      if (rating == "A") {
-        rating = "다이아";
-      } else if (rating == "B") {
-        rating = "골드";
-      } else if (rating == "C") {
-        rating = "실버";
-      } else {
-        rating = "브론즈";
-      }
-    });
+    grip = 0;
+    forwardBending = 0;
+    longJump = 0;
+    situp = 0;
+    bmi = 0;
+    rating = "";
   }
 
   @override
@@ -848,11 +1175,35 @@ class BarChartSample2State extends State<BarChartSample2> {
   //     await refreshState2();
   //   }
   // }
+  Future getJSONData() async {
+    var url = Uri.parse(
+        "http://localhost:8080/Flutter/fitness/calendar_analysis_select.jsp?uId=$uId&bDate=$bDate");
+    var response = await http.get(url);
+    setState(() {
+      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      //키값
+      List value = dataConvertedJSON['results'];
+      //데이터에 넣기
+      data.addAll(value);
+      rating = data[0]['bRating'];
+      bmi = data[0]['bBmi'];
+      longJump = data[0]['bJump'];
+      forwardBending = data[0]['bBend'];
+      grip = data[0]['bGrip'];
+      situp = data[0]['bSitup'];
+      print(rating);
+      print(bmi);
+      print(longJump);
+      print(forwardBending);
+      print(grip);
+      print(situp);
+    });
+  }
 }
 
 //------------------------------------------------------------------------------------------
 
-class BarChartSample3 extends StatefulWidget {
+class BarChartResult3 extends StatefulWidget {
   final List<Color> availableColors = const [
     Colors.purpleAccent,
     Colors.yellow,
@@ -862,23 +1213,23 @@ class BarChartSample3 extends StatefulWidget {
     Colors.redAccent,
   ];
 
-  const BarChartSample3({Key? key}) : super(key: key);
+  const BarChartResult3({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => BarChartSample3State();
+  State<StatefulWidget> createState() => BarChartResult3State();
 }
 
-class BarChartSample3State extends State<BarChartSample3> {
+class BarChartResult3State extends State<BarChartResult3> {
   final Color barBackgroundColor3 = Color.fromARGB(255, 216, 114, 165);
   final Duration animDuration3 = const Duration(milliseconds: 250);
 
-  late double height;
-  late double weight;
-  late double age;
+  late List data;
+  late String uId;
+  late String bDate;
+
   late double grip;
   late double forwardBending;
   late double longJump;
-  late double fatMass;
   late double situp;
   late double bmi;
   late String rating;
@@ -890,28 +1241,17 @@ class BarChartSample3State extends State<BarChartSample3> {
   void initState() {
     super.initState();
 
-    height = double.parse(Message2.height);
-    weight = double.parse(Message2.weight);
-    age = double.parse(Message2.age);
-    grip = double.parse(Message2.grip);
-    forwardBending = double.parse(Message2.forwardBending);
-    longJump = double.parse(Message2.longJump);
-    fatMass = double.parse(Message2.fatMass);
-    situp = double.parse(Message2.situp);
-    rating = Message2.ratingResult;
-    bmi = double.parse(Message2.bmi);
+    uId = Message.uId;
+    bDate = Message4.selectedDay;
+    data = [];
+    getJSONData();
 
-    setState(() {
-      if (rating == "A") {
-        rating = "다이아";
-      } else if (rating == "B") {
-        rating = "골드";
-      } else if (rating == "C") {
-        rating = "실버";
-      } else {
-        rating = "브론즈";
-      }
-    });
+    grip = 0;
+    forwardBending = 0;
+    longJump = 0;
+    situp = 0;
+    bmi = 0;
+    rating = "";
   }
 
   @override
@@ -1209,15 +1549,15 @@ class BarChartSample3State extends State<BarChartSample3> {
       barGroups: List.generate(3, (i) {
         switch (i) {
           case 0:
-            return makeGroupData3(0, Random().nextInt(20).toDouble() + 6,
+            return makeGroupData3(0, Random().nextInt(170).toDouble() + 6,
                 barColor: widget.availableColors[
                     Random().nextInt(widget.availableColors.length)]);
           case 1:
-            return makeGroupData3(1, Random().nextInt(20).toDouble() + 6,
+            return makeGroupData3(1, Random().nextInt(170).toDouble() + 6,
                 barColor: widget.availableColors[
                     Random().nextInt(widget.availableColors.length)]);
           case 2:
-            return makeGroupData3(2, Random().nextInt(20).toDouble() + 6,
+            return makeGroupData3(2, Random().nextInt(170).toDouble() + 6,
                 barColor: widget.availableColors[
                     Random().nextInt(widget.availableColors.length)]);
           default:
@@ -1236,11 +1576,35 @@ class BarChartSample3State extends State<BarChartSample3> {
   //     await refreshState();
   //   }
   // }
+  Future getJSONData() async {
+    var url = Uri.parse(
+        "http://localhost:8080/Flutter/fitness/calendar_analysis_select.jsp?uId=$uId&bDate=$bDate");
+    var response = await http.get(url);
+    setState(() {
+      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      //키값
+      List value = dataConvertedJSON['results'];
+      //데이터에 넣기
+      data.addAll(value);
+      rating = data[0]['bRating'];
+      bmi = data[0]['bBmi'];
+      longJump = data[0]['bJump'];
+      forwardBending = data[0]['bBend'];
+      grip = data[0]['bGrip'];
+      situp = data[0]['bSitup'];
+      print(rating);
+      print(bmi);
+      print(longJump);
+      print(forwardBending);
+      print(grip);
+      print(situp);
+    });
+  }
 }
 
 // ---------------------------------------------------------------------------------------------------
 
-class BarChartSample4 extends StatefulWidget {
+class BarChartResult4 extends StatefulWidget {
   final List<Color> availableColors = const [
     Colors.purpleAccent,
     Colors.yellow,
@@ -1250,23 +1614,23 @@ class BarChartSample4 extends StatefulWidget {
     Colors.redAccent,
   ];
 
-  const BarChartSample4({Key? key}) : super(key: key);
+  const BarChartResult4({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => BarChartSample4State();
+  State<StatefulWidget> createState() => BarChartResult4State();
 }
 
-class BarChartSample4State extends State<BarChartSample4> {
+class BarChartResult4State extends State<BarChartResult4> {
   final Color barBackgroundColor4 = const Color(0xff72d8bf);
   final Duration animDuration4 = const Duration(milliseconds: 250);
 
-  late double height;
-  late double weight;
-  late double age;
+  late List data;
+  late String uId;
+  late String bDate;
+
   late double grip;
   late double forwardBending;
   late double longJump;
-  late double fatMass;
   late double situp;
   late double bmi;
   late String rating;
@@ -1278,28 +1642,17 @@ class BarChartSample4State extends State<BarChartSample4> {
   void initState() {
     super.initState();
 
-    height = double.parse(Message2.height);
-    weight = double.parse(Message2.weight);
-    age = double.parse(Message2.age);
-    grip = double.parse(Message2.grip);
-    forwardBending = double.parse(Message2.forwardBending);
-    longJump = double.parse(Message2.longJump);
-    fatMass = double.parse(Message2.fatMass);
-    situp = double.parse(Message2.situp);
-    rating = Message2.ratingResult;
-    bmi = double.parse(Message2.bmi);
+    uId = Message.uId;
+    bDate = Message4.selectedDay;
+    data = [];
+    getJSONData();
 
-    setState(() {
-      if (rating == "A") {
-        rating = "다이아";
-      } else if (rating == "B") {
-        rating = "골드";
-      } else if (rating == "C") {
-        rating = "실버";
-      } else {
-        rating = "브론즈";
-      }
-    });
+    grip = 0;
+    forwardBending = 0;
+    longJump = 0;
+    situp = 0;
+    bmi = 0;
+    rating = "";
   }
 
   @override
@@ -1624,11 +1977,35 @@ class BarChartSample4State extends State<BarChartSample4> {
   //     await refreshState();
   //   }
   // }
+  Future getJSONData() async {
+    var url = Uri.parse(
+        "http://localhost:8080/Flutter/fitness/calendar_analysis_select.jsp?uId=$uId&bDate=$bDate");
+    var response = await http.get(url);
+    setState(() {
+      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      //키값
+      List value = dataConvertedJSON['results'];
+      //데이터에 넣기
+      data.addAll(value);
+      rating = data[0]['bRating'];
+      bmi = data[0]['bBmi'];
+      longJump = data[0]['bJump'];
+      forwardBending = data[0]['bBend'];
+      grip = data[0]['bGrip'];
+      situp = data[0]['bSitup'];
+      print(rating);
+      print(bmi);
+      print(longJump);
+      print(forwardBending);
+      print(grip);
+      print(situp);
+    });
+  }
 }
 
 // ---------------------------------------------------------------------------------------------------
 
-class BarChartSample5 extends StatefulWidget {
+class BarChartResult5 extends StatefulWidget {
   final List<Color> availableColors = const [
     Colors.purpleAccent,
     Colors.yellow,
@@ -1638,23 +2015,23 @@ class BarChartSample5 extends StatefulWidget {
     Colors.redAccent,
   ];
 
-  const BarChartSample5({Key? key}) : super(key: key);
+  const BarChartResult5({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => BarChartSample5State();
+  State<StatefulWidget> createState() => BarChartResult5State();
 }
 
-class BarChartSample5State extends State<BarChartSample5> {
+class BarChartResult5State extends State<BarChartResult5> {
   final Color barBackgroundColor5 = Color.fromARGB(255, 114, 209, 216);
   final Duration animDuration5 = const Duration(milliseconds: 250);
 
-  late double height;
-  late double weight;
-  late double age;
+  late List data;
+  late String uId;
+  late String bDate;
+
   late double grip;
   late double forwardBending;
   late double longJump;
-  late double fatMass;
   late double situp;
   late double bmi;
   late String rating;
@@ -1666,28 +2043,17 @@ class BarChartSample5State extends State<BarChartSample5> {
   void initState() {
     super.initState();
 
-    height = double.parse(Message2.height);
-    weight = double.parse(Message2.weight);
-    age = double.parse(Message2.age);
-    grip = double.parse(Message2.grip);
-    forwardBending = double.parse(Message2.forwardBending);
-    longJump = double.parse(Message2.longJump);
-    fatMass = double.parse(Message2.fatMass);
-    situp = double.parse(Message2.situp);
-    rating = Message2.ratingResult;
-    bmi = double.parse(Message2.bmi);
+    uId = Message.uId;
+    bDate = Message4.selectedDay;
+    data = [];
+    getJSONData();
 
-    setState(() {
-      if (rating == "A") {
-        rating = "다이아";
-      } else if (rating == "B") {
-        rating = "골드";
-      } else if (rating == "C") {
-        rating = "실버";
-      } else {
-        rating = "브론즈";
-      }
-    });
+    grip = 0;
+    forwardBending = 0;
+    longJump = 0;
+    situp = 0;
+    bmi = 0;
+    rating = "";
   }
 
   @override
@@ -1788,11 +2154,6 @@ class BarChartSample5State extends State<BarChartSample5> {
           ),
           const SizedBox(
             height: 50,
-          ),
-          Image.asset(
-            "images/arrow.gif",
-            width: 70,
-            height: 70,
           )
         ]),
       ),
@@ -2012,318 +2373,7 @@ class BarChartSample5State extends State<BarChartSample5> {
   //     await refreshState();
   //   }
   // }
-}
-
-// ----------------------------------------------------------------------------------------------------
-
-class AnalysisResult extends StatefulWidget {
-  const AnalysisResult({Key? key}) : super(key: key);
-
-  @override
-  State<AnalysisResult> createState() => _AnalysisResultState();
-}
-
-class _AnalysisResultState extends State<AnalysisResult> {
-  int selectedDataSetIndex = -1;
-  
-  late String uId;
-  late String bDate;
-  late double height;
-  late double weight;
-  late int age;
-  late double grip;
-  late double forwardBending;
-  late double longJump;
-  late double fatMass;
-  late int situp;
-  late double bmi;
-  late String rating;
-  late String result;
-  late List data;
-
-  @override
-  void initState() {
-    super.initState();
-
-    uId = Message.uId;
-    bDate = Message4.selectedDay;
-    print(bDate);
-    height = 0;
-    weight = 0;
-    age = 0;
-    grip = 0;
-    forwardBending = 0;
-    longJump = 0;
-    fatMass = 0;
-    situp = 0;
-    bmi = 0;
-    rating = "";
-    data = [];
-    getJSONData();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text("스마트 체력 테스트 분석 결과"),
-        backgroundColor: Color.fromARGB(255, 92, 209, 229),
-        elevation: 0,
-        toolbarHeight: 75,
-      ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Center(
-                  child: Column(
-                    children: [
-                      const Text(
-                        "다이아 / 골드 / 실버 / 브론즈\n\n 총 4개의 티어가 존재합니다.",
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        "당신의 티어는 '$rating' 티어입니다.",
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                    ],
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedDataSetIndex = -1;
-                    });
-                  },
-                  child: Text(
-                    'Pentagon status'.toUpperCase(),
-                    style: const TextStyle(
-                      color: titleColor,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: rawDataSets()
-                      .asMap()
-                      .map((index, value) {
-                        final isSelected = index == selectedDataSetIndex;
-                        return MapEntry(
-                          index,
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedDataSetIndex = index;
-                              });
-                            },
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 300),
-                              margin: const EdgeInsets.symmetric(vertical: 2),
-                              height: 30,
-                              decoration: BoxDecoration(
-                                color: isSelected
-                                    ? gridColor.withOpacity(0.5)
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(46),
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 4.0, horizontal: 6),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  AnimatedContainer(
-                                    duration: const Duration(milliseconds: 400),
-                                    curve: Curves.easeInToLinear,
-                                    padding: EdgeInsets.all(isSelected ? 8 : 6),
-                                    decoration: BoxDecoration(
-                                      color: value.color,
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  AnimatedDefaultTextStyle(
-                                    duration: const Duration(milliseconds: 300),
-                                    curve: Curves.easeInToLinear,
-                                    style: TextStyle(
-                                      color:
-                                          isSelected ? value.color : gridColor,
-                                    ),
-                                    child: Text(value.title),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      })
-                      .values
-                      .toList(),
-                ),
-                AspectRatio(
-                  aspectRatio: 1.3,
-                  child: RadarChart(
-                    RadarChartData(
-                      radarTouchData: RadarTouchData(
-                          touchCallback: (FlTouchEvent event, response) {
-                        if (!event.isInterestedForInteractions) {
-                          setState(() {
-                            selectedDataSetIndex = -1;
-                          });
-                          return;
-                        }
-                        setState(() {
-                          selectedDataSetIndex =
-                              response?.touchedSpot?.touchedDataSetIndex ?? -1;
-                        });
-                      }),
-                      dataSets: showingDataSets(),
-                      radarBackgroundColor: Colors.white,
-                      borderData: FlBorderData(show: false),
-                      radarBorderData: const BorderSide(color: Colors.white24),
-                      titlePositionPercentageOffset: 0.18,
-                      titleTextStyle:
-                          const TextStyle(color: titleColor, fontSize: 17),
-                      getTitle: (index) {
-                        switch (index) {
-                          case 0:
-                            return '신체조성';
-                          case 4:
-                            return '근지구력';
-                          case 3:
-                            return '근력';
-                          case 2:
-                            return '유연성';
-                          case 1:
-                            return '순발력';
-                          default:
-                            return '';
-                        }
-                      },
-                      tickCount: 1,
-                      ticksTextStyle: const TextStyle(
-                          color: Colors.transparent, fontSize: 15),
-                      tickBorderData: const BorderSide(color: Colors.white),
-                      gridBorderData:
-                          const BorderSide(color: gridColor, width: 2),
-                    ),
-                    swapAnimationDuration: const Duration(milliseconds: 400),
-                  ),
-                ),
-                //---------------------------------------------------------------------------
-                const SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RotatedBox(
-                        quarterTurns: 1,
-                        child: Image.asset(
-                          "images/slide.gif",
-                          width: 70,
-                          height: 70,
-                        )),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    const Text(
-                      "밑으로 넘기면서 결과를 확인해보세요!",
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  List<RadarDataSet> showingDataSets() {
-    return rawDataSets().asMap().entries.map((entry) {
-      var index = entry.key;
-      var rawDataSet = entry.value;
-
-      final isSelected = index == selectedDataSetIndex
-          ? true
-          : selectedDataSetIndex == -1
-              ? true
-              : false;
-
-      return RadarDataSet(
-        fillColor: isSelected
-            ? rawDataSet.color.withOpacity(0.6)
-            : rawDataSet.color.withOpacity(0.02),
-        borderColor:
-            isSelected ? rawDataSet.color : rawDataSet.color.withOpacity(0.25),
-        entryRadius: isSelected ? 5 : 2,
-        dataEntries:
-            rawDataSet.values.map((e) => RadarEntry(value: e)).toList(),
-        borderWidth: isSelected ? 5 : 2,
-      );
-    }).toList();
-  }
-
-  List<RawDataSet> rawDataSets() {
-    return [
-      RawDataSet(
-        title: '다이아티어 평균 능력치',
-        color: tier1Color,
-        values: [
-          21, //bmi
-          18, //멀리뛰기
-          24, //앞으로 구부리기
-          29, //악력
-          45, //윗몸 일으키기
-        ],
-      ),
-      RawDataSet(
-        title: '나이대 평균 능력치',
-        color: meanColor,
-        values: [
-          22, //bmi
-          17, //멀리뛰기
-          20, //앞으로 구부리기
-          27, //악력
-          39, //윗몸 일으키기
-        ],
-      ),
-      RawDataSet(
-        title: '나의 능력치',
-        color: myColor,
-        values: [
-          bmi, //bmi
-          longJump / 10, //멀리뛰기 155
-          forwardBending, //앞으로 구부리기 25
-          grip, //악력 28
-          //윗몸 일으키기 39
-        ],
-      ),
-    ];
-  }
-// function
   Future getJSONData() async {
-    data.clear();
     var url = Uri.parse(
         "http://localhost:8080/Flutter/fitness/calendar_analysis_select.jsp?uId=$uId&bDate=$bDate");
     var response = await http.get(url);
@@ -2334,65 +2384,17 @@ class _AnalysisResultState extends State<AnalysisResult> {
       //데이터에 넣기
       data.addAll(value);
       rating = data[0]['bRating'];
-      print(rating);
       bmi = data[0]['bBmi'];
       longJump = data[0]['bJump'];
       forwardBending = data[0]['bBend'];
       grip = data[0]['bGrip'];
       situp = data[0]['bSitup'];
+      print(rating);
+      print(bmi);
+      print(longJump);
+      print(forwardBending);
+      print(grip);
+      print(situp);
     });
   }
-
-
-  _showDialog(BuildContext ctx) {
-    showDialog(
-        context: context,
-        builder: (BuildContext ctx) {
-          return AlertDialog(
-            title: const Text('분석결과 입력'),
-            content: const Text('입력이 완료되었습니다'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pushNamed(context, '/Calender');
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        });
-  }
-
-  errorSnackBar(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('사용자 정보 입력에 문제가 발생하였습니다.'),
-        duration: Duration(seconds: 2),
-        backgroundColor: Colors.red,
-      ),
-    );
-  }
-
-
-
 }
-
-class RawDataSet {
-  final String title;
-  final Color color;
-  final List<double> values;
-
-  RawDataSet({
-    required this.title,
-    required this.color,
-    required this.values,
-  });
-}
-
-// -------------------------------------------------------------------------------------------
-
-
-
-
-
