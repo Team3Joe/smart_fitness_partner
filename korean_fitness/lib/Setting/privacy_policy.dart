@@ -12,7 +12,22 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('이용약관 & 개인정보처리방침'),
+        title: Text(
+          '이용약관 & 개인정보처리방침',
+          style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 21,
+                shadows: [
+                  Shadow(
+                    color: Colors.black.withOpacity(0.5),
+                    offset: const Offset(3, 3),
+                    blurRadius:10
+                  )
+                ]
+              ),
+          ),
+          backgroundColor: Color.fromARGB(198, 58, 34, 131),
+        toolbarHeight: 75,
       ),
       body: Padding(
         padding: const EdgeInsets.all(25.0),

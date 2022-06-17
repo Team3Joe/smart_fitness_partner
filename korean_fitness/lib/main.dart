@@ -82,7 +82,7 @@ class MyApp extends StatelessWidget {
             '/Mypage': (context) => const MyPage(),
 
             // Program
-            '/Muscular_strength': (context) => const MuscularStrength(),
+            //'/Muscular_strength': (context) => const MuscularStrength(),
             '/Cardiovascular_endurance': (context) =>
                 const CardiovascularEndurance(),
             '/Flexibility': (context) => const Flexibility(),
