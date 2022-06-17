@@ -24,17 +24,10 @@ class _AnalysisState extends State<Analysis> {
     getData();
     super.initState();
   }
-  GoogleSignIn _googleSignIn = GoogleSignIn(
-    // Optional clientId
-    // clientId: '479882132969-9i9aqik3jfjd7qhci1nqf0bm2g71rm1u.apps.googleusercontent.com',
-    scopes: <String>[
-      'email',
-      'https://www.googleapis.com/auth/contacts.readonly',
-    ],
-  );
 
 
-  Future<void> _handleSignOut() => _googleSignIn.disconnect();
+
+
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
   // Optional clientId
@@ -57,7 +50,7 @@ Future<void> _handleSignIn(BuildContext context) async {
       
   }
 
-  Future<void> _handleSignOut() => _googleSignIn.disconnect();
+Future<void> _handleSignOut() => _googleSignIn.disconnect();
 
  Future getData() async{
   final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
