@@ -283,37 +283,48 @@ class _MainPageState extends State<MainPage>
           TabBarView(
             controller : controller,
             // ignore: prefer_const_literals_to_create_immutables
-            children: [const Analysis(),MuscularStrength(listM: exerciseListm, listC: exerciseListc, listF:exerciseListf, listS:exerciseLists),const Calender()],
+            children: [const Analysis(), MuscularStrength(listM: exerciseListm, listC: exerciseListc, listF:exerciseListf, listS:exerciseLists),const Calender()],
           ),
         ),
       bottomNavigationBar: SizedBox(
-        height: 100,
+        height: 80,
         child: TabBar(
+          indicator: const BoxDecoration(
+            gradient: LinearGradient(  //배경 그라데이션 적용
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    Color.fromARGB(100, 114, 164, 250),
+                    Color.fromARGB(100, 218, 127, 241),
+                  ],
+                ),
+          ),
           controller: controller,
-          labelColor: Colors.blueAccent,
+          labelColor: Colors.black,
           indicatorColor: Colors.purpleAccent,
-          tabs: const [
+          tabs:  [
             Tab(
-              icon: Icon(
-                Icons.analytics,
-                color: Colors.black,
-              ),
+              icon: Image.asset(
+               "images/tabbar_analysis.png",
+               width: 35,
+               height: 30,),
               text: "분석",
-            ),
-            Tab(
-              icon: Icon(
-                Icons.fitness_center,
-                color: Colors.black,
               ),
+            Tab(
+              icon: Image.asset(
+               "images/tabbar_h.png",
+               width: 35,
+               height: 35,),
               text: '체력향상',
             ),
             Tab(
-              icon: Icon(
-                Icons.calendar_month_outlined,
-                color: Colors.black,
-              ),
+              icon: Image.asset(
+               "images/tabbar_c3.png",
+               width: 35,
+               height: 30,),
               text: '캘린더',
             ),
+            
           ],
         ),
       ),
