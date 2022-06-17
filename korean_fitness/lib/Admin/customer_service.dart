@@ -44,7 +44,7 @@ class _AdminCustomerServiceState extends State<AdminCustomerService> {
             SingleChildScrollView(
               child: SizedBox(
                 // 키보드 올라오는 공간 고려, 반응형 사이즈박스
-                height: 650 - MediaQuery.of(context).viewInsets.bottom,
+                height: 550 - MediaQuery.of(context).viewInsets.bottom,
                 child: ListView.builder(
                   shrinkWrap: true,
                   itemBuilder: (context, index) {

@@ -440,8 +440,8 @@ class _LogInState extends State<LogIn> {
                       Message.uName = data[0]['uName'];
                       Message.uBirth = data[0]['uBirth'];
                       Message.uEmail = data[0]['uEmail'];
-
-                      Navigator.popAndPushNamed(context, '/Customer_list');
+                      Navigator.popUntil(context, (route) => false); // 뒤로가기 없애기
+                      Navigator.pushNamed(context, '/Customer_list');
                     },
                     child: const Text('OK'))
               ],
@@ -471,7 +471,7 @@ class _LogInState extends State<LogIn> {
                           'id', idController.text.trim());
                       sharedPreferences.setString('name', data[0]['uName']);
                       sharedPreferences.setString('email', data[0]['uEmail']);
-                      Get.to(SplashPage());
+                      Get.to(const SplashPage());
                       //Navigator.popAndPushNamed(context, '/Mainpage');
                     },
                     child: const Text('OK'))

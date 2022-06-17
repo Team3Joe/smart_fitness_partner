@@ -18,7 +18,6 @@ import 'package:korean_fitness/Main/mainpage.dart';
 import 'package:korean_fitness/Main/splashscreen.dart';
 import 'package:korean_fitness/Program/cardiovascular_endurance.dart';
 import 'package:korean_fitness/Program/flexibility.dart';
-import 'package:korean_fitness/Program/muscular_strength.dart';
 import 'package:korean_fitness/Program/speed_strength.dart';
 import 'package:korean_fitness/Setting/customer_service.dart';
 import 'package:korean_fitness/Setting/help.dart';
@@ -74,7 +73,7 @@ class MyApp extends StatelessWidget {
 
             // Main
             '/Mainpage': (context) => const MainPage(),
-            '/loading': (context) => SplashPage(),
+            '/loading': (context) => const SplashPage(),
 
             // My page
             '/Mypage': (context) => const MyPage(),
