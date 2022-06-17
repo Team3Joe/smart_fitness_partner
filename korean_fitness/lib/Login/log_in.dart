@@ -49,7 +49,7 @@ class _LogInState extends State<LogIn> {
                     if(user != null){
                    // print(user.displayName);
                    // print(user.email);
-                    final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                  final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
                   sharedPreferences.setString('id', user.email.toString() );
                   Get.to(SplashPage());
                     }
@@ -352,7 +352,7 @@ class _LogInState extends State<LogIn> {
                 GestureDetector(
                   onTap: () {
                     _handleSignIn(context); //Google-Log-In
-                    // _handleSignOut();//Google-Log-Out
+                    //  _handleSignOut();//Google-Log-Out
                 
 
                   },
