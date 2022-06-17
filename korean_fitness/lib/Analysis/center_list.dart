@@ -70,9 +70,10 @@ class _CenterListState extends State<CenterList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(227, 249, 233, 255),
       appBar: AppBar(
         title: Text(
-          '$nowTap',
+          nowTap,
           style: TextStyle(fontWeight: FontWeight.w600, shadows: [
             Shadow(
                 color: Colors.black.withOpacity(0.3),
@@ -80,7 +81,7 @@ class _CenterListState extends State<CenterList> {
                 blurRadius: 10)
           ]),
         ),
-        backgroundColor: const Color.fromARGB(230, 73, 39, 174),
+        backgroundColor: const Color.fromARGB(230, 87, 51, 194),
         toolbarHeight: 75,
         elevation: 0,
       ),

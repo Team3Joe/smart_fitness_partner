@@ -46,6 +46,10 @@ dependencies:
   
   table_calendar: ^3.0.6 # 캘린더 구현
   intl: ^0.17.0 # 캘린더 datetime 세팅
+  
+  shared_preferences: ^2.0.15
+  get: ^4.6.5
+  google_sign_in: ^5.3.3
 
 dev_dependencies:
   flutter_test:

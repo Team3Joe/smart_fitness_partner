@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:korean_fitness/Login/log_in.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashPage extends StatefulWidget {
   SplashPage({Key? key}) : super(key: key);
@@ -10,6 +14,28 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  String? finalid;
+
+@override
+  void initState() {
+    getData().whenComplete(() async{
+     Timer(Duration(seconds: 2),() => Get.to(finalid == "" ? Navigator.pushNamed(context,'/Log_in') : Navigator.pushNamed(context, '/Mainpage')));
+    });
+    super.initState();
+  }
+
+Future getData() async{
+  final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  var obitainedid = sharedPreferences.getString('id');
+  setState(() {
+    if(obitainedid == null){
+      finalid = "";
+    }else{
+    finalid = obitainedid;}
+  });
+  print("로딩 : $finalid");
+}
+
   @override
   Widget build(BuildContext context) {
     return EasySplashScreen(
@@ -36,10 +62,9 @@ class _SplashPageState extends State<SplashPage> {
           fontWeight: FontWeight.bold,
         ),
       ),
-      navigator: const LogIn(),
-      durationInSeconds: 4,
+      
       loaderColor: Colors.black,
-      logoSize: 1,
+      logoSize: 0,
       loadingTextPadding: EdgeInsets.fromLTRB(20, 20, 20, 100),
     );
   }

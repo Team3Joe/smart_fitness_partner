@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:korean_fitness/Admin/customer_list.dart';
-import 'package:korean_fitness/Admin/customer_service.dart';
 import 'package:korean_fitness/Analysis/analysis.dart';
 import 'package:korean_fitness/Analysis/analysis_input.dart';
 import 'package:korean_fitness/Analysis/analysis_result.dart';
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: themeNotifier,
       builder: (context, ThemeMode currentMode, __) {
-        return MaterialApp(
+        return GetMaterialApp(
           // debug banner
           debugShowCheckedModeBanner: false,
           theme: ThemeData(primarySwatch: Colors.deepPurple),
