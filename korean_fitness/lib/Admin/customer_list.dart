@@ -131,9 +131,9 @@ class _CustomerListState extends State<CustomerList> {
                         width: 20,
                       ),
                       SizedBox(
-                        width: 50,
+                        width: 175,
                         child: Text(
-                          'ID',
+                          'ID/Email',
                           style: TextStyle(
                             fontSize: 20,
                           ),
@@ -143,9 +143,9 @@ class _CustomerListState extends State<CustomerList> {
                         width: 15,
                       ),
                       SizedBox(
-                        width: 200,
+                        width: 75,
                         child: Text(
-                          '개인정보',
+                          '이름',
                           style: TextStyle(
                             fontSize: 20,
                           ),
@@ -189,6 +189,7 @@ class _CustomerListState extends State<CustomerList> {
                                       child: Row(
                                         children: [
                                           SizedBox(
+                                            height: 50,
                                             child: Card(
                                               child: Row(
                                                 children: [
@@ -196,7 +197,7 @@ class _CustomerListState extends State<CustomerList> {
                                                     width: 15,
                                                   ),
                                                   SizedBox(
-                                                    width: 50,
+                                                    width: 175,
                                                     child: Text(
                                                       data[index]['uId'],
                                                       style: const TextStyle(
@@ -207,42 +208,21 @@ class _CustomerListState extends State<CustomerList> {
                                                   const SizedBox(
                                                     width: 15,
                                                   ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      SizedBox(
-                                                        width: 150,
-                                                        child: Text(
-                                                          data[index]['uName'],
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 20,
-                                                          ),
-                                                        ),
+                                                  SizedBox(
+                                                    width: 75,
+                                                    child: Text(
+                                                      data[index]['uName'],
+                                                      style: const TextStyle(
+                                                        fontSize: 20,
                                                       ),
-                                                      const SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 200,
-                                                        child: Text(
-                                                          data[index]['uEmail'],
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 20,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
+                                                    ),
                                                   ),
                                                 ],
                                               ),
                                             ),
                                           ),
                                           SizedBox(
-                                            height: 50,
+                                            height: 40,
                                             child: ElevatedButton(
                                               style: ButtonStyle(
                                                 backgroundColor:
@@ -256,7 +236,7 @@ class _CustomerListState extends State<CustomerList> {
                                               child: const Text(
                                                 '탈퇴',
                                                 style: TextStyle(
-                                                  fontSize: 20,
+                                                  fontSize: 15,
                                                 ),
                                               ),
                                             ),
@@ -290,9 +270,9 @@ class _CustomerListState extends State<CustomerList> {
                         width: 20,
                       ),
                       SizedBox(
-                        width: 50,
+                        width: 175,
                         child: Text(
-                          'ID',
+                          'ID/Email',
                           style: TextStyle(
                             fontSize: 20,
                           ),
@@ -302,9 +282,9 @@ class _CustomerListState extends State<CustomerList> {
                         width: 15,
                       ),
                       SizedBox(
-                        width: 200,
+                        width: 75,
                         child: Text(
-                          '개인정보',
+                          '이름',
                           style: TextStyle(
                             fontSize: 20,
                           ),
@@ -347,6 +327,7 @@ class _CustomerListState extends State<CustomerList> {
                                       child: Row(
                                         children: [
                                           SizedBox(
+                                            height: 50,
                                             child: Card(
                                               child: Row(
                                                 children: [
@@ -354,7 +335,7 @@ class _CustomerListState extends State<CustomerList> {
                                                     width: 15,
                                                   ),
                                                   SizedBox(
-                                                    width: 50,
+                                                    width: 175,
                                                     child: Text(
                                                       data[index]['uId'],
                                                       style: const TextStyle(
@@ -365,42 +346,21 @@ class _CustomerListState extends State<CustomerList> {
                                                   const SizedBox(
                                                     width: 15,
                                                   ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      SizedBox(
-                                                        width: 150,
-                                                        child: Text(
-                                                          data[index]['uName'],
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 20,
-                                                          ),
-                                                        ),
+                                                  SizedBox(
+                                                    width: 75,
+                                                    child: Text(
+                                                      data[index]['uName'],
+                                                      style: const TextStyle(
+                                                        fontSize: 20,
                                                       ),
-                                                      const SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 200,
-                                                        child: Text(
-                                                          data[index]['uEmail'],
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 20,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
+                                                    ),
                                                   ),
                                                 ],
                                               ),
                                             ),
                                           ),
                                           SizedBox(
-                                            height: 50,
+                                            height: 40,
                                             child: ElevatedButton(
                                               style: ButtonStyle(
                                                 backgroundColor:
@@ -414,7 +374,7 @@ class _CustomerListState extends State<CustomerList> {
                                               child: const Text(
                                                 '탈퇴',
                                                 style: TextStyle(
-                                                  fontSize: 20,
+                                                  fontSize: 15,
                                                 ),
                                               ),
                                             ),
