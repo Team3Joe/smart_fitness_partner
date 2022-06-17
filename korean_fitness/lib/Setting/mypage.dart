@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:korean_fitness/message.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({Key? key}) : super(key: key);
@@ -38,6 +39,7 @@ class _MyPageState extends State<MyPage> {
     uBirthController = TextEditingController();
     uEmailController = TextEditingController();
 
+    uId = Message.uId;
     getJSONData();
   }
 
@@ -322,7 +324,7 @@ class _MyPageState extends State<MyPage> {
   Future getJSONData() async {
     data.clear();
     var url = Uri.parse(
-        "http://localhost:8080/Flutter/fitness/mypage_select.jsp?uId=asdf");
+        "http://localhost:8080/Flutter/fitness/mypage_select.jsp?uId=$uId");
     var response = await http.get(url);
     setState(() {
       var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));

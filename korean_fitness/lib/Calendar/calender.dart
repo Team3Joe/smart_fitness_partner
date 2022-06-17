@@ -21,6 +21,7 @@ class _CalenderState extends State<Calender> {
   late List allDatedata;
   late List data;
   late List analysisData;
+  late List allAnalysisData;
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
@@ -45,6 +46,7 @@ class _CalenderState extends State<Calender> {
     data = [];
     allDatedata = [];
     analysisData = [];
+    allAnalysisData = [];
     cDate = DateTime.now().toString().substring(0, 10);
     cCode = '';
     cTitle = '';
@@ -56,6 +58,7 @@ class _CalenderState extends State<Calender> {
     cCardiovascularEndurance = '';
     uId = Message.uId;
     getJSONData();
+    getAnalysisData();
   }
 
   @override
@@ -98,11 +101,21 @@ class _CalenderState extends State<Calender> {
 
               eventLoader: (day) {
                 List dot = [];
+
                 for (int i = 0; i < allDatedata.length; i++) {
-                  if (allDatedata.isEmpty) {
-                  } else if (day.toString().substring(0, 10) ==
-                      allDatedata[i]['cDate']) {
-                    dot.add(true);
+                  if (allDatedata.isNotEmpty) {
+                    if (day.toString().substring(0, 10) ==
+                        allDatedata[i]['cDate']) {
+                      dot.add(true);
+                    }
+                  }
+                }
+                for (int a = 0; a < allAnalysisData.length; a++) {
+                  if (allAnalysisData.isNotEmpty) {
+                    if (day.toString().substring(0, 10) ==
+                        allAnalysisData[a]['bDate']) {
+                      dot.add(true);
+                    }
                   }
                 }
                 return dot;
@@ -156,8 +169,8 @@ class _CalenderState extends State<Calender> {
                                     .withOpacity(0.5), //color of shadow
                                 spreadRadius: 1, //spread radius
                                 blurRadius: 1, // blur radius
-                                offset:
-                                    const Offset(0, 2), // changes position of shadow
+                                offset: const Offset(
+                                    0, 2), // changes position of shadow
                                 //first paramerter of offset is left-right
                                 //second parameter is top to down
                               ),
@@ -209,8 +222,8 @@ class _CalenderState extends State<Calender> {
                                     .withOpacity(0.5), //color of shadow
                                 spreadRadius: 1, //spread radius
                                 blurRadius: 1, // blur radius
-                                offset:
-                                    const Offset(0, 2), // changes position of shadow
+                                offset: const Offset(
+                                    0, 2), // changes position of shadow
                                 //first paramerter of offset is left-right
                                 //second parameter is top to down
                               ),
@@ -393,7 +406,8 @@ class _CalenderState extends State<Calender> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(10),
-                                                        color: const Color.fromARGB(
+                                                        color: const Color
+                                                                .fromARGB(
                                                             80, 116, 252, 195),
                                                       ),
                                                       width: 50,
@@ -457,8 +471,6 @@ class _CalenderState extends State<Calender> {
 
   // function
   Future getJSONData() async {
-    print(uId);
-    print(cDate);
     data.clear();
     var url = Uri.parse(
         "http://localhost:8080/Flutter/fitness/calendar_select.jsp?uId=$uId&cDate=$cDate");
@@ -489,6 +501,7 @@ class _CalenderState extends State<Calender> {
   }
 
   Future getAnalysisData() async {
+    analysisData.clear();
     var url = Uri.parse(
         "http://localhost:8080/Flutter/fitness/calendar_analysis_select.jsp?uId=$uId&bDate=$cDate");
     var response = await http.get(url);
@@ -498,6 +511,21 @@ class _CalenderState extends State<Calender> {
       List value = dataConvertedJSON['results'];
       //데이터에 넣기
       analysisData.addAll(value);
+      getAnalysisDataAllDate();
+    });
+  }
+
+  Future getAnalysisDataAllDate() async {
+    allAnalysisData.clear();
+    var url = Uri.parse(
+        "http://localhost:8080/Flutter/fitness/calendar_analysis_all.jsp?uId=$uId");
+    var response = await http.get(url);
+    setState(() {
+      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      //키값
+      List value = dataConvertedJSON['results'];
+      //데이터에 넣기
+      allAnalysisData.addAll(value);
     });
   }
 
@@ -575,9 +603,10 @@ class _CalenderState extends State<Calender> {
     );
   }
 
-  analysisDataCheck(){
+  analysisDataCheck() {
     if (analysisData.isNotEmpty) {
-      Navigator.pushNamed(context, '/Calender_alnalysis').then((value) => Navigator.popAndPushNamed(context, '/Calender'));
+      Navigator.pushNamed(context, '/Calender_alnalysis')
+          .then((value) => Navigator.popAndPushNamed(context, '/Calender'));
     } else {
       snackBarFuntion(context);
     }
