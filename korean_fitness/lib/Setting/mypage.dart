@@ -107,7 +107,7 @@ class _MyPageState extends State<MyPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        width: 180,
+                        width: 200,
                         height: 60,
                         child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -140,7 +140,7 @@ class _MyPageState extends State<MyPage> {
                             )),
                       ),
                       SizedBox(
-                        width: 180,
+                        width: 200,
                         height: 60,
                         child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -172,7 +172,7 @@ class _MyPageState extends State<MyPage> {
                             )),
                       ),
                       SizedBox(
-                        width: 180,
+                        width: 200,
                         height: 60,
                         child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -204,7 +204,7 @@ class _MyPageState extends State<MyPage> {
                             )),
                       ),
                       SizedBox(
-                        width: 180,
+                        width: 200,
                         height: 60,
                         child: Padding(
                             padding: const EdgeInsets.all(8.0),
