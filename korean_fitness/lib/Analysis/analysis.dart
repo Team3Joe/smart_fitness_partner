@@ -15,7 +15,7 @@ class Analysis extends StatefulWidget {
 }
 
 class _AnalysisState extends State<Analysis> {
-   String? finalid;
+   String? finalid;//값이 null일수 있음.
 
  
   @override
@@ -281,7 +281,7 @@ class _AnalysisState extends State<Analysis> {
                 backgroundImage: AssetImage('images/korea.png'),
               ),
               //이미지 밑에 이름 & 이메일
-              accountName: Text('user name'),
+              accountName: Text("님"),
               accountEmail: Text('user email'),
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 164, 154, 239),

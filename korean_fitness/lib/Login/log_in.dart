@@ -448,10 +448,9 @@ class _LogInState extends State<LogIn> {
                       Message.uEmail = data[0]['uEmail'];
                       final SharedPreferences sharedPreferences =
                           await SharedPreferences.getInstance();
-                      sharedPreferences.setString(
-                          'id', idController.text.trim());
-                      sharedPreferences.setString(
-                          'pw', pwController.text.trim());
+                      sharedPreferences.setString( 'id', idController.text.trim());
+                      
+                      
                       Get.to(SplashPage());
                       Navigator.popAndPushNamed(context, '/Mainpage');
                     },
