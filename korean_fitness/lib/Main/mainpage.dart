@@ -275,7 +275,9 @@ class _MainPageState extends State<MainPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(onWillPop: () => Future(()=> false),//로그인후 뒤로가기 막기
+    child:
+    Scaffold(
       body: Center(
         child: 
           TabBarView(
@@ -315,6 +317,6 @@ class _MainPageState extends State<MainPage>
           ],
         ),
       ),
-    );
+    ),);
   }
 }

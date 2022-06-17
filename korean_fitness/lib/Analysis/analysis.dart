@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:korean_fitness/Calendar/calender.dart';
 import 'package:korean_fitness/Main/mainpage.dart';
 import 'package:korean_fitness/Setting/mypage.dart';
+import 'package:korean_fitness/message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 class Analysis extends StatefulWidget {
   const Analysis({Key? key}) : super(key: key);
@@ -15,14 +15,19 @@ class Analysis extends StatefulWidget {
 }
 
 class _AnalysisState extends State<Analysis> {
-   String? finalid;
+  late String finalId;
+  late String finalName;
+  late String finalEmail;
 
- 
   @override
   void initState() {
+    finalId = "";
+    finalName = "";
+    finalEmail = "";
     getData();
     super.initState();
   }
+
   GoogleSignIn _googleSignIn = GoogleSignIn(
     // Optional clientId
     // clientId: '479882132969-9i9aqik3jfjd7qhci1nqf0bm2g71rm1u.apps.googleusercontent.com',
@@ -32,32 +37,38 @@ class _AnalysisState extends State<Analysis> {
     ],
   );
 
-
   Future<void> _handleSignOut() => _googleSignIn.disconnect();
 
- Future getData() async{
-  final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  var obitainedid = sharedPreferences.getString('id');
-  setState(() {
-    if(obitainedid == null){
-      finalid = "";
-    }else{
-    finalid = obitainedid;}
-  });
-  print("분석메인 $finalid");
-}
-  
+  Future getData() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var obitainedid = sharedPreferences.getString('id');
+    var obitainedEmail = sharedPreferences.getString('email');
+    var obitainedName = sharedPreferences.getString('name');
+
+    setState(() {
+      if (obitainedid == null) {
+        finalId = "";
+      } else {
+        finalId = obitainedid;
+        finalEmail = obitainedEmail!;
+        finalName = obitainedName!;
+      }
+    });
+        Message.uId = finalId;
+        Message.uEmail = finalEmail;
+        Message.uName = finalName;
+    print("분석메인 $finalId");
+  }
+
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           "당신의 신체등급을 분석해보세요!",
           style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w600,
-              color: Colors.black
-            ),
+              fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black),
         ),
         backgroundColor: Colors.white10,
         foregroundColor: Colors.black,
@@ -68,13 +79,12 @@ class _AnalysisState extends State<Analysis> {
           const SizedBox(
             height: 35,
           ),
-           Text(
-            "$finalid 스마트 체력 테스트",
+          Text(
+            "$finalId님의 스마트 체력 테스트",
             style: const TextStyle(
-              fontSize: 20,
-              color: Color.fromARGB(255, 92, 29, 181),
-              fontWeight: FontWeight.bold
-            ),
+                fontSize: 20,
+                color: Color.fromARGB(255, 92, 29, 181),
+                fontWeight: FontWeight.bold),
           ),
           const SizedBox(
             height: 20,
@@ -88,19 +98,17 @@ class _AnalysisState extends State<Analysis> {
                     "images/bmi.png",
                     width: 80,
                     height: 80,
-                    color: Colors.white.withOpacity(0.9), colorBlendMode: BlendMode.modulate,
+                    color: Colors.white.withOpacity(0.9),
+                    colorBlendMode: BlendMode.modulate,
                   ),
                   const SizedBox(
                     height: 5,
                   ),
-                  const Text(
-                    "신체조성",
-                    style : TextStyle(
-                      fontSize: 16,
-                      color: Color.fromARGB(235, 110, 47, 199),
-                      fontWeight: FontWeight.bold
-                    )
-                  ),
+                  const Text("신체조성",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(235, 110, 47, 199),
+                          fontWeight: FontWeight.bold)),
                 ],
               ),
               const SizedBox(
@@ -112,19 +120,17 @@ class _AnalysisState extends State<Analysis> {
                     "images/muscular_strength.png",
                     width: 80,
                     height: 80,
-                    color: Colors.white.withOpacity(0.9), colorBlendMode: BlendMode.modulate,
+                    color: Colors.white.withOpacity(0.9),
+                    colorBlendMode: BlendMode.modulate,
                   ),
                   const SizedBox(
                     height: 5,
                   ),
-                  const Text(
-                    "근력",
-                    style : TextStyle(
-                      fontSize: 16,
-                      color: Color.fromARGB(235, 110, 47, 199),
-                      fontWeight: FontWeight.bold
-                    )
-                  ),
+                  const Text("근력",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(235, 110, 47, 199),
+                          fontWeight: FontWeight.bold)),
                 ],
               ),
               const SizedBox(
@@ -140,14 +146,11 @@ class _AnalysisState extends State<Analysis> {
                   const SizedBox(
                     height: 5,
                   ),
-                  const Text(
-                    "근지구력",
-                    style : TextStyle(
-                      fontSize: 16,
-                      color: Color.fromARGB(235, 110, 47, 199),
-                      fontWeight: FontWeight.bold
-                    )
-                  ),
+                  const Text("근지구력",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(235, 110, 47, 199),
+                          fontWeight: FontWeight.bold)),
                 ],
               ),
             ],
@@ -165,14 +168,11 @@ class _AnalysisState extends State<Analysis> {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text(
-                    "유연성",
-                    style : TextStyle(
-                      fontSize: 16,
-                      color: Color.fromARGB(235, 110, 47, 199),
-                      fontWeight: FontWeight.bold
-                    )
-                  ),
+                  const Text("유연성",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(235, 110, 47, 199),
+                          fontWeight: FontWeight.bold)),
                 ],
               ),
               const SizedBox(
@@ -188,14 +188,11 @@ class _AnalysisState extends State<Analysis> {
                   const SizedBox(
                     height: 5,
                   ),
-                  const Text(
-                    "순발력",
-                    style : TextStyle(
-                      fontSize: 16,
-                      color: Color.fromARGB(235, 110, 47, 199),
-                      fontWeight: FontWeight.bold
-                    )
-                  ),
+                  const Text("순발력",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(235, 110, 47, 199),
+                          fontWeight: FontWeight.bold)),
                 ],
               ),
               const SizedBox(
@@ -207,67 +204,61 @@ class _AnalysisState extends State<Analysis> {
                     "images/analysis.png",
                     width: 70,
                     height: 70,
-                    color: Colors.white.withOpacity(0.8), colorBlendMode: BlendMode.modulate,
+                    color: Colors.white.withOpacity(0.8),
+                    colorBlendMode: BlendMode.modulate,
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text(
-                    "분석",
-                    style : TextStyle(
-                      fontSize: 16,
-                      color: Color.fromARGB(235, 110, 47, 199),
-                      fontWeight: FontWeight.bold
-                    )
-                  ),
+                  const Text("분석",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(235, 110, 47, 199),
+                          fontWeight: FontWeight.bold)),
                 ],
               ),
             ],
           ),
-          const SizedBox(
-            height: 5
-          ),
+          const SizedBox(height: 5),
           Image.asset(
             "images/chartexample.png",
             width: 270,
             height: 300,
           ),
-          const SizedBox(
-            height: 10
-          ),
+          const SizedBox(height: 10),
           OutlinedButton(
-              onPressed: (){
-                Navigator.pushNamed(context, '/SelectGender');
-              },
-              style: OutlinedButton.styleFrom(
+            onPressed: () {
+              Navigator.pushNamed(context, '/SelectGender');
+            },
+            style: OutlinedButton.styleFrom(
               minimumSize: const Size(100, 45),
-                primary: Colors.deepPurpleAccent,
-                side: const BorderSide(
-                  color: Colors.deepPurple,
-                  width: 2.5,
-                ),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: const [
-                  Text(
-                    '스마트체력테스트 하러가기',
-                    style: TextStyle(
-                          color: Color.fromARGB(255, 98, 53, 164),
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600
-                        ),
-                  ), // <-- Text
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Icon( // <-- Icon
-                    Icons.arrow_forward_rounded,
-                    size: 24.0,
-                  ),
-                ],
+              primary: Colors.deepPurpleAccent,
+              side: const BorderSide(
+                color: Colors.deepPurple,
+                width: 2.5,
               ),
             ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Text(
+                  '스마트체력테스트 하러가기',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 98, 53, 164),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600),
+                ), // <-- Text
+                SizedBox(
+                  width: 5,
+                ),
+                Icon(
+                  // <-- Icon
+                  Icons.arrow_forward_rounded,
+                  size: 24.0,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
       drawer: Drawer(
@@ -275,15 +266,15 @@ class _AnalysisState extends State<Analysis> {
           //패딩 없이 꽉 채우기
           padding: EdgeInsets.zero,
           children: [
-            const UserAccountsDrawerHeader(
+            UserAccountsDrawerHeader(
               //상단에 이미지 넣기
-              currentAccountPicture: CircleAvatar(
+              currentAccountPicture: const CircleAvatar(
                 backgroundImage: AssetImage('images/korea.png'),
               ),
               //이미지 밑에 이름 & 이메일
-              accountName: Text('user name'),
-              accountEmail: Text('user email'),
-              decoration: BoxDecoration(
+              accountName: Text('${Message.uName}님'),
+              accountEmail: Text(Message.uEmail),
+              decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 164, 154, 239),
                 //테두리, 값을 각각 줄 수 있음. all 은 한번에 다 뜸
               ),
@@ -313,8 +304,9 @@ class _AnalysisState extends State<Analysis> {
               title: const Text('설정'),
             ),
             ListTile(
-              onTap: () async{
-                final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+              onTap: () async {
+                final SharedPreferences sharedPreferences =
+                    await SharedPreferences.getInstance();
                 sharedPreferences.remove("id");
                 _handleSignOut();
                 Navigator.pushNamed(context, '/Log_in');
