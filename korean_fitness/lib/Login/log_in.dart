@@ -40,16 +40,18 @@ class _LogInState extends State<LogIn> {
   void initState() {
     super.initState();
 
-      _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
+      _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) async{
       setState(() {
         _currentUser = account;
         
       });
             final GoogleSignInAccount? user = _currentUser;
                     if(user != null){
-                    print(user.displayName);
-                    print(user.email);
-                     
+                   // print(user.displayName);
+                   // print(user.email);
+                    final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                  sharedPreferences.setString('id', user.email.toString() );
+                  Get.to(SplashPage());
                     }
       if (_currentUser != null) {
         _handleGetContact(_currentUser!);
@@ -119,7 +121,7 @@ class _LogInState extends State<LogIn> {
    Future<void> _handleSignIn(BuildContext context) async {
     try {
       await _googleSignIn.signIn();
-      Navigator.popAndPushNamed(context, '/Mainpage');
+   
   
     } catch (error) {
       print(error);
@@ -349,15 +351,15 @@ class _LogInState extends State<LogIn> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    _handleSignIn(context);
-                    // _handleSignOut();
+                    _handleSignIn(context); //Google-Log-In
+                    // _handleSignOut();//Google-Log-Out
                 
 
                   },
                   child: Image.asset(
-                    "images/kakao_login_large_wide.png",
-                    width: 400,
-                    height: 50,
+                    "images/google-signin-button.png",
+                    width: 450,
+                    height: 65,
                   ),
                 )
               ],

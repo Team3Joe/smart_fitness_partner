@@ -19,7 +19,7 @@ class _SplashPageState extends State<SplashPage> {
 @override
   void initState() {
     getData().whenComplete(() async{
-     Timer(Duration(seconds: 4),() => Get.to(finalid == "" ? Navigator.pushNamed(context,'/Log_in') : Navigator.pushNamed(context, '/Mainpage')));
+     Timer(Duration(seconds: 2),() => Get.to(finalid == "" ? Navigator.pushNamed(context,'/Log_in') : Navigator.pushNamed(context, '/Mainpage')));
     });
     super.initState();
   }
@@ -33,7 +33,7 @@ Future getData() async{
     }else{
     finalid = obitainedid;}
   });
-  print(finalid);
+  print("로딩 : $finalid");
 }
 
   @override

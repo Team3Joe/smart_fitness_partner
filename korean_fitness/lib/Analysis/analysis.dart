@@ -14,6 +14,26 @@ class Analysis extends StatefulWidget {
 }
 
 class _AnalysisState extends State<Analysis> {
+   String? finalid;
+
+ 
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+ Future getData() async{
+  final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  var obitainedid = sharedPreferences.getString('id');
+  setState(() {
+    if(obitainedid == null){
+      finalid = "";
+    }else{
+    finalid = obitainedid;}
+  });
+  print("분석메인 $finalid");
+}
   @override
   Widget build(BuildContext context) {  
     return Scaffold(
@@ -35,9 +55,9 @@ class _AnalysisState extends State<Analysis> {
           const SizedBox(
             height: 35,
           ),
-          const Text(
-            "스마트 체력 테스트",
-            style: TextStyle(
+           Text(
+            "$finalid 스마트 체력 테스트",
+            style: const TextStyle(
               fontSize: 20,
               color: Color.fromARGB(255, 92, 29, 181),
               fontWeight: FontWeight.bold
@@ -283,7 +303,7 @@ class _AnalysisState extends State<Analysis> {
               onTap: () async{
                 final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
                 sharedPreferences.remove("id");
-                Navigator.pushNamed(context, '/Log_in');
+                //Navigator.pushNamed(context, '/Log_in');
               },
               leading: const Icon(
                 Icons.logout,
