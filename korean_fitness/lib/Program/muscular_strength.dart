@@ -60,7 +60,7 @@ class _MuscularStrengthState extends State<MuscularStrength> {
     super.initState();
     type = '근력';
     col = Colors.orange;
-    col2 = Colors.red;
+    col2 = Color.fromARGB(150, 43, 9, 0);
     listX = widget.listM;
     ment1 = '근력 향상 운동';
     ment2 = '맨몸운동, 웨이트 트레이닝, 저항밴드운동';
@@ -82,7 +82,7 @@ class _MuscularStrengthState extends State<MuscularStrength> {
     jump4 = 30;
     jump5 = 10;
     cu = Curves.easeInOutBack;
-    num = 1200;
+    num = 900;
   }
 
   GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -118,8 +118,8 @@ class _MuscularStrengthState extends State<MuscularStrength> {
                       setState(() {
                         listX = widget.listM;
                         type = '근력';
-                        col = Colors.orange;
-                        col2 = Colors.deepOrange;
+                        col = Color.fromARGB(150, 43, 9, 0);
+                        col2 = Colors.orange;
                         ment1 = '근력 향상 운동';
                         ment2 = '맨몸운동, 웨이트 트레이닝, 저항밴드운동';
                         add1 = '근력(Muscular Strength) :';
@@ -158,8 +158,8 @@ class _MuscularStrengthState extends State<MuscularStrength> {
                       setState(() {
                         listX = widget.listC;
                         type = '심폐지구력';
+                        col = Color.fromARGB(149, 0, 43, 23);
                         col2 = Colors.lightGreen;
-                        col = Colors.green;
                         ment1 = '심폐지구력 향상 운동';
                         ment2 = '달리기, 수영, 테니스, 축구, 농구';
                         add1 = '심폐지구력(Cardiovascular) :';
@@ -198,8 +198,8 @@ class _MuscularStrengthState extends State<MuscularStrength> {
                       setState(() {
                         listX = widget.listF;
                         type = '유연성';
-                        col = Colors.lightBlueAccent;
-                        col2 = Colors.blueAccent;
+                        col = Color.fromARGB(149, 1, 0, 43);
+                        col2 = Colors.lightBlueAccent;
                         ment1 = '유연성 향상 운동';
                         ment2 = '요가, 필라테스, 스트레칭';
                         add1 = '유연성(Flexibility) :';
@@ -238,8 +238,8 @@ class _MuscularStrengthState extends State<MuscularStrength> {
                       setState(() {
                         listX = widget.listS;
                         type = '순발력';
-                        col = Colors.pinkAccent;
-                        col2 = Colors.pink;
+                        col = Color.fromARGB(255, 90, 4, 101);
+                        col2 = Colors.pinkAccent;
                         ment1 = '순발력 향상 운동';
                         ment2 = '사이드 스텝, 왕복 달리기, 부메랑 런';
                         add1 = '순발력(Power) :';
@@ -612,11 +612,13 @@ class _MuscularStrengthState extends State<MuscularStrength> {
             CardLoading(
               cardLoadingTheme: CardLoadingTheme(
                   colorOne: const Color.fromARGB(255, 243, 243, 243),
-                  colorTwo: col),
+                  colorTwo: col2,
+                  ),
               height: 3,
               borderRadius: 40,
               margin: const EdgeInsets.only(bottom: 10),
               curve: Curves.easeInToLinear,
+              animationDuration:const Duration(milliseconds:1400),
             ),
             SingleChildScrollView(
               child: SizedBox(
@@ -651,7 +653,7 @@ class _MuscularStrengthState extends State<MuscularStrength> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                     width: 230,
+                                     width: 210,
                                      decoration: BoxDecoration(
                                       border: Border(right: BorderSide(color:col))),
                                       child: Column(
@@ -661,16 +663,9 @@ class _MuscularStrengthState extends State<MuscularStrength> {
                                           Text(listX[position].exName,
                                             textAlign: TextAlign.right,
                                             style: TextStyle(
-                                              fontSize: 25,
+                                              fontSize: 20,
                                               fontWeight: FontWeight.w900,
-                                              color: col,
-                                              shadows:  <Shadow>[
-                                                Shadow(
-                                                  offset: Offset(0.5, 2.0),
-                                                  blurRadius: 3.0,
-                                                  color: col2,
-                                                ),
-                                              ],
+                                              color: col2,
                                             ),
                                           ),
                                           const SizedBox(
@@ -688,6 +683,9 @@ class _MuscularStrengthState extends State<MuscularStrength> {
                                           
                                         ],
                                       ),
+                                    ),
+                                    const SizedBox(
+                                      width: 15,
                                     ),
                                     StarButton(
                                       isStarred: false,
@@ -712,11 +710,12 @@ class _MuscularStrengthState extends State<MuscularStrength> {
             CardLoading(
               cardLoadingTheme: CardLoadingTheme(
                   colorOne: const Color.fromARGB(255, 243, 243, 243),
-                  colorTwo: col),
+                  colorTwo: col2),
               height: 3,
               borderRadius: 40,
               margin: const EdgeInsets.only(bottom: 10),
               curve: Curves.easeInToLinear,
+              animationDuration:const Duration(milliseconds:1400),
             ),
 
             // Expanded(
