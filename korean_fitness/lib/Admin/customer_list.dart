@@ -31,6 +31,7 @@ class _CustomerListState extends State<CustomerList> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('고객 명단'),
+        backgroundColor: Colors.blueGrey,
         elevation: 0,
       ),
       body: Padding(
@@ -55,9 +56,9 @@ class _CustomerListState extends State<CustomerList> {
                   width: 20,
                 ),
                 SizedBox(
-                  width: 60,
+                  width: 150,
                   child: Text(
-                    'Name',
+                    '개인정보',
                     style: TextStyle(
                       fontSize: 20,
                     ),
@@ -67,9 +68,9 @@ class _CustomerListState extends State<CustomerList> {
                   width: 20,
                 ),
                 SizedBox(
-                  width: 180,
+                  width: 50,
                   child: Text(
-                    'Email',
+                    '기능',
                     style: TextStyle(
                       fontSize: 20,
                     ),
@@ -79,7 +80,7 @@ class _CustomerListState extends State<CustomerList> {
             ),
             SingleChildScrollView(
               child: SizedBox(
-                height: 600 - MediaQuery.of(context).viewInsets.bottom,
+                height: 550 - MediaQuery.of(context).viewInsets.bottom,
                 // 키보드 올라오는 공간 고려
                 child: ListView.builder(
                   itemBuilder: (context, index) {
@@ -109,26 +110,31 @@ class _CustomerListState extends State<CustomerList> {
                             const SizedBox(
                               width: 20,
                             ),
-                            SizedBox(
-                              width: 60,
-                              child: Text(
-                                data[index]['uName'],
-                                style: const TextStyle(
-                                  fontSize: 20,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: 60,
+                                  child: Text(
+                                    data[index]['uName'],
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            SizedBox(
-                              width: 180,
-                              child: Text(
-                                data[index]['uEmail'],
-                                style: const TextStyle(
-                                  fontSize: 20,
+                                const SizedBox(
+                                  height: 5,
                                 ),
-                              ),
+                                SizedBox(
+                                  width: 180,
+                                  child: Text(
+                                    data[index]['uEmail'],
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -146,8 +152,13 @@ class _CustomerListState extends State<CustomerList> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  width: 200,
+                  width: 150,
                   child: TextField(
+                    decoration: const InputDecoration(
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                        ),
+                        focusColor: Colors.blueGrey),
                     autocorrect: false,
                     controller: searchField,
                     onSubmitted: (value) {
@@ -165,7 +176,7 @@ class _CustomerListState extends State<CustomerList> {
                   width: 10,
                 ),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.deepPurple),
+                    style: ElevatedButton.styleFrom(primary: Colors.blueGrey),
                     onPressed: () {
                       setState(() {
                         if (searchField.text.trim().isNotEmpty) {
@@ -180,7 +191,7 @@ class _CustomerListState extends State<CustomerList> {
                   width: 10,
                 ),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.deepPurple),
+                    style: ElevatedButton.styleFrom(primary: Colors.blueGrey),
                     onPressed: () {
                       setState(() {
                         search = '';

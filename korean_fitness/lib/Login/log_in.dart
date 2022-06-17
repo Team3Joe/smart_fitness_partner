@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:get/instance_manager.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:korean_fitness/Main/splashscreen.dart';
@@ -26,7 +25,7 @@ class LogIn extends StatefulWidget {
 
 class _LogInState extends State<LogIn> {
   GoogleSignInAccount? _currentUser;
-  String _contactText = '';
+  String contactText = '';
   // Property
   late TextEditingController idController;
   late TextEditingController pwController;
@@ -71,7 +70,7 @@ class _LogInState extends State<LogIn> {
 
   Future<void> _handleGetContact(GoogleSignInAccount user) async {
     setState(() {
-      _contactText = 'Loading contact info...';
+      contactText = 'Loading contact info...';
     });
     final http.Response response = await http.get(
       Uri.parse('https://people.googleapis.com/v1/people/me/connections'
@@ -80,7 +79,7 @@ class _LogInState extends State<LogIn> {
     );
     if (response.statusCode != 200) {
       setState(() {
-        _contactText = 'People API gave a ${response.statusCode} '
+        contactText = 'People API gave a ${response.statusCode} '
             'response. Check logs for details.';
       });
       print('People API ${response.statusCode} response: ${response.body}');
@@ -91,9 +90,9 @@ class _LogInState extends State<LogIn> {
     final String? namedContact = _pickFirstNamedContact(data);
     setState(() {
       if (namedContact != null) {
-        _contactText = 'I see you know $namedContact!';
+        contactText = 'I see you know $namedContact!';
       } else {
-        _contactText = 'No contacts to display.';
+        contactText = 'No contacts to display.';
       }
     });
   }
@@ -124,7 +123,7 @@ class _LogInState extends State<LogIn> {
     }
   }
 
-  Future<void> _handleSignOut() => _googleSignIn.disconnect();
+  Future<void> handleSignOut() => _googleSignIn.disconnect();
 
   @override
   Widget build(BuildContext context) {
@@ -347,7 +346,7 @@ class _LogInState extends State<LogIn> {
                 GestureDetector(
                   onTap: () {
                     _handleSignIn(context); //Google-Log-In
-                    // _handleSignOut();//Google-Log-Out
+                    // handleSignOut();//Google-Log-Out
                   },
                   child: Image.asset(
                     "images/google-signin-button.png",
@@ -440,7 +439,6 @@ class _LogInState extends State<LogIn> {
                       Message.uBirth = data[0]['uBirth'];
                       Message.uEmail = data[0]['uEmail'];
 
-                      Navigator.pop(context); // 다시 로그인페이지로 돌아가지 않도록
                       Navigator.popAndPushNamed(context, '/Customer_list');
                     },
                     child: const Text('OK'))
@@ -500,6 +498,5 @@ class _LogInState extends State<LogIn> {
         admin = userAdmin;
       });
     }
-    print(admin);
   }
 }//end

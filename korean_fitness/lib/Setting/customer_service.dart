@@ -25,10 +25,10 @@ class _CustomerServiceState extends State<CustomerService> {
     super.initState();
     sendField = TextEditingController();
     data = [];
-    getJSONData();
-
     csContent = '';
     uId = Message.uId;
+
+    getJSONData();
   }
 
   @override
