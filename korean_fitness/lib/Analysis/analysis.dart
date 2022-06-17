@@ -6,6 +6,7 @@ import 'package:korean_fitness/Main/mainpage.dart';
 import 'package:korean_fitness/Setting/mypage.dart';
 import 'package:korean_fitness/message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Analysis extends StatefulWidget {
   const Analysis({Key? key}) : super(key: key);
@@ -28,16 +29,28 @@ class _AnalysisState extends State<Analysis> {
     super.initState();
   }
 
-  GoogleSignIn _googleSignIn = GoogleSignIn(
-    // Optional clientId
-    // clientId: '479882132969-9i9aqik3jfjd7qhci1nqf0bm2g71rm1u.apps.googleusercontent.com',
-    scopes: <String>[
-      'email',
-      'https://www.googleapis.com/auth/contacts.readonly',
-    ],
-  );
 
-  Future<void> _handleSignOut() => _googleSignIn.disconnect();
+
+
+
+GoogleSignIn _googleSignIn = GoogleSignIn(
+  // Optional clientId
+  // clientId: '479882132969-9i9aqik3jfjd7qhci1nqf0bm2g71rm1u.apps.googleusercontent.com',
+  scopes: <String>[
+    'email',
+    'https://www.googleapis.com/auth/contacts.readonly',
+  ],
+);
+
+Future<void> _handleSignIn(BuildContext context) async {
+    try {
+      await _googleSignIn.signIn();
+    } catch (error) {
+      print(error);
+    }
+  }
+
+Future<void> _handleSignOut() => _googleSignIn.disconnect();
 
   Future getData() async {
     final SharedPreferences sharedPreferences =
@@ -80,7 +93,7 @@ class _AnalysisState extends State<Analysis> {
             height: 35,
           ),
           Text(
-            "$finalId님의 스마트 체력 테스트",
+            "$finalName님의 스마트 체력 테스트",
             style: const TextStyle(
                 fontSize: 20,
                 color: Color.fromARGB(255, 92, 29, 181),
@@ -295,7 +308,8 @@ class _AnalysisState extends State<Analysis> {
             ),
             ListTile(
               onTap: () {
-                Navigator.pushNamed(context, '/Setting');
+               Navigator.pushNamed(context, '/Setting');
+        
               },
               leading: const Icon(
                 Icons.settings,
