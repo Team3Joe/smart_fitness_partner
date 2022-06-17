@@ -28,7 +28,7 @@ class _AnalysisState extends State<Analysis> {
     super.initState();
   }
 
-  GoogleSignIn googleSignIn = GoogleSignIn(
+  GoogleSignIn _googleSignIn = GoogleSignIn(
     // Optional clientId
     // clientId: '479882132969-9i9aqik3jfjd7qhci1nqf0bm2g71rm1u.apps.googleusercontent.com',
     scopes: <String>[
@@ -37,7 +37,7 @@ class _AnalysisState extends State<Analysis> {
     ],
   );
 
-  Future<void> _handleSignOut() => googleSignIn.disconnect();
+  Future<void> _handleSignOut() => _googleSignIn.disconnect();
 
   Future getData() async {
     final SharedPreferences sharedPreferences =
@@ -80,7 +80,7 @@ class _AnalysisState extends State<Analysis> {
             height: 35,
           ),
           Text(
-            "$finalId 스마트 체력 테스트",
+            "$finalId님의 스마트 체력 테스트",
             style: const TextStyle(
                 fontSize: 20,
                 color: Color.fromARGB(255, 92, 29, 181),
