@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:korean_fitness/Calendar/calender_analysis.dart';
 import 'package:korean_fitness/Calendar/calender_write.dart';
 import 'package:korean_fitness/message.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -191,8 +192,14 @@ class _CalenderState extends State<Calender> {
                       padding: const EdgeInsets.all(8.0),
                       //
                       child: GestureDetector(
-                        // onTap: () =>
-                        //     Navigator.pushNamed(context, '/Calender_write'),
+                        onTap:() {
+                           Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PageViewDemo1(
+                                          selectedDay: selectedDay)))
+                              .then((value) => getJSONData());
+                        },
                         child: Container(
                           width: 170,
                           height: 60,

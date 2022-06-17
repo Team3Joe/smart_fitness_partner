@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
 
             // Calendar
             '/Calender': (context) => const Calender(),
-            '/Calender_alnalysis': (context) => const CalenderAnalysis(),
+            // '/Calender_alnalysis': (context) => PageViewDemo1(),
 
             // Login
             '/Sign_up': (context) => const SignUp(),
