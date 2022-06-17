@@ -361,7 +361,7 @@ class _LogInState extends State<LogIn> {
       data.addAll(result);
     });
     if (data.isEmpty) {
-      //없는 계정입력시
+      // 탈퇴한 계정 입력시
       return true;
     } else {
       var userquite = data[0]['uQuit']; //탈퇴여부 값 받아오기
