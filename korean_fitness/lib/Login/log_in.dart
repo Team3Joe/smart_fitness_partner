@@ -37,6 +37,7 @@ class _LogInState extends State<LogIn> {
 
   @override
   void initState() {
+    _handleSignOut();//Google-Log-Out
     super.initState();
 
       _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) async{
@@ -51,6 +52,7 @@ class _LogInState extends State<LogIn> {
                     final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
                   sharedPreferences.setString('id', user.email.toString());
                   sharedPreferences.setString('name', user.displayName.toString());
+                  sharedPreferences.setString('email', user.email.toString());
                   Get.to(SplashPage());
                     }
       if (_currentUser != null) {
@@ -121,7 +123,7 @@ class _LogInState extends State<LogIn> {
    Future<void> _handleSignIn(BuildContext context) async {
     try {
       await _googleSignIn.signIn();
-   
+        
   
     } catch (error) {
       print(error);
@@ -352,7 +354,8 @@ class _LogInState extends State<LogIn> {
                 GestureDetector(
                   onTap: () {
                     _handleSignIn(context); //Google-Log-In
-                    // _handleSignOut();//Google-Log-Out
+                    //  _handleSignOut();//Google-Log-Out
+                    // print("aaa");
                 
 
                   },
