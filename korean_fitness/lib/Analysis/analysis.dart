@@ -80,7 +80,7 @@ class _AnalysisState extends State<Analysis> {
             height: 35,
           ),
           Text(
-            "$finalId님의 스마트 체력 테스트",
+            "$finalName님의 스마트 체력 테스트",
             style: const TextStyle(
                 fontSize: 20,
                 color: Color.fromARGB(255, 92, 29, 181),

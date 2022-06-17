@@ -24,53 +24,66 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
-    GoogleSignInAccount? _currentUser;
-  String _contactText = '';
   // Property
+  GoogleSignInAccount? _currentUser;
+  String _contactText = '';
   late TextEditingController idController;
   late TextEditingController pwController;
   late String id;
   late String pw;
+  late String name;
   late int uq; //user탈퇴여부
-
+  late String result;
+  late String gid;
+  late String gname;
+  late List gdata;
   late List data;
 
   @override
   void initState() {
     super.initState();
-
-      _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) async{
+//Google API initState
+    _googleSignIn.onCurrentUserChanged
+        .listen((GoogleSignInAccount? account) async {
       setState(() {
         _currentUser = account;
-        
       });
-            final GoogleSignInAccount? user = _currentUser;
-                    if(user != null){
-                   // print(user.displayName);
-                   // print(user.email);
-                    final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-                  sharedPreferences.setString('id', user.email.toString());
-                  sharedPreferences.setString('name', user.displayName.toString());
-                  sharedPreferences.setString('email', user.email.toString());
-                  Get.to(SplashPage());
-                    }
+      final GoogleSignInAccount? user = _currentUser;
+      if (user != null) {
+        // print(user.displayName);
+        // print(user.email);
+        
+        //google info save
+        gid = user.email.toString();
+        gname = user.displayName.toString();
+        
+        //SharedPreferences Set data
+        final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+        sharedPreferences.setString('id', user.email.toString());
+        sharedPreferences.setString('name', user.displayName.toString());
+        sharedPreferences.setString('email', user.email.toString());
+        Get.to(SplashPage());
+      }
       if (_currentUser != null) {
         _handleGetContact(_currentUser!);
-        
       }
     });
     _googleSignIn.signInSilently();
-    
 
+    //Propert initState
     idController = TextEditingController();
     pwController = TextEditingController();
     id = '';
     pw = '';
+    name = '';
     uq = 0;
+    gid = '';
+    gname = '';
     data = [];
+    gdata = [];
   }
 
-    Future<void> _handleGetContact(GoogleSignInAccount user) async {
+  Future<void> _handleGetContact(GoogleSignInAccount user) async {
     setState(() {
       _contactText = 'Loading contact info...';
     });
@@ -96,11 +109,9 @@ class _LogInState extends State<LogIn> {
       } else {
         _contactText = 'No contacts to display.';
       }
-      
-
-   
     });
   }
+
   String? _pickFirstNamedContact(Map<String, dynamic> data) {
     final List<dynamic>? connections = data['connections'] as List<dynamic>?;
     final Map<String, dynamic>? contact = connections?.firstWhere(
@@ -119,37 +130,30 @@ class _LogInState extends State<LogIn> {
     return null;
   }
 
-   Future<void> _handleSignIn(BuildContext context) async {
+  Future<void> _handleSignIn(BuildContext context) async {
     try {
       await _googleSignIn.signIn();
-   
-  
+      _getJSONGData();
     } catch (error) {
       print(error);
     }
-
-      
   }
 
   Future<void> _handleSignOut() => _googleSignIn.disconnect();
-
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-         FocusScope.of(context).unfocus();
+        FocusScope.of(context).unfocus();
       },
       child: Container(
         decoration: const BoxDecoration(
-          color: Color.fromARGB(240, 255, 255, 255),
-          image: DecorationImage(
-            image: AssetImage(
-              "images/fitnesscenter4.png"
-            ), 
-            fit: BoxFit.fill,
-          )
-        ),
+            color: Color.fromARGB(240, 255, 255, 255),
+            image: DecorationImage(
+              image: AssetImage("images/fitnesscenter4.png"),
+              fit: BoxFit.fill,
+            )),
         child: Scaffold(
           backgroundColor: Colors.white,
           body: Center(
@@ -183,16 +187,21 @@ class _LogInState extends State<LogIn> {
                             color: Color.fromARGB(255, 69, 41, 152),
                           ),
                           hintStyle: TextStyle(
-                           color: Color.fromARGB(159, 101, 71, 191),
-                           fontSize: 14
-                          ),
+                              color: Color.fromARGB(159, 101, 71, 191),
+                              fontSize: 14),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                            borderSide: BorderSide(width: 2.5, color: Color.fromARGB(255, 61, 51, 133)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25.0)),
+                            borderSide: BorderSide(
+                                width: 2.5,
+                                color: Color.fromARGB(255, 61, 51, 133)),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                            borderSide: BorderSide(width: 2, color: Color.fromARGB(255, 91, 80, 177)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
+                            borderSide: BorderSide(
+                                width: 2,
+                                color: Color.fromARGB(255, 91, 80, 177)),
                           ),
                         ),
                         keyboardType: TextInputType.text,
@@ -218,16 +227,21 @@ class _LogInState extends State<LogIn> {
                             color: Color.fromARGB(255, 69, 41, 152),
                           ),
                           hintStyle: TextStyle(
-                           color: Color.fromARGB(159, 101, 71, 191),
-                           fontSize: 14
-                          ),
+                              color: Color.fromARGB(159, 101, 71, 191),
+                              fontSize: 14),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                            borderSide: BorderSide(width: 2.5, color: Color.fromARGB(255, 61, 51, 133)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25.0)),
+                            borderSide: BorderSide(
+                                width: 2.5,
+                                color: Color.fromARGB(255, 61, 51, 133)),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                            borderSide: BorderSide(width: 2, color: Color.fromARGB(255, 91, 80, 177)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
+                            borderSide: BorderSide(
+                                width: 2,
+                                color: Color.fromARGB(255, 91, 80, 177)),
                           ),
                         ),
                         keyboardType: TextInputType.text,
@@ -266,10 +280,9 @@ class _LogInState extends State<LogIn> {
                       child: const Text(
                         '로그인',
                         style: TextStyle(
-                          color: Color.fromARGB(255, 226, 207, 255),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600
-                        ),
+                            color: Color.fromARGB(255, 226, 207, 255),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
                     const SizedBox(
@@ -284,12 +297,11 @@ class _LogInState extends State<LogIn> {
                       children: [
                         const Text(
                           '아직 회원이 아니신가요?',
-                            style: TextStyle(
+                          style: TextStyle(
                               color: Color.fromARGB(255, 23, 0, 60),
                               fontSize: 15,
-                              fontWeight: FontWeight.w500
-                            ),
-                          ),
+                              fontWeight: FontWeight.w500),
+                        ),
                         SizedBox(
                           height: 40,
                           child: TextButton(
@@ -299,10 +311,9 @@ class _LogInState extends State<LogIn> {
                             child: const Text(
                               '회원가입 하기',
                               style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600
-                              ),
+                                  color: Colors.blue,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600),
                             ),
                           ),
                         ),
@@ -319,12 +330,11 @@ class _LogInState extends State<LogIn> {
                             },
                             child: const Text(
                               '아이디 찾기',
-                                style: TextStyle(
+                              style: TextStyle(
                                   color: Colors.blue,
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w600
-                                ),
-                              ),
+                                  fontWeight: FontWeight.w600),
+                            ),
                           ),
                           const SizedBox(
                             width: 35,
@@ -335,12 +345,11 @@ class _LogInState extends State<LogIn> {
                             },
                             child: const Text(
                               '비밀번호 찾기',
-                                style: TextStyle(
+                              style: TextStyle(
                                   color: Colors.blue,
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w600
-                                ),
-                              ),
+                                  fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ],
                       ),
@@ -354,8 +363,6 @@ class _LogInState extends State<LogIn> {
                   onTap: () {
                     _handleSignIn(context); //Google-Log-In
                     // _handleSignOut();//Google-Log-Out
-                
-
                   },
                   child: Image.asset(
                     "images/google-signin-button.png",
@@ -441,7 +448,7 @@ class _LogInState extends State<LogIn> {
               content: const Text('로그인에 성공하였습니다.'),
               actions: [
                 ElevatedButton(
-                    onPressed: () async{
+                    onPressed: () async {
                       Message.uId = data[0]['uId'];
                       Message.uPw = data[0]['uPw'];
                       Message.uName = data[0]['uName'];
@@ -449,9 +456,10 @@ class _LogInState extends State<LogIn> {
                       Message.uEmail = data[0]['uEmail'];
                       final SharedPreferences sharedPreferences =
                           await SharedPreferences.getInstance();
-                      sharedPreferences.setString( 'id', idController.text.trim());
-                      sharedPreferences.setString( 'name', data[0]['uName']);
-                      sharedPreferences.setString( 'email', data[0]['uEmail']);
+                      sharedPreferences.setString(
+                          'id', idController.text.trim());
+                      sharedPreferences.setString('name', data[0]['uName']);
+                      sharedPreferences.setString('email', data[0]['uEmail']);
                       Get.to(SplashPage());
                       //Navigator.popAndPushNamed(context, '/Mainpage');
                     },
@@ -480,6 +488,40 @@ class _LogInState extends State<LogIn> {
       uq = userquite;
       return true;
     }
+  }
+
+  Future<bool> _getJSONGData() async {
+    //google id select
+    var url = Uri.parse(
+        'http://localhost:8080/Flutter/fitness/google_user_select.jsp?id=$gid&name=$gname');
+    var response = await http.get(url);
+    var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+    List result = dataConvertedJSON['results'];
+    setState(() {
+      gdata = [];
+      gdata.addAll(result);
+      print(gdata);
+    });
+    if (gdata.isEmpty) {
+      //google id 없는 계정입력시 -> insert
+      GoogleInsertAction();
+      return true;
+    } else {
+      var userquite = gdata[0]['uQuit']; //탈퇴여부 값 받아오기
+      uq = userquite;
+      return true;
+    }
+  }
+
+  GoogleInsertAction() async {
+    //google id insert
+    var url = Uri.parse(
+        'http://localhost:8080/Flutter/fitness/google_user_insert.jsp?id=$gid&name=$gname&email=$gid');
+    var response = await http.get(url);
+    setState(() {
+      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      result = dataConvertedJSON['result'];
+    });
   }
 }//end
 
