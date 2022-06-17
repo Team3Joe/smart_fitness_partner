@@ -51,6 +51,7 @@ class _LogInState extends State<LogIn> {
                     final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
                   sharedPreferences.setString('id', user.email.toString());
                   sharedPreferences.setString('name', user.displayName.toString());
+                  sharedPreferences.setString('email', user.email.toString());
                   Get.to(SplashPage());
                     }
       if (_currentUser != null) {
