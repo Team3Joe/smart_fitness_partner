@@ -37,7 +37,6 @@ class _AnalysisDataState extends State<AnalysisData> {
   late String ratingResult;
   @override
   void initState() {
-    
     // TODO: implement initState
     super.initState();
 
@@ -75,18 +74,14 @@ class _AnalysisDataState extends State<AnalysisData> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text(
-              '나의 신체 티어는?',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                shadows: [
-                  Shadow(
-                    color: Colors.black.withOpacity(0.3),
-                    offset: const Offset(5, 5),
-                    blurRadius:10
-                  )
-                ]
-              ),
-            ),
+            '나의 신체 티어는?',
+            style: TextStyle(fontWeight: FontWeight.w600, shadows: [
+              Shadow(
+                  color: Colors.black.withOpacity(0.3),
+                  offset: const Offset(5, 5),
+                  blurRadius: 10)
+            ]),
+          ),
           backgroundColor: Color.fromARGB(255, 197, 129, 224),
           elevation: 0,
           toolbarHeight: 75,
@@ -122,16 +117,13 @@ class _AnalysisDataState extends State<AnalysisData> {
                       // ),
                       ElevatedButton(
                         onPressed: () {
-                          
                           Navigator.pushNamed(context, '/Center_list');
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Color.fromARGB(189, 145, 108, 255),
+                          primary: const Color.fromARGB(189, 145, 108, 255),
                         ),
-                        child: const Text(
-                          '우리집 근처 체력측정센터',
-                          style: TextStyle(fontSize: 18)
-                        ),
+                        child: const Text('우리집 근처 체력측정센터',
+                            style: TextStyle(fontSize: 18)),
                       )
                     ],
                   ),
@@ -439,16 +431,15 @@ class _AnalysisDataState extends State<AnalysisData> {
                         fatMass = fatMassController.text;
                         situp = situpController.text;
 
-                        
                         getRatingResult();
                       },
                       label: const Text(
                         "티어분석",
                         style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                          ),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
                       ),
                       icon: const Icon(
                         Icons.arrow_forward,
@@ -465,7 +456,7 @@ class _AnalysisDataState extends State<AnalysisData> {
     );
   }
 
-  analysis() async{
+  analysis() async {
     if (heightController.text.isEmpty == false &&
         weightController.text.isEmpty == false &&
         ageController.text.isEmpty == false &&
@@ -616,7 +607,6 @@ class _AnalysisDataState extends State<AnalysisData> {
   }
 
   getRatingResult() async {
-
     showDialog(
       context: context,
       builder: (context) {
@@ -639,7 +629,7 @@ class _AnalysisDataState extends State<AnalysisData> {
                     '\tSmart\nFitness\n\t\tTest',
                     style: TextStyle(
                       fontSize: 20,
-                      fontWeight : FontWeight.bold,
+                      fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   )),
@@ -652,8 +642,6 @@ class _AnalysisDataState extends State<AnalysisData> {
     );
 
     print(Message2.gender);
-
-
 
     //비동기 함수 == 작업하면서 화면구성도 같이하겠다!
     //이럴땐 (주소) var를 많이 씀.
@@ -709,7 +697,5 @@ class _AnalysisDataState extends State<AnalysisData> {
       Navigator.pop(context);
       Navigator.pushNamed(context, '/Analysis_result');
     });
-
-
   }
 }

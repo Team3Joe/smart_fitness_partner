@@ -4,5 +4,5 @@ class Message {
   static String uName = "";
   static String uBirth = "";
   static String uEmail = "";
-  static bool uQuit = false;
+  static int uQuit = 0;
 }

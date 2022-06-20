@@ -18,6 +18,7 @@ class _CustomerServiceState extends State<CustomerService> {
   late List data;
 
   late String csContent;
+  late int csAdmin;
   late String uId;
 
   @override
@@ -26,6 +27,7 @@ class _CustomerServiceState extends State<CustomerService> {
     sendField = TextEditingController();
     data = [];
     csContent = '';
+    csAdmin = 0; // 고객모드
     uId = Message.uId;
 
     getJSONData();
@@ -43,61 +45,54 @@ class _CustomerServiceState extends State<CustomerService> {
       appBar: AppBar(
         title: Text(
           '고객센터',
-          style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 23,
-                shadows: [
-                  Shadow(
-                    color: Colors.black.withOpacity(0.5),
-                    offset: const Offset(3, 3),
-                    blurRadius:10
-                  )
-                ]
-              ),
-          ),
-          backgroundColor: Color.fromARGB(198, 58, 34, 131),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 23, shadows: [
+            Shadow(
+                color: Colors.black.withOpacity(0.5),
+                offset: const Offset(3, 3),
+                blurRadius: 10)
+          ]),
+        ),
+        backgroundColor: const Color.fromARGB(198, 58, 34, 131),
         toolbarHeight: 75,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            SingleChildScrollView(
-              child: SizedBox(
-                height: 600 - MediaQuery.of(context).viewInsets.bottom,
-                // 키보드 올라오는 공간 고려
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    // bubble을 리스트뷰로 촤르륵 띄워보자, data[index]
-                    if (data[index]['csAdmin'] != 1) {
-                      return Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: BubbleNormal(
-                          color: Colors.grey,
-                          text: data[index]['csContent'], // DB : select
-                          textStyle: const TextStyle(fontSize: 20),
-                          isSender: true,
-                          tail: true,
+            SizedBox(
+              // 키보드 올라오는 공간 고려
+              height: 580 - MediaQuery.of(context).viewInsets.bottom,
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  // bubble을 리스트뷰로 촤르륵 띄워보자, data[index]
+                  if (data[index]['csAdmin'] == 1) {
+                    return Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: BubbleNormal(
+                        color: Colors.grey,
+                        text: data[index]['csContent'], // DB : select
+                        textStyle: const TextStyle(fontSize: 20),
+                        isSender: false,
+                        tail: true,
+                      ),
+                    );
+                  } else {
+                    return Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: BubbleNormal(
+                        color: Colors.deepPurple,
+                        text: data[index]['csContent'], // DB : select
+                        textStyle: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
                         ),
-                      );
-                    } else {
-                      return Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: BubbleNormal(
-                          color: Colors.deepPurple,
-                          text: data[index]['csContent'], // DB : select
-                          textStyle: const TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
-                          isSender: false,
-                          tail: true,
-                        ),
-                      );
-                    }
-                  },
-                  itemCount: data.length,
-                ),
+                        isSender: true,
+                        tail: true,
+                      ),
+                    );
+                  }
+                },
+                itemCount: data.length,
               ),
             ),
             const SizedBox(
@@ -138,7 +133,7 @@ class _CustomerServiceState extends State<CustomerService> {
                         sendField.text = ''; // text field 비우기
                       });
                     },
-                    child: const Text('문의하기')),
+                    child: const Text('문의')),
               ],
             )
           ],
@@ -166,7 +161,7 @@ class _CustomerServiceState extends State<CustomerService> {
 
   insertAction() async {
     var url = Uri.parse(
-      'http://localhost:8080/Flutter/fitness/customer_service_insert.jsp?csContent=$csContent&uId=abc',
+      'http://localhost:8080/Flutter/fitness/customer_service_insert.jsp?csContent=$csContent&csAdmin=$csAdmin&uId=$uId',
     );
     var response = await http.get(url);
     setState(

@@ -50,21 +50,21 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return EasySplashScreen(
-      logo: Image.network(
-          'https://cdn4.iconfinder.com/data/icons/logos-brands-5/24/flutter-512.png'),
-      title: Text(
-        "스마트 운동 파트너",
-        style: TextStyle(
-            fontSize: 45,
-            fontWeight: FontWeight.bold,
-            color: const Color.fromARGB(255, 48, 30, 90),
-            shadows: [
-              Shadow(
-                  color: Colors.white.withOpacity(0.7),
-                  offset: const Offset(3, 3),
-                  blurRadius: 12)
-            ]),
-      ),
+      logo: Image.asset(
+          'images/logo.png'),
+      // title: Text(
+      //   "스마트 운동 파트너",
+      //   style: TextStyle(
+      //       fontSize: 45,
+      //       fontWeight: FontWeight.bold,
+      //       color: const Color.fromARGB(255, 48, 30, 90),
+      //       shadows: [
+      //         Shadow(
+      //             color: Colors.white.withOpacity(0.7),
+      //             offset: const Offset(3, 3),
+      //             blurRadius: 12)
+      //       ]),
+      // ),
       backgroundImage: const AssetImage(
         // "images/fitnesscenter1.png",
         "images/FITNESS5.png",
@@ -78,7 +78,7 @@ class _SplashPageState extends State<SplashPage> {
         ),
       ),
       loaderColor: Colors.black,
-      logoSize: 0,
+      logoSize: 165,
       loadingTextPadding: const EdgeInsets.fromLTRB(20, 20, 20, 100),
     );
   }
