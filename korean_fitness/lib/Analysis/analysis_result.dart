@@ -2489,7 +2489,9 @@ class _resultState extends State<result> {
                   shadowColor: Colors.transparent,
                   //make color or elevated button transparent
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  _showDialog1(context);
+                },
                 label: const Text(
                   "체력향상 프로그램 보러가기",
                   style: TextStyle(
@@ -2531,8 +2533,12 @@ class _resultState extends State<result> {
         context: context,
         builder: (BuildContext ctx) {
           return AlertDialog(
-            title: const Text('분석결과 입력'),
-            content: const Text('입력이 완료되었습니다'),
+            title: const Text('분석결과 캘린더',
+              style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            content: const Text('캘린더에 입력되었습니다'),
             actions: [
               TextButton(
                 onPressed: () {
@@ -2540,6 +2546,54 @@ class _resultState extends State<result> {
                   Navigator.pushNamed(context, '/Mainpage');
                 },
                 child: const Text('OK'),
+              ),
+            ],
+          );
+        });
+  }
+
+  _showDialog1(BuildContext ctx) {
+    showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            title: const Text('분석결과 캘린더',
+              style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            content: const Text(' 분석결과를 저장하고 체력향상 프로그램으로\n가시겠습니까?'),
+            actions: [
+              Row(
+                mainAxisAlignment : MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, '/Mainpage');
+                    },
+                    child: const Text(
+                      'No',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      'Yes',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           );

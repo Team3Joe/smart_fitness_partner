@@ -364,10 +364,20 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
+  allowSnackBar_id(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("\t\t\t\t사용가능한 아이디입니다."),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
   errorSnackBar_id(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text("\t\t\t\t아이디는 5자 ~ 15자 이상으로 입력해주세요."),
+        content: Text("\t\t\t\t중복된 아이디입니다..\n\t\t\t다른 아이디를 사용해주세요."),
         duration: Duration(seconds: 2),
         backgroundColor: Colors.red,
       ),
