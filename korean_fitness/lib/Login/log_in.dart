@@ -67,6 +67,7 @@ class _LogInState extends State<LogIn> {
         sharedPreferences.setString('name', user.displayName.toString());
         sharedPreferences.setString('email', user.email.toString());
         Get.to(const SplashPage());
+        
       }
       if (_currentUser != null) {
         _handleGetContact(_currentUser!);
@@ -470,13 +471,18 @@ class _LogInState extends State<LogIn> {
           } else {
             return AlertDialog(
               title: const Text(
-                '로그인 성공!',
+                '로그인',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              content: const Text('로그인에 성공했습니다.'),
+              content: const Text('로그인 하시겠습니까?'),
               actions: [
+                ElevatedButton(
+                    onPressed: () async {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('NO')),
                 ElevatedButton(
                     onPressed: () async {
                       Message.uId = data[0]['uId'];

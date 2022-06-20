@@ -58,7 +58,7 @@ class _CenterListState extends State<CenterList> {
     _scrollController.addListener(() {
       if (_scrollController.offset >=
               _scrollController.position.maxScrollExtent &&
-          !_scrollController.position.outOfRange) {
+          !_scrollController.position.outOfRange && nowTap == '전국') {
         getJSONData();
       }
     });
