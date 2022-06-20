@@ -162,22 +162,22 @@ class _MainPageState extends State<MainPage>
             Tab(
               icon: Image.asset(
                "images/tabbar_analysis.png",
-               width: 35,
-               height: 30,),
+               width: 28,
+               height: 28,),
               text: "분석",
               ),
             Tab(
               icon: Image.asset(
                "images/tabbar_h.png",
-               width: 35,
-               height: 35,),
+               width: 28,
+               height: 28,),
               text: '체력향상',
             ),
             Tab(
               icon: Image.asset(
                "images/tabbar_c3.png",
-               width: 35,
-               height: 30,),
+               width: 28,
+               height: 28,),
               text: '캘린더',
             ),
             

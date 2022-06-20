@@ -77,21 +77,22 @@ class _AnalysisState extends State<Analysis> {
         title: const Text(
           "당신의 신체등급을 분석해보세요!",
           style: TextStyle(
-              fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black),
+              fontSize: 21, fontWeight: FontWeight.w600, color: Colors.black),
         ),
         backgroundColor: Colors.white10,
         foregroundColor: Colors.black,
+        toolbarHeight: 65,
         elevation: 0,
       ),
       body: Column(
         children: [
           const SizedBox(
-            height: 35,
+            height: 20,
           ),
           Text(
             "$finalName님의 스마트 체력 테스트",
             style: const TextStyle(
-                fontSize: 20,
+                fontSize: 19,
                 color: Color.fromARGB(255, 92, 29, 181),
                 fontWeight: FontWeight.bold),
           ),
@@ -278,7 +279,9 @@ class _AnalysisState extends State<Analysis> {
             UserAccountsDrawerHeader(
               //상단에 이미지 넣기
               currentAccountPicture: const CircleAvatar(
-                backgroundImage: AssetImage('images/korea.png'),
+                backgroundImage: AssetImage(
+                  'images/logo.png',
+                  ),
               ),
               //이미지 밑에 이름 & 이메일
               accountName: Text('${Message.uName}님'),
