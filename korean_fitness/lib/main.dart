@@ -21,6 +21,7 @@ import 'package:korean_fitness/Program/flexibility.dart';
 import 'package:korean_fitness/Program/speed_strength.dart';
 import 'package:korean_fitness/Setting/customer_service.dart';
 import 'package:korean_fitness/Setting/help.dart';
+import 'package:korean_fitness/Setting/help_analysis.dart';
 import 'package:korean_fitness/Setting/mypage.dart';
 import 'package:korean_fitness/Setting/privacy_policy.dart';
 import 'package:korean_fitness/Setting/setting.dart';
@@ -91,7 +92,7 @@ class MyApp extends StatelessWidget {
             '/Customer_service': (context) => const CustomerService(),
             '/Privacy_policy': (context) => const PrivacyPolicy(),
           },
-          initialRoute: '/loading',
+          initialRoute: '/Help',
         );
       },
     );
