@@ -158,7 +158,7 @@ class _CalenderState extends State<Calender> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -309,133 +309,136 @@ class _CalenderState extends State<Calender> {
                             ),
                           ).then((value) => getJSONData());
                         },
-                        child: Container(
-                          width: 370,
-                          height: 120,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color.fromARGB(80, 224, 197, 255),
-                          ),
-                          margin: const EdgeInsets.only(bottom: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(17, 13, 0, 7),
-                                child: Text(
-                                  data[index]['cTitle'],
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            width: 200,
+                            height: 120,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: const Color.fromARGB(80, 224, 197, 255),
+                            ),
+                            margin: const EdgeInsets.only(bottom: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(17, 13, 0, 7),
+                                  child: Text(
+                                    data[index]['cTitle'],
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                child: Row(
-                                  children: [
-                                    data[index]['cFlexibility'] == 1
-                                        ? Padding(
-                                            padding: const EdgeInsets.all(3.0),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                color: const Color.fromARGB(
-                                                    129, 245, 183, 183),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                  child: Row(
+                                    children: [
+                                      data[index]['cFlexibility'] == 1
+                                          ? Padding(
+                                              padding: const EdgeInsets.all(3.0),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color: const Color.fromARGB(
+                                                      129, 245, 183, 183),
+                                                ),
+                                                width: 60,
+                                                height: 30,
+                                                child: const Center(
+                                                    child: Text('유연성')),
                                               ),
-                                              width: 60,
-                                              height: 30,
-                                              child: const Center(
-                                                  child: Text('유연성')),
-                                            ),
-                                          )
-                                        : const SizedBox(),
-                                    data[index]['cEndurance'] == 1
-                                        ? Padding(
-                                            padding: const EdgeInsets.all(3.0),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                color: const Color.fromARGB(
-                                                    129, 240, 183, 245),
+                                            )
+                                          : const SizedBox(),
+                                      data[index]['cEndurance'] == 1
+                                          ? Padding(
+                                              padding: const EdgeInsets.all(3.0),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color: const Color.fromARGB(
+                                                      129, 240, 183, 245),
+                                                ),
+                                                width: 60,
+                                                height: 30,
+                                                child: const Center(
+                                                    child: Text('근지구력')),
                                               ),
-                                              width: 60,
-                                              height: 30,
-                                              child: const Center(
-                                                  child: Text('근지구력')),
-                                            ),
-                                          )
-                                        : const SizedBox(),
-                                    data[index]['cWits'] == 1
-                                        ? Padding(
-                                            padding: const EdgeInsets.all(3.0),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                color: const Color.fromARGB(
-                                                    129, 227, 217, 142),
+                                            )
+                                          : const SizedBox(),
+                                      data[index]['cWits'] == 1
+                                          ? Padding(
+                                              padding: const EdgeInsets.all(3.0),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color: const Color.fromARGB(
+                                                      129, 227, 217, 142),
+                                                ),
+                                                width: 60,
+                                                height: 30,
+                                                child: const Center(
+                                                    child: Text('순발력')),
                                               ),
-                                              width: 60,
-                                              height: 30,
-                                              child: const Center(
-                                                  child: Text('순발력')),
-                                            ),
-                                          )
-                                        : const SizedBox(),
-                                    data[index]['cMuscularStrength'] == 1
-                                        ? Padding(
-                                            padding: const EdgeInsets.all(3.0),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                color: const Color.fromARGB(
-                                                    80, 116, 252, 195),
+                                            )
+                                          : const SizedBox(),
+                                      data[index]['cMuscularStrength'] == 1
+                                          ? Padding(
+                                              padding: const EdgeInsets.all(3.0),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color: const Color.fromARGB(
+                                                      80, 116, 252, 195),
+                                                ),
+                                                width: 50,
+                                                height: 30,
+                                                child: const Center(
+                                                    child: Text('근력')),
                                               ),
-                                              width: 50,
-                                              height: 30,
-                                              child: const Center(
-                                                  child: Text('근력')),
-                                            ),
-                                          )
-                                        : const SizedBox(),
-                                    data[index]['cCardiovascularEndurance'] == 1
-                                        ? Padding(
-                                            padding: const EdgeInsets.all(3.0),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                color: const Color.fromARGB(
-                                                    98, 116, 154, 252),
+                                            )
+                                          : const SizedBox(),
+                                      data[index]['cCardiovascularEndurance'] == 1
+                                          ? Padding(
+                                              padding: const EdgeInsets.all(3.0),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color: const Color.fromARGB(
+                                                      98, 116, 154, 252),
+                                                ),
+                                                width: 90,
+                                                height: 30,
+                                                child: const Center(
+                                                    child: Text('심폐지구력')),
                                               ),
-                                              width: 90,
-                                              height: 30,
-                                              child: const Center(
-                                                  child: Text('심폐지구력')),
-                                            ),
-                                          )
-                                        : const SizedBox(),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(17, 0, 0, 0),
-                                child: Text(
-                                  data[index]['cContent'],
-                                  style: const TextStyle(
-                                    fontSize: 17,
+                                            )
+                                          : const SizedBox(),
+                                    ],
                                   ),
                                 ),
-                              ),
-                            ],
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(17, 0, 0, 0),
+                                  child: Text(
+                                    data[index]['cContent'],
+                                    style: const TextStyle(
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       );

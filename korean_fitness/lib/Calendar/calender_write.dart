@@ -274,29 +274,32 @@ class _CalenderWriteState extends State<CalenderWrite> {
                 ),
                 Row(
                   children: [
-                    ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                            _cCardiovascularEnduranceColors,
-                          ),
-                          foregroundColor: MaterialStateProperty.all(
-                            Colors.black,
-                          )),
-                      child: Text(_cCardiovascularEnduranceName),
-                      onPressed: () {
-                        setState(() {
-                          if (_cCardiovascularEnduranceColors ==
-                              Colors.grey.shade200) {
-                            _cCardiovascularEnduranceColors =
-                                const Color.fromARGB(129, 245, 238, 183);
-                            _cCardiovascularEnduranceState = '1';
-                          } else {
-                            _cCardiovascularEnduranceColors =
-                                Colors.grey.shade200;
-                            _cCardiovascularEnduranceState = '0';
-                          }
-                        });
-                      },
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(13, 0, 0, 0),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                              _cCardiovascularEnduranceColors,
+                            ),
+                            foregroundColor: MaterialStateProperty.all(
+                              Colors.black,
+                            )),
+                        child: Text(_cCardiovascularEnduranceName),
+                        onPressed: () {
+                          setState(() {
+                            if (_cCardiovascularEnduranceColors ==
+                                Colors.grey.shade200) {
+                              _cCardiovascularEnduranceColors =
+                                  const Color.fromARGB(129, 245, 238, 183);
+                              _cCardiovascularEnduranceState = '1';
+                            } else {
+                              _cCardiovascularEnduranceColors =
+                                  Colors.grey.shade200;
+                              _cCardiovascularEnduranceState = '0';
+                            }
+                          });
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -313,7 +316,7 @@ class _CalenderWriteState extends State<CalenderWrite> {
                   controller: cContentController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.symmetric(vertical: 40),
+                    contentPadding: EdgeInsets.symmetric(vertical: 30),
                   ),
                 ),
               ],
