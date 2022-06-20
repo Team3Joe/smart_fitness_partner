@@ -57,8 +57,10 @@ class _CenterMapState extends State<CenterMap> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            appBar: AppBar(
-        backgroundColor: Colors.purple,
+        appBar: AppBar(
+        backgroundColor: Color.fromARGB(230, 87, 51, 194),
+        toolbarHeight: 75,
+        elevation: 0,
         title: Text('체력인증센터 위치'),
       ),
         body: GoogleMap(
