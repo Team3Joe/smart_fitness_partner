@@ -454,12 +454,8 @@ class _LogInState extends State<LogIn> {
               actions: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: Colors.blueGrey),
-                  onPressed: () async {
+                  onPressed: () {
                     Message.uId = data[0]['uId'];
-                    Message.uPw = data[0]['uPw'];
-                    Message.uName = data[0]['uName'];
-                    Message.uBirth = data[0]['uBirth'];
-                    Message.uEmail = data[0]['uEmail'];
                     Navigator.popUntil(context, (route) => false); // 뒤로가기 없애기
                     Navigator.pushNamed(context, '/Customer_list');
                   },
