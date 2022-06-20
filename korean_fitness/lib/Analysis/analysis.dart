@@ -1,12 +1,9 @@
 import 'dart:ui';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
-import 'package:korean_fitness/Calendar/calender.dart';
-import 'package:korean_fitness/Main/mainpage.dart';
 import 'package:korean_fitness/Setting/mypage.dart';
 import 'package:korean_fitness/message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class Analysis extends StatefulWidget {
   const Analysis({Key? key}) : super(key: key);
@@ -29,7 +26,7 @@ class _AnalysisState extends State<Analysis> {
     super.initState();
   }
 
-  GoogleSignIn _googleSignIn = GoogleSignIn(
+  GoogleSignIn googleSignIn = GoogleSignIn(
     // Optional clientId
     // clientId: '479882132969-9i9aqik3jfjd7qhci1nqf0bm2g71rm1u.apps.googleusercontent.com',
     scopes: <String>[
@@ -38,15 +35,15 @@ class _AnalysisState extends State<Analysis> {
     ],
   );
 
-  Future<void> _handleSignIn(BuildContext context) async {
+  Future<void> handleSignIn(BuildContext context) async {
     try {
-      await _googleSignIn.signIn();
+      await googleSignIn.signIn();
     } catch (error) {
       print(error);
     }
   }
 
-  Future<void> _handleSignOut() => _googleSignIn.disconnect();
+  Future<void> handleSignOut() => googleSignIn.disconnect();
 
   Future getData() async {
     final SharedPreferences sharedPreferences =
@@ -67,7 +64,6 @@ class _AnalysisState extends State<Analysis> {
     Message.uId = finalId;
     Message.uEmail = finalEmail;
     Message.uName = finalName;
-    print("분석메인 $finalId");
   }
 
   @override
@@ -317,7 +313,7 @@ class _AnalysisState extends State<Analysis> {
                 final SharedPreferences sharedPreferences =
                     await SharedPreferences.getInstance();
                 sharedPreferences.remove("id");
-                _handleSignOut();
+                handleSignOut();
                 Navigator.pushNamed(context, '/Log_in');
               },
               leading: const Icon(

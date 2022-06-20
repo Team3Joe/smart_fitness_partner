@@ -120,7 +120,6 @@ class _CalenderState extends State<Calender> {
                 }
                 return dot;
               },
-
               // Calendar Style
               calendarStyle: CalendarStyle(
                 selectedDecoration: BoxDecoration(
@@ -136,120 +135,111 @@ class _CalenderState extends State<Calender> {
                 formatButtonShowsNext: false,
               ),
             ),
-
-            const SizedBox(
-              height: 5,
-            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const SizedBox(
+                  height: 20,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(19.0),
-                      //
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CalenderWrite(
-                                          selectedDay: selectedDay)))
-                              .then((value) => getJSONData());
-                        },
-                        child: Container(
-                          width: 150,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color.fromARGB(165, 81, 9, 164),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey
-                                    .withOpacity(0.5), //color of shadow
-                                spreadRadius: 1, //spread radius
-                                blurRadius: 1, // blur radius
-                                offset: const Offset(
-                                    0, 2), // changes position of shadow
-                                //first paramerter of offset is left-right
-                                //second parameter is top to down
-                              ),
-                              //you can set more BoxShadow() here
-                            ],
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(Icons.add,
-                                  color: Color.fromARGB(255, 241, 228, 255),
-                                  size: 25),
-                              SizedBox(
-                                width: 4,
-                              ),
-                              Text(
-                                '운동 기록 추가',
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color.fromARGB(255, 241, 228, 255)),
-                              ),
-                            ],
-                          ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CalenderWrite(
+                                        selectedDay: selectedDay)))
+                            .then((value) => getJSONData());
+                      },
+                      child: Container(
+                        width: 150,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: const Color.fromARGB(165, 81, 9, 164),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey
+                                  .withOpacity(0.5), //color of shadow
+                              spreadRadius: 1, //spread radius
+                              blurRadius: 1, // blur radius
+                              offset: const Offset(
+                                  0, 2), // changes position of shadow
+                              //first paramerter of offset is left-right
+                              //second parameter is top to down
+                            ),
+                            //you can set more BoxShadow() here
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Icon(Icons.add,
+                                color: Color.fromARGB(255, 241, 228, 255),
+                                size: 25),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              '운동 기록 추가',
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromARGB(255, 241, 228, 255)),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                     const SizedBox(
-                      width: 1,
+                      width: 20,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      //
-                      child: GestureDetector(
-                        onTap: () {
-                          Message4.selectedDay =
-                              selectedDay.toString().substring(0, 10);
-                          analysisDataCheck();
-                        },
-                        child: Container(
-                          width: 150,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color.fromARGB(144, 0, 58, 158),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey
-                                    .withOpacity(0.5), //color of shadow
-                                spreadRadius: 1, //spread radius
-                                blurRadius: 1, // blur radius
-                                offset: const Offset(
-                                    0, 2), // changes position of shadow
-                                //first paramerter of offset is left-right
-                                //second parameter is top to down
-                              ),
-                              //you can set more BoxShadow() here
-                            ],
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(
-                                Icons.bar_chart,
-                                color: Color.fromARGB(255, 237, 237, 255),
-                              ),
-                              SizedBox(
-                                width: 4,
-                              ),
-                              Text(
-                                '분석 결과 보기',
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color.fromARGB(255, 237, 237, 255)),
-                              ),
-                            ],
-                          ),
+                    GestureDetector(
+                      onTap: () {
+                        Message4.selectedDay =
+                            selectedDay.toString().substring(0, 10);
+                        analysisDataCheck();
+                      },
+                      child: Container(
+                        width: 150,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: const Color.fromARGB(144, 0, 58, 158),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey
+                                  .withOpacity(0.5), //color of shadow
+                              spreadRadius: 1, //spread radius
+                              blurRadius: 1, // blur radius
+                              offset: const Offset(
+                                  0, 2), // changes position of shadow
+                              //first paramerter of offset is left-right
+                              //second parameter is top to down
+                            ),
+                            //you can set more BoxShadow() here
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Icon(
+                              Icons.bar_chart,
+                              color: Color.fromARGB(255, 237, 237, 255),
+                            ),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              '분석 결과 보기',
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromARGB(255, 237, 237, 255)),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -258,12 +248,12 @@ class _CalenderState extends State<Calender> {
               ],
             ),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
             data.isEmpty
                 ? const Text('데이터가 없습니다')
                 : SizedBox(
-                    height: 300,
+                    height: 250,
                     child: ListView.builder(
                         shrinkWrap: true,
                         itemCount: data.length,
