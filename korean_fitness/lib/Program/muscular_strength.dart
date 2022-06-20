@@ -241,7 +241,7 @@ late String result;
                     ),
                   ),
                   const SizedBox(
-                    width: 20,
+                    width: 50,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -284,7 +284,7 @@ late String result;
                     ),
                   ),
                   const SizedBox(
-                    width: 20,
+                    width: 50,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -327,7 +327,7 @@ late String result;
                     ),
                   ),
                   const SizedBox(
-                    width: 20,
+                    width: 50,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -372,15 +372,6 @@ late String result;
                       radius: 30,
                     ),
                   ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  const CircleAvatar(
-                      backgroundImage: AssetImage(
-                        'images/star.png',
-                      ),
-                      radius: 30,
-                    ),
                 ],
               ),
             ),
@@ -951,7 +942,7 @@ late String result;
     starList = [];
 
     var url = Uri.parse(
-        "http://localhost:8080/Flutter/fitness/favorite_select.jsp?id=abc&exName=$exName");
+        "http://localhost:8080/Flutter/fitness/favorite_select.jsp?id=${Message.uId}&exName=$exName");
     var response = await http.get(url);
 
     setState(() {
@@ -983,7 +974,7 @@ numList = [];
 
   insertAction(int exName, int exNum) async {
     var url = Uri.parse(
-        'http://localhost:8080/Flutter/fitness/favorite_insert.jsp?id=abc&exName=$exName&exNum=$exNum');
+        'http://localhost:8080/Flutter/fitness/favorite_insert.jsp?id=${Message.uId}&exName=$exName&exNum=$exNum');
     var response = await http.get(url);
     setState(() {
       var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
@@ -996,7 +987,7 @@ numList = [];
 
     deleteAction(int exName, int exNum) async {
     var url = Uri.parse(
-        'http://localhost:8080/Flutter/fitness/favorite_delete.jsp?Id=abc&exName=$exName&exNum=$exNum');
+        'http://localhost:8080/Flutter/fitness/favorite_delete.jsp?Id=${Message.uId}&exName=$exName&exNum=$exNum');
     var response = await http.get(url);
     setState(() {
       var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
