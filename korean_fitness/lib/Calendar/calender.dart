@@ -70,7 +70,7 @@ class _CalenderState extends State<Calender> {
     getAnalysisData();
   }
 
-  GoogleSignIn _googleSignIn = GoogleSignIn(
+  GoogleSignIn googleSignIn = GoogleSignIn(
     // Optional clientId
     // clientId: '479882132969-9i9aqik3jfjd7qhci1nqf0bm2g71rm1u.apps.googleusercontent.com',
     scopes: <String>[
@@ -85,7 +85,7 @@ class _CalenderState extends State<Calender> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-           elevation: 0,
+        elevation: 0,
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -159,7 +159,7 @@ class _CalenderState extends State<Calender> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -524,7 +524,7 @@ class _CalenderState extends State<Calender> {
                 final SharedPreferences sharedPreferences =
                     await SharedPreferences.getInstance();
                 sharedPreferences.remove("id");
-                _handleSignOut();
+                handleSignOut();
                 Navigator.pushNamed(context, '/Log_in');
               },
               leading: const Icon(
@@ -584,8 +584,6 @@ class _CalenderState extends State<Calender> {
       getAnalysisDataAllDate();
     });
   }
-
-
 
   Future getAnalysisDataAllDate() async {
     allAnalysisData.clear();
@@ -684,7 +682,7 @@ class _CalenderState extends State<Calender> {
     }
   }
 
-  Future<void> _handleSignOut() => _googleSignIn.disconnect();
+  Future<void> handleSignOut() => googleSignIn.disconnect();
 
   Future getData() async {
     final SharedPreferences sharedPreferences =
