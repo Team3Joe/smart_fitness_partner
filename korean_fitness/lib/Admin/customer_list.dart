@@ -20,6 +20,9 @@ class _CustomerListState extends State<CustomerList> {
 
   late int uQuitCount; // 탈퇴자 수 세기
 
+  late int uQuitDatePassed;
+  DateTime today = DateTime.now();
+
   @override
   void initState() {
     super.initState();
@@ -27,8 +30,9 @@ class _CustomerListState extends State<CustomerList> {
     search = '';
     uId = '';
     data = [];
-    uQuitCount = 0;
     getJSONData();
+    uQuitCount = 0;
+    uQuitDatePassed;
   }
 
   @override
@@ -167,7 +171,7 @@ class _CustomerListState extends State<CustomerList> {
                   ),
                   SingleChildScrollView(
                     child: SizedBox(
-                      height: (data.length - uQuitCount) * 45 -
+                      height: (data.length - uQuitCount) * 35 -
                           MediaQuery.of(context).viewInsets.bottom,
                       // 키보드 올라오는 공간 고려
                       child: ListView.builder(
@@ -201,7 +205,7 @@ class _CustomerListState extends State<CustomerList> {
                                                     child: Text(
                                                       data[index]['uId'],
                                                       style: const TextStyle(
-                                                        fontSize: 20,
+                                                        fontSize: 15,
                                                       ),
                                                     ),
                                                   ),
@@ -236,7 +240,7 @@ class _CustomerListState extends State<CustomerList> {
                                               child: const Text(
                                                 '탈퇴',
                                                 style: TextStyle(
-                                                  fontSize: 15,
+                                                  fontSize: 20,
                                                 ),
                                               ),
                                             ),
@@ -306,7 +310,7 @@ class _CustomerListState extends State<CustomerList> {
                   ),
                   SingleChildScrollView(
                     child: SizedBox(
-                      height: uQuitCount * 45 -
+                      height: uQuitCount * 35 -
                           MediaQuery.of(context).viewInsets.bottom,
                       // 키보드 올라오는 공간 고려
                       child: ListView.builder(
@@ -339,7 +343,7 @@ class _CustomerListState extends State<CustomerList> {
                                                     child: Text(
                                                       data[index]['uId'],
                                                       style: const TextStyle(
-                                                        fontSize: 20,
+                                                        fontSize: 15,
                                                       ),
                                                     ),
                                                   ),
@@ -369,12 +373,24 @@ class _CustomerListState extends State<CustomerList> {
                                               ),
                                               onPressed: () {
                                                 uId = data[index]['uId'];
-                                                signOutShowDialog(context);
+                                                // 탈퇴후 3년 지나야 삭제 가능
+                                                uQuitDatePassed = int.parse(
+                                                    today
+                                                        .difference(DateTime
+                                                            .parse(data[index]
+                                                                ['uQuitDate']))
+                                                        .inDays
+                                                        .toString());
+                                                if (uQuitDatePassed > 365 * 3) {
+                                                  deleteShowDialog(context);
+                                                } else {
+                                                  cantDeleteAlert(context);
+                                                }
                                               },
                                               child: const Text(
-                                                '탈퇴',
+                                                '삭제',
                                                 style: TextStyle(
-                                                  fontSize: 15,
+                                                  fontSize: 20,
                                                 ),
                                               ),
                                             ),
@@ -402,7 +418,6 @@ class _CustomerListState extends State<CustomerList> {
 
   // Functions
   Future getJSONData() async {
-    uQuitCount = 0;
     // 비동기 방식 async : 동시에 실행되고
     var url = Uri.parse(
         'http://localhost:8080/Flutter/fitness/customer_list_select.jsp?search=$search');
@@ -413,6 +428,7 @@ class _CustomerListState extends State<CustomerList> {
     // body 자체로는 decode하지 못한다 : bodyBytes
     List result = dataConvertedJSON['results'];
     setState(() {
+      uQuitCount = 0;
       data = []; // 초기화 안하면 계속 누적되어서 출력된다.
       data.addAll(result);
       // 탈퇴자 수 세기
@@ -430,7 +446,7 @@ class _CustomerListState extends State<CustomerList> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('회원 탈퇴'),
-            content: const Text('정말로 탈퇴하시겠습니까?'),
+            content: const Text('정말로 탈퇴시키겠습니까?'),
             actions: [
               TextButton(
                 onPressed: () {
@@ -453,13 +469,58 @@ class _CustomerListState extends State<CustomerList> {
 
   signOutAction() async {
     var url = Uri.parse(
-        'http://localhost:8080/Flutter/fitness/admin_sign_out_update.jsp?uId?$uId');
+        'http://localhost:8080/Flutter/fitness/admin_sign_out_update.jsp?uId=$uId');
     var response = await http.get(url);
     var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
     setState(() {
       String result = dataConvertedJSON['result'];
       if (result == 'OK') {
         Navigator.pop(context);
+        getJSONData();
+      } else {
+        errorSnackBar(context);
+      }
+    });
+  }
+
+  deleteShowDialog(BuildContext context) {
+    // uQuitDate-today
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('회원 삭제'),
+            content: const Text('정말로 삭제하시겠습니까?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  deleteAction();
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/Customer_list');
+                },
+                child: const Text('예'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('아니오'),
+              ),
+            ],
+          );
+        });
+  }
+
+  deleteAction() async {
+    var url = Uri.parse(
+        'http://localhost:8080/Flutter/fitness/admin_delete.jsp?uId=$uId');
+    var response = await http.get(url);
+    var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+    setState(() {
+      String result = dataConvertedJSON['result'];
+      if (result == 'OK') {
+        Navigator.pop(context);
+        getJSONData();
       } else {
         errorSnackBar(context);
       }
@@ -471,6 +532,16 @@ class _CustomerListState extends State<CustomerList> {
       const SnackBar(
         content: Text('문제가 발생 하였습니다.'),
         duration: Duration(seconds: 1),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
+  cantDeleteAlert(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('탈퇴 후 3년이 지나야 삭제가능합니다.\n현재 $uQuitDatePassed 일이 지났습니다.'),
+        duration: const Duration(seconds: 2),
         backgroundColor: Colors.red,
       ),
     );
