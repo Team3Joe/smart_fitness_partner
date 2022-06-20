@@ -92,7 +92,7 @@ class MyApp extends StatelessWidget {
             '/Customer_service': (context) => const CustomerService(),
             '/Privacy_policy': (context) => const PrivacyPolicy(),
           },
-          initialRoute: '/Mainpage',
+          initialRoute: '/loading',
         );
       },
     );
