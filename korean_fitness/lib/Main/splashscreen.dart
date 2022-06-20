@@ -31,7 +31,7 @@ class _SplashPageState extends State<SplashPage> {
   Future getData() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
-    var obitainedId = sharedPreferences.getString('id');
+    var obitainedId = sharedPreferences.getString(' id');
     var obitainedName = sharedPreferences.getString('name');
     var obitainedEmail = sharedPreferences.getString('email');
 

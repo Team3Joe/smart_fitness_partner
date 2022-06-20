@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:animated_card/animated_card.dart';
@@ -9,12 +10,15 @@ import 'package:korean_fitness/message5.dart';
 import 'package:reveal_card/reveal_card.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class MuscularStrength extends StatefulWidget {
   final List<exercise> listM;
   final List<exercise> listC;
   final List<exercise> listF;
   final List<exercise> listS;
+
+
   const MuscularStrength({
     Key? key,
     required this.listM,
@@ -53,11 +57,27 @@ class _MuscularStrengthState extends State<MuscularStrength> {
   late double jump5;
   late Curve cu; //!@
   late int num;
+  late int page;
+  late List numList;
+
+ late List starM;
+ late List starC;
+ late List starF;
+ late List starS;
+
+ late List starList;
+
+late String result;
+ 
+ 
+
   var lista = List.generate(50, (index) => index);
 
   @override
   void initState() {
-    super.initState();
+
+  page = 1;
+
     type = '근력';
     col = Colors.orange;
     col2 = Color.fromARGB(150, 43, 9, 0);
@@ -81,8 +101,26 @@ class _MuscularStrengthState extends State<MuscularStrength> {
     jump3 = 30;
     jump4 = 30;
     jump5 = 10;
+
+  
+
     cu = Curves.easeInOutBack;
     num = 900;
+
+    starM = [false,false,false,false,false,false,false,false,false,false,false,false];
+    starC = [false,false,false,false,false,false,false,false,false,false,false,false];
+    starF = [false,false,false,false,false,false,false,false,false,false,false,false];
+    starS = [false,false,false,false,false,false,false,false,false,false,false,false];
+    
+    starList = []; 
+    numList = [];
+
+    favoriteGetJSONData(1);
+
+    super.initState();
+
+
+    
   }
 
   GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -116,7 +154,11 @@ class _MuscularStrengthState extends State<MuscularStrength> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
+                        page = 1;
                         listX = widget.listM;
+                        starList = starM;
+                        print("abc");
+                        favoriteGetJSONData(1);
                         type = '근력';
                         col = Color.fromARGB(150, 43, 9, 0);
                         col2 = Colors.orange;
@@ -156,7 +198,10 @@ class _MuscularStrengthState extends State<MuscularStrength> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
+                        page = 2;
                         listX = widget.listC;
+                        starList = starC;
+                        favoriteGetJSONData(2);
                         type = '심폐지구력';
                         col = Color.fromARGB(149, 0, 43, 23);
                         col2 = Colors.lightGreen;
@@ -196,7 +241,10 @@ class _MuscularStrengthState extends State<MuscularStrength> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
+                           page = 3;
                         listX = widget.listF;
+                        starList = starF;
+                        favoriteGetJSONData(3);
                         type = '유연성';
                         col = Color.fromARGB(149, 1, 0, 43);
                         col2 = Colors.lightBlueAccent;
@@ -236,7 +284,13 @@ class _MuscularStrengthState extends State<MuscularStrength> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
+                       
                         listX = widget.listS;
+                        starList = starS;
+                         favoriteGetJSONData(4);
+                        print("S : $starS");
+                        print(starList);
+                        page = 4;
                         type = '순발력';
                         col = Color.fromARGB(255, 90, 4, 101);
                         col2 = Colors.pinkAccent;
@@ -687,10 +741,19 @@ class _MuscularStrengthState extends State<MuscularStrength> {
                                     const SizedBox(
                                       width: 15,
                                     ),
-                                    StarButton(
-                                      isStarred: false,
+                                    Checkbox(
+                                      value: numList.contains(position) == true ? true : false,
                                       // iconDisabledColor: Colors.white,
-                                      valueChanged: (_isStarred) {},
+                                      onChanged: (_isStarred) {
+                                        
+                                        if (_isStarred == true){
+                                          insertAction(page, position);
+                                          
+                                        }else{
+                                          deleteAction(page, position);
+                                        }
+                                                                  
+                                      },
                                     )
                                   ],
                                 ),
@@ -822,5 +885,79 @@ class _MuscularStrengthState extends State<MuscularStrength> {
             ],
           );
         });
+
+
+        
   }
+
+    Future<bool> favoriteGetJSONData(int exName) async {
+    // showDialog(
+    //   context: context,
+    //   builder: (context) {
+    //     return Center(child: CircularProgressIndicator());
+    //   },
+    // );
+
+    starList = [];
+
+    var url = Uri.parse(
+        "http://localhost:8080/Flutter/fitness/favorite_select.jsp?id=abc&exName=$exName");
+    var response = await http.get(url);
+
+    setState(() {
+      var dataConvertedJSOn = json.decode(utf8.decode(response.bodyBytes));
+
+      List result = dataConvertedJSOn['results'];
+
+      starList.addAll(result);
+    
+numList = [];
+
+    for (int i = 0; i < starList.length; i++ ){
+ numList.add(starList[i]['exNum']);
+
+}
+
+    });
+
+
+
+
+    //  print(double.parse(Message3.mLatitude));
+
+    // print(result);
+
+
+    return true;
+  }
+
+  insertAction(int exName, int exNum) async {
+    var url = Uri.parse(
+        'http://localhost:8080/Flutter/fitness/favorite_insert.jsp?id=abc&exName=$exName&exNum=$exNum');
+    var response = await http.get(url);
+    setState(() {
+      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      result = dataConvertedJSON['result'];
+
+  
+    });
+    favoriteGetJSONData(page);
+  }
+
+    deleteAction(int exName, int exNum) async {
+    var url = Uri.parse(
+        'http://localhost:8080/Flutter/fitness/favorite_delete.jsp?Id=abc&exName=$exName&exNum=$exNum');
+    var response = await http.get(url);
+    setState(() {
+      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      result = dataConvertedJSON['result'];
+
+  
+    });
+    favoriteGetJSONData(page);
+  }
+
+
+
+  
 }
