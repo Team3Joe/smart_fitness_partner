@@ -24,6 +24,8 @@ class _SignUpState extends State<SignUp> {
   late String birth;
   late String email;
   late String result;
+  late bool DuplicatedFinish;
+  late List data;
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -35,16 +37,20 @@ class _SignUpState extends State<SignUp> {
     nameController = TextEditingController();
     birthController = TextEditingController();
     emailController = TextEditingController();
+    data = [];
+    getJSONData();
+
+    DuplicatedFinish = false;
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-         FocusScope.of(context).unfocus();
+        FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
+          backgroundColor: Colors.white,
           appBar: AppBar(
             foregroundColor: Color.fromARGB(255, 164, 154, 239),
             title: const Text(
@@ -95,9 +101,47 @@ class _SignUpState extends State<SignUp> {
                               ),
                             ),
                             keyboardType: TextInputType.text,
-                            cursorColor: const Color.fromARGB(255, 164, 154, 239),
+                            cursorColor:
+                                const Color.fromARGB(255, 164, 154, 239),
                           ),
                         ),
+                        ElevatedButton(
+                            onPressed: () {
+                              id = idController.text;
+                              bool isDuplicated = false;
+                              bool isIdEmpty = false;
+                              for (int i = 0; i < data.length; i++) {
+                                if (data[i]['uId'] == id) {
+                                  errorSnackBar_id(context);
+                                  isDuplicated = true;
+                                  isIdEmpty = false;
+                                  idController.text = '';
+                                }
+                              }
+                              if (id.isEmpty) {
+                                isDuplicated = true;
+                                isIdEmpty = true;
+                                errorSnackBar_idEmpty(context);
+                              }
+
+                              if ((id.length < 4 || id.length > 15 )&& !isIdEmpty) {
+                                errorSnackBar_idCheck(context);
+                                isDuplicated = true;
+                              }
+
+                              if (!isDuplicated) {
+                                allowSnackBar_id(context);
+                                DuplicatedFinish = true;
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: const Color.fromARGB(255, 139, 128, 222),
+                              minimumSize: const Size(80, 40),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            child: const Text('중복체크'))
                       ],
                     ),
                   ),
@@ -128,7 +172,8 @@ class _SignUpState extends State<SignUp> {
                             ),
                             obscureText: true,
                             keyboardType: TextInputType.text,
-                            cursorColor: const Color.fromARGB(255, 164, 154, 239),
+                            cursorColor:
+                                const Color.fromARGB(255, 164, 154, 239),
                           ),
                         ),
                       ],
@@ -160,7 +205,8 @@ class _SignUpState extends State<SignUp> {
                               ),
                             ),
                             keyboardType: TextInputType.text,
-                            cursorColor: const Color.fromARGB(255, 164, 154, 239),
+                            cursorColor:
+                                const Color.fromARGB(255, 164, 154, 239),
                           ),
                         ),
                       ],
@@ -192,7 +238,8 @@ class _SignUpState extends State<SignUp> {
                               ),
                             ),
                             keyboardType: TextInputType.number,
-                            cursorColor: const Color.fromARGB(255, 164, 154, 239),
+                            cursorColor:
+                                const Color.fromARGB(255, 164, 154, 239),
                           ),
                         ),
                       ],
@@ -224,7 +271,8 @@ class _SignUpState extends State<SignUp> {
                               ),
                             ),
                             keyboardType: TextInputType.emailAddress,
-                            cursorColor: const Color.fromARGB(255, 164, 154, 239),
+                            cursorColor:
+                                const Color.fromARGB(255, 164, 154, 239),
                           ),
                         ),
                       ],
@@ -240,7 +288,11 @@ class _SignUpState extends State<SignUp> {
                         name = nameController.text;
                         birth = birthController.text;
                         email = emailController.text;
+                          if(DuplicatedFinish == false){
+                         errorSnackBar_Duplicated(context);
+                         }else{
                         _Validation();
+                         }
                       },
                       style: ElevatedButton.styleFrom(
                         primary: const Color.fromARGB(255, 139, 128, 222),
@@ -258,37 +310,49 @@ class _SignUpState extends State<SignUp> {
   }
 
   // --- Functions
+
+  Future getJSONData() async {
+    data.clear();
+    var url = Uri.parse(
+        "http://localhost:8080/Flutter/fitness/id_Duplicate_Check.jsp?");
+    var response = await http.get(url);
+    setState(() {
+      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+      //키값
+      List value = dataConvertedJSON['results'];
+      //데이터에 넣기
+      data.addAll(value);
+    });
+  }
+
   _Validation() {
     final id = idController.text;
     final pw = pwController.text;
     final name = nameController.text;
     final birth = birthController.text;
     final email = emailController.text;
-
-    if (id.length > 4 && id.length < 15) {
-      if (RegExp(r'^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$')
-          .hasMatch(pw)) {
-        if (name.length > 2 && name.length < 15) {
-          if (birth.length == 8) {
-            if (RegExp(
-                    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-                .hasMatch(email)) {
-              _showDialog(context);
-            } else {
-              errorSnackBar_Email(context);
-            }
+  
+    if (RegExp(r'^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$')
+        .hasMatch(pw)) {
+      if (name.length > 2 && name.length < 15) {
+        if (birth.length == 8) {
+          if (RegExp(
+                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+              .hasMatch(email)) {
+            _showDialog(context);
           } else {
-            errorSnackBar_birth(context);
+            errorSnackBar_Email(context);
           }
         } else {
-          errorSnackBar_name(context);
+          errorSnackBar_birth(context);
         }
       } else {
-        errorSnackBar_pw(context);
+        errorSnackBar_name(context);
       }
     } else {
-      errorSnackBar_id(context);
+      errorSnackBar_pw(context);
     }
+    
   }
 
   _showDialog(BuildContext ctx) {
@@ -369,6 +433,15 @@ class _SignUpState extends State<SignUp> {
       const SnackBar(
         content: Text("\t\t\t\t사용가능한 아이디입니다."),
         duration: Duration(seconds: 2),
+        backgroundColor: Colors.green,
+      ),
+    );
+  }
+  errorSnackBar_Duplicated(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("\t\t\t\t아이디 중복체크를 해주세요!"),
+        duration: Duration(seconds: 2),
         backgroundColor: Colors.red,
       ),
     );
@@ -377,7 +450,27 @@ class _SignUpState extends State<SignUp> {
   errorSnackBar_id(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text("\t\t\t\t중복된 아이디입니다..\n\t\t\t다른 아이디를 사용해주세요."),
+        content: Text("\t\t\t\t중복된 아이디입니다.\n\t\t\t다른 아이디를 사용해주세요."),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
+  errorSnackBar_idCheck(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("아이디를 4자 이상 15자 이내로 입력해주세요!"),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
+  errorSnackBar_idEmpty(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("아이디를 입력해주세요!"),
         duration: Duration(seconds: 2),
         backgroundColor: Colors.red,
       ),
