@@ -445,12 +445,12 @@ class _LogInState extends State<LogIn> {
           } else if (admin == 1) {
             return AlertDialog(
               title: const Text(
-                '관리자 로그인 성공!',
+                '관리자 확인',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              content: const Text('관리자로 로그인했습니다.'),
+              content: const Text('관리자 계정으로 로그인합니다.'),
               actions: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: Colors.blueGrey),
