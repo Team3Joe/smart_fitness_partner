@@ -67,6 +67,7 @@ class _LogInState extends State<LogIn> {
         sharedPreferences.setString('name', user.displayName.toString());
         sharedPreferences.setString('email', user.email.toString());
         Get.to(const SplashPage());
+        
       }
       if (_currentUser != null) {
         _handleGetContact(_currentUser!);
