@@ -163,220 +163,219 @@ class _LogInState extends State<LogIn> {
         child: Scaffold(
           backgroundColor: Colors.white,
           body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "LOGIN",
-                  style: TextStyle(
-                    fontSize: 50,
-                    color: Color.fromARGB(255, 47, 40, 100),
-                    fontWeight: FontWeight.w600,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "LOGIN",
+                    style: TextStyle(
+                      fontSize: 50,
+                      color: Color.fromARGB(255, 47, 40, 100),
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(70, 0, 70, 0),
-                      child: TextField(
-                        controller: idController,
-                        decoration: const InputDecoration(
-                          labelText: 'ID | ',
-                          hintText: 'ID를 입력하세요(Enter your ID)',
-                          filled: true,
-                          fillColor: Color.fromARGB(225, 255, 255, 255),
-                          labelStyle: TextStyle(
-                            color: Color.fromARGB(255, 69, 41, 152),
-                          ),
-                          hintStyle: TextStyle(
-                              color: Color.fromARGB(159, 101, 71, 191),
-                              fontSize: 14),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(25.0)),
-                            borderSide: BorderSide(
-                                width: 2.5,
-                                color: Color.fromARGB(255, 61, 51, 133)),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20.0)),
-                            borderSide: BorderSide(
-                                width: 2,
-                                color: Color.fromARGB(255, 91, 80, 177)),
-                          ),
-                        ),
-                        keyboardType: TextInputType.text,
-                        cursorColor: const Color.fromARGB(255, 164, 154, 239),
-                        onChanged: (value) {
-                          //
-                        },
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 50,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(70, 0, 70, 0),
-                      child: TextField(
-                        controller: pwController,
-                        decoration: const InputDecoration(
-                          labelText: 'PW | ',
-                          hintText: 'PW를 입력하세요(Enter your PW)',
-                          filled: true,
-                          fillColor: Color.fromARGB(220, 255, 255, 255),
-                          labelStyle: TextStyle(
-                            color: Color.fromARGB(255, 69, 41, 152),
-                          ),
-                          hintStyle: TextStyle(
-                              color: Color.fromARGB(159, 101, 71, 191),
-                              fontSize: 14),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(25.0)),
-                            borderSide: BorderSide(
-                                width: 2.5,
-                                color: Color.fromARGB(255, 61, 51, 133)),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20.0)),
-                            borderSide: BorderSide(
-                                width: 2,
-                                color: Color.fromARGB(255, 91, 80, 177)),
-                          ),
-                        ),
-                        keyboardType: TextInputType.text,
-                        obscureText: true,
-                        cursorColor: const Color.fromARGB(255, 164, 154, 239),
-                        onChanged: (value) {
-                          //
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: const Color.fromARGB(255, 102, 90, 190),
-                        minimumSize: const Size(100, 46),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                      onPressed: () {
-                        if (idController.text.trim().isEmpty) {
-                          emptyID(context);
-                        } else if (pwController.text.trim().isEmpty) {
-                          emptyPW(context);
-                        } else {
-                          setState(() {
-                            id = idController.text.trim();
-                            pw = pwController.text.trim();
-                          });
-                          _getJSONData()
-                              .then((value) => logInCheck(context)); // data 오류
-                        }
-                      },
-                      child: const Text(
-                        '로그인',
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 226, 207, 255),
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          '아직 회원이 아니신가요?',
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 23, 0, 60),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        SizedBox(
-                          height: 40,
-                          child: TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/Sign_up');
-                            },
-                            child: const Text(
-                              '회원가입 하기',
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(70, 0, 70, 0),
+                        child: TextField(
+                          controller: idController,
+                          decoration: const InputDecoration(
+                            labelText: 'ID | ',
+                            hintText: 'ID를 입력하세요(Enter your ID)',
+                            filled: true,
+                            fillColor: Color.fromARGB(225, 255, 255, 255),
+                            labelStyle: TextStyle(
+                              color: Color.fromARGB(255, 69, 41, 152),
+                            ),
+                            hintStyle: TextStyle(
+                                color: Color.fromARGB(159, 101, 71, 191),
+                                fontSize: 14),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25.0)),
+                              borderSide: BorderSide(
+                                  width: 2.5,
+                                  color: Color.fromARGB(255, 61, 51, 133)),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0)),
+                              borderSide: BorderSide(
+                                  width: 2,
+                                  color: Color.fromARGB(255, 91, 80, 177)),
                             ),
                           ),
+                          keyboardType: TextInputType.text,
+                          cursorColor: const Color.fromARGB(255, 164, 154, 239),
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 35,
-                      child: Row(
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(70, 0, 70, 0),
+                        child: TextField(
+                          controller: pwController,
+                          decoration: const InputDecoration(
+                            labelText: 'PW | ',
+                            hintText: 'PW를 입력하세요(Enter your PW)',
+                            filled: true,
+                            fillColor: Color.fromARGB(220, 255, 255, 255),
+                            labelStyle: TextStyle(
+                              color: Color.fromARGB(255, 69, 41, 152),
+                            ),
+                            hintStyle: TextStyle(
+                                color: Color.fromARGB(159, 101, 71, 191),
+                                fontSize: 14),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25.0)),
+                              borderSide: BorderSide(
+                                  width: 2.5,
+                                  color: Color.fromARGB(255, 61, 51, 133)),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0)),
+                              borderSide: BorderSide(
+                                  width: 2,
+                                  color: Color.fromARGB(255, 91, 80, 177)),
+                            ),
+                          ),
+                          keyboardType: TextInputType.text,
+                          obscureText: true,
+                          cursorColor: const Color.fromARGB(255, 164, 154, 239),
+                          onChanged: (value) {
+                            //
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: const Color.fromARGB(255, 102, 90, 190),
+                          minimumSize: const Size(100, 46),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                        onPressed: () {
+                          if (idController.text.trim().isEmpty) {
+                            emptyID(context);
+                          } else if (pwController.text.trim().isEmpty) {
+                            emptyPW(context);
+                          } else {
+                            setState(() {
+                              id = idController.text.trim();
+                              pw = pwController.text.trim();
+                            });
+                            _getJSONData().then(
+                                (value) => logInCheck(context)); // data 오류
+                          }
+                        },
+                        child: const Text(
+                          '로그인',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 226, 207, 255),
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/Find_id');
-                            },
-                            child: const Text(
-                              '아이디 찾기',
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600),
-                            ),
+                          const Text(
+                            '아직 회원이 아니신가요?',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 23, 0, 60),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500),
                           ),
-                          const SizedBox(
-                            width: 35,
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/Find_pw');
-                            },
-                            child: const Text(
-                              '비밀번호 찾기',
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600),
+                          SizedBox(
+                            height: 40,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/Sign_up');
+                              },
+                              child: const Text(
+                                '회원가입 하기',
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600),
+                              ),
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _handleSignIn(context); //Google-Log-In
-                    // handleSignOut();//Google-Log-Out
-                  },
-                  child: Image.asset(
-                    "images/google-signin-button.png",
-                    width: 450,
-                    height: 65,
+                      SizedBox(
+                        height: 35,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/Find_id');
+                              },
+                              child: const Text(
+                                '아이디 찾기',
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 35,
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/Find_pw');
+                              },
+                              child: const Text(
+                                '비밀번호 찾기',
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                )
-              ],
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      _handleSignIn(context); //Google-Log-In
+                      // handleSignOut();//Google-Log-Out
+                    },
+                    child: Image.asset(
+                      "images/google-signin-button.png",
+                      width: 450,
+                      height: 65,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -454,16 +453,18 @@ class _LogInState extends State<LogIn> {
               content: const Text('관리자로 로그인했습니다.'),
               actions: [
                 ElevatedButton(
-                    onPressed: () async {
-                      Message.uId = data[0]['uId'];
-                      Message.uPw = data[0]['uPw'];
-                      Message.uName = data[0]['uName'];
-                      Message.uBirth = data[0]['uBirth'];
-                      Message.uEmail = data[0]['uEmail'];
-                      Navigator.popUntil(context, (route) => false); // 뒤로가기 없애기
-                      Navigator.pushNamed(context, '/Customer_list');
-                    },
-                    child: const Text('OK'))
+                  style: ElevatedButton.styleFrom(primary: Colors.blueGrey),
+                  onPressed: () async {
+                    Message.uId = data[0]['uId'];
+                    Message.uPw = data[0]['uPw'];
+                    Message.uName = data[0]['uName'];
+                    Message.uBirth = data[0]['uBirth'];
+                    Message.uEmail = data[0]['uEmail'];
+                    Navigator.popUntil(context, (route) => false); // 뒤로가기 없애기
+                    Navigator.pushNamed(context, '/Customer_list');
+                  },
+                  child: const Text('OK'),
+                )
               ],
             );
           } else {

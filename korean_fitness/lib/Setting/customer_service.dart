@@ -56,10 +56,11 @@ class _CustomerServiceState extends State<CustomerService> {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             SingleChildScrollView(
               child: SizedBox(
-                height: 600 - MediaQuery.of(context).viewInsets.bottom,
+                height: 580 - MediaQuery.of(context).viewInsets.bottom,
                 // 키보드 올라오는 공간 고려
                 child: ListView.builder(
                   itemBuilder: (context, index) {
@@ -104,6 +105,7 @@ class _CustomerServiceState extends State<CustomerService> {
                 SizedBox(
                   width: 250,
                   child: TextField(
+                    expands: true,
                     autocorrect: false,
                     controller: sendField,
                     onSubmitted: (value) {

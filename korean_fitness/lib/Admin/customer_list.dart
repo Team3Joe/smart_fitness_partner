@@ -32,7 +32,7 @@ class _CustomerListState extends State<CustomerList> {
     data = [];
     getJSONData();
     uQuitCount = 0;
-    uQuitDatePassed;
+    uQuitDatePassed = 0;
   }
 
   @override
@@ -53,6 +53,7 @@ class _CustomerListState extends State<CustomerList> {
             padding: const EdgeInsets.all(15.0),
             child: SingleChildScrollView(
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -540,7 +541,8 @@ class _CustomerListState extends State<CustomerList> {
   cantDeleteAlert(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('탈퇴 후 3년이 지나야 삭제가능합니다.\n현재 $uQuitDatePassed 일이 지났습니다.'),
+        content: Text(
+            '탈퇴 후 3년이 지나야 가능합니다.\n앞으로 ${365 * 3 - uQuitDatePassed} 일이 남았습니다.'),
         duration: const Duration(seconds: 2),
         backgroundColor: Colors.red,
       ),
