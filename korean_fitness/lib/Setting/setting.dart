@@ -71,7 +71,7 @@ class _SettingState extends State<Setting> {
                     width: 350,
                     height: 70,
                     child: Card(
-                      color: Color.fromARGB(134, 182, 167, 239),
+                      color: const Color.fromARGB(134, 182, 167, 239),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -81,11 +81,11 @@ class _SettingState extends State<Setting> {
                             ),
                             Icon(
                               Icons.circle,
-                              size: 15,
+                              size: 13,
                               // color: Color.fromARGB(186, 30, 22, 56),
                             ),
                             SizedBox(
-                              width: 20,
+                              width: 30,
                             ),
                             Text(
                               '도움말',
@@ -103,7 +103,7 @@ class _SettingState extends State<Setting> {
                   ),
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 GestureDetector(
                   onTap: (() {
@@ -113,7 +113,7 @@ class _SettingState extends State<Setting> {
                     width: 350,
                     height: 70,
                     child: Card(
-                      color: const Color.fromARGB(100, 158, 145, 203),
+                      color: const Color.fromARGB(134, 182, 167, 239),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -123,11 +123,11 @@ class _SettingState extends State<Setting> {
                             ),
                             Icon(
                               Icons.circle,
-                              size: 15,
-                              //color: Color.fromARGB(186, 30, 22, 56),
+                              size: 13,
+                              // color: Color.fromARGB(186, 30, 22, 56),
                             ),
                             SizedBox(
-                              width: 20,
+                              width: 30,
                             ),
                             Text(
                               '고객센터',
@@ -145,13 +145,13 @@ class _SettingState extends State<Setting> {
                   ),
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 SizedBox(
                   width: 350,
                   height: 70,
                   child: Card(
-                    color: const Color.fromARGB(100, 158, 145, 203),
+                    color: const Color.fromARGB(134, 182, 167, 239),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -160,12 +160,12 @@ class _SettingState extends State<Setting> {
                             width: 20,
                           ),
                           const Icon(
-                            Icons.circle,
-                            size: 15,
-                            //color: Color.fromARGB(186, 30, 22, 56),
-                          ),
+                              Icons.circle,
+                              size: 13,
+                              // color: Color.fromARGB(186, 30, 22, 56),
+                            ),
                           const SizedBox(
-                            width: 20,
+                            width: 30,
                           ),
                           const Text(
                             '다크모드',
@@ -202,7 +202,7 @@ class _SettingState extends State<Setting> {
                   ),
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -212,7 +212,7 @@ class _SettingState extends State<Setting> {
                     width: 350,
                     height: 70,
                     child: Card(
-                      color: Color.fromARGB(134, 182, 167, 239),
+                      color: const Color.fromARGB(134, 182, 167, 239),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -222,11 +222,11 @@ class _SettingState extends State<Setting> {
                             ),
                             Icon(
                               Icons.circle,
-                              size: 15,
-                              //color: Color.fromARGB(186, 30, 22, 56),
+                              size: 13,
+                              // color: Color.fromARGB(186, 30, 22, 56),
                             ),
                             SizedBox(
-                              width: 20,
+                              width: 30,
                             ),
                             Text(
                               '버전 확인',
@@ -244,7 +244,7 @@ class _SettingState extends State<Setting> {
                   ),
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -254,7 +254,7 @@ class _SettingState extends State<Setting> {
                     width: 350,
                     height: 70,
                     child: Card(
-                      color: const Color.fromARGB(100, 158, 145, 203),
+                      color: const Color.fromARGB(134, 182, 167, 239),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -264,11 +264,11 @@ class _SettingState extends State<Setting> {
                             ),
                             Icon(
                               Icons.circle,
-                              size: 15,
-                              //color: Color.fromARGB(186, 30, 22, 56),
+                              size: 13,
+                              // color: Color.fromARGB(186, 30, 22, 56),
                             ),
                             SizedBox(
-                              width: 20,
+                              width: 30,
                             ),
                             Text(
                               '이용약관 & 개인정보 보호방침',
