@@ -184,89 +184,88 @@ class _CustomerListState extends State<CustomerList> {
                       ),
                     ],
                   ),
-                  SingleChildScrollView(
-                    child: SizedBox(
-                      height: (data.length - uQuitCount) * 35 -
-                          MediaQuery.of(context).viewInsets.bottom,
-                      // 키보드 올라오는 공간 고려
-                      child: ListView.builder(
-                        itemBuilder: (context, index) {
-                          return data.isEmpty
-                              ? const Text('데이터가 없습니다.')
-                              : data[index]['uQuit'] == 0
-                                  ? GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                AdminCustomerService(
-                                                    uId: data[index]['uId']),
-                                          ),
-                                        );
-                                      },
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                            height: 50,
-                                            child: Card(
-                                              child: Row(
-                                                children: [
-                                                  const SizedBox(
-                                                    width: 15,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 175,
-                                                    child: Text(
-                                                      data[index]['uId'],
-                                                      style: const TextStyle(
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 15,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 75,
-                                                    child: Text(
-                                                      data[index]['uName'],
-                                                      style: const TextStyle(
-                                                        fontSize: 20,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 40,
-                                            child: ElevatedButton(
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all(
-                                                        Colors.blueGrey),
-                                              ),
-                                              onPressed: () {
-                                                uId = data[index]['uId'];
-                                                signOutShowDialog(context);
-                                              },
-                                              child: const Text(
-                                                '탈퇴',
-                                                style: TextStyle(
-                                                  fontSize: 20,
+                  SizedBox(
+                    height: (data.length - uQuitCount) * 45,
+                    // 키보드 올라오는 공간 고려
+                    child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        return data.isEmpty
+                            ? const Text('데이터가 없습니다.')
+                            : data[index]['uQuit'] == 0
+                                ? GestureDetector(
+                                    onTap: () {
+                                      Message.uQuit =
+                                          0; // customer_service에서 uquit을 받기 위함
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              AdminCustomerService(
+                                                  uId: data[index]['uId']),
+                                        ),
+                                      );
+                                    },
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          height: 50,
+                                          child: Card(
+                                            child: Row(
+                                              children: [
+                                                const SizedBox(
+                                                  width: 15,
                                                 ),
+                                                SizedBox(
+                                                  width: 175,
+                                                  child: Text(
+                                                    data[index]['uId'],
+                                                    style: const TextStyle(
+                                                      fontSize: 15,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 15,
+                                                ),
+                                                SizedBox(
+                                                  width: 75,
+                                                  child: Text(
+                                                    data[index]['uName'],
+                                                    style: const TextStyle(
+                                                      fontSize: 20,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 40,
+                                          child: ElevatedButton(
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      Colors.blueGrey),
+                                            ),
+                                            onPressed: () {
+                                              uId = data[index]['uId'];
+                                              signOutShowDialog(context);
+                                            },
+                                            child: const Text(
+                                              '탈퇴',
+                                              style: TextStyle(
+                                                fontSize: 20,
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    )
-                                  : const SizedBox();
-                        },
-                        itemCount: data.length - uQuitCount,
-                      ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : const SizedBox();
+                      },
+                      itemCount: data.length - uQuitCount,
                     ),
                   ),
                   const SizedBox(
@@ -323,100 +322,97 @@ class _CustomerListState extends State<CustomerList> {
                       ),
                     ],
                   ),
-                  SingleChildScrollView(
-                    child: SizedBox(
-                      height: uQuitCount * 35 -
-                          MediaQuery.of(context).viewInsets.bottom,
-                      // 키보드 올라오는 공간 고려
-                      child: ListView.builder(
-                        itemBuilder: (context, index) {
-                          return data.isEmpty
-                              ? const Text('데이터가 없습니다.')
-                              : data[index]['uQuit'] == 1
-                                  ? GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: ((context) =>
-                                                    AdminCustomerService(
-                                                        uId: data[index]
-                                                            ['uId']))));
-                                      },
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                            height: 50,
-                                            child: Card(
-                                              child: Row(
-                                                children: [
-                                                  const SizedBox(
-                                                    width: 15,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 175,
-                                                    child: Text(
-                                                      data[index]['uId'],
-                                                      style: const TextStyle(
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 15,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 75,
-                                                    child: Text(
-                                                      data[index]['uName'],
-                                                      style: const TextStyle(
-                                                        fontSize: 20,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 40,
-                                            child: ElevatedButton(
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all(
-                                                        Colors.blueGrey),
-                                              ),
-                                              onPressed: () {
-                                                uId = data[index]['uId'];
-                                                // 탈퇴후 3년 지나야 삭제 가능
-                                                uQuitDatePassed = int.parse(
-                                                    today
-                                                        .difference(DateTime
-                                                            .parse(data[index]
-                                                                ['uQuitDate']))
-                                                        .inDays
-                                                        .toString());
-                                                if (uQuitDatePassed > 365 * 3) {
-                                                  deleteShowDialog(context);
-                                                } else {
-                                                  cantDeleteAlert(context);
-                                                }
-                                              },
-                                              child: const Text(
-                                                '삭제',
-                                                style: TextStyle(
-                                                  fontSize: 20,
+                  SizedBox(
+                    height: uQuitCount * 45,
+                    // 키보드 올라오는 공간 고려
+                    child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        return data.isEmpty
+                            ? const Text('데이터가 없습니다.')
+                            : data[index]['uQuit'] == 1
+                                ? GestureDetector(
+                                    onTap: () {
+                                      Message.uQuit =
+                                          1; // customer_service에서 uquit을 받기 위함
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: ((context) =>
+                                                  AdminCustomerService(
+                                                      uId: data[index]
+                                                          ['uId']))));
+                                    },
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          height: 50,
+                                          child: Card(
+                                            child: Row(
+                                              children: [
+                                                const SizedBox(
+                                                  width: 15,
                                                 ),
+                                                SizedBox(
+                                                  width: 175,
+                                                  child: Text(
+                                                    data[index]['uId'],
+                                                    style: const TextStyle(
+                                                      fontSize: 15,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 15,
+                                                ),
+                                                SizedBox(
+                                                  width: 75,
+                                                  child: Text(
+                                                    data[index]['uName'],
+                                                    style: const TextStyle(
+                                                      fontSize: 20,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 40,
+                                          child: ElevatedButton(
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      Colors.blueGrey),
+                                            ),
+                                            onPressed: () {
+                                              uId = data[index]['uId'];
+                                              // 탈퇴후 3년 지나야 삭제 가능
+                                              uQuitDatePassed = int.parse(today
+                                                  .difference(DateTime.parse(
+                                                      data[index]['uQuitDate']))
+                                                  .inDays
+                                                  .toString());
+                                              if (uQuitDatePassed > 365 * 3) {
+                                                deleteShowDialog(context);
+                                              } else {
+                                                cantDeleteAlert(context);
+                                              }
+                                            },
+                                            child: const Text(
+                                              '삭제',
+                                              style: TextStyle(
+                                                fontSize: 20,
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    )
-                                  : const SizedBox();
-                        },
-                        itemCount: uQuitCount,
-                      ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : const SizedBox();
+                      },
+                      itemCount: uQuitCount,
                     ),
                   ),
                   const SizedBox(

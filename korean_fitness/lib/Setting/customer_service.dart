@@ -59,42 +59,40 @@ class _CustomerServiceState extends State<CustomerService> {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            SingleChildScrollView(
-              child: SizedBox(
-                // 키보드 올라오는 공간 고려
-                height: 580 - MediaQuery.of(context).viewInsets.bottom,
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    // bubble을 리스트뷰로 촤르륵 띄워보자, data[index]
-                    if (data[index]['csAdmin'] == 1) {
-                      return Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: BubbleNormal(
-                          color: Colors.grey,
-                          text: data[index]['csContent'], // DB : select
-                          textStyle: const TextStyle(fontSize: 20),
-                          isSender: false,
-                          tail: true,
+            SizedBox(
+              // 키보드 올라오는 공간 고려
+              height: 580 - MediaQuery.of(context).viewInsets.bottom,
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  // bubble을 리스트뷰로 촤르륵 띄워보자, data[index]
+                  if (data[index]['csAdmin'] == 1) {
+                    return Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: BubbleNormal(
+                        color: Colors.grey,
+                        text: data[index]['csContent'], // DB : select
+                        textStyle: const TextStyle(fontSize: 20),
+                        isSender: false,
+                        tail: true,
+                      ),
+                    );
+                  } else {
+                    return Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: BubbleNormal(
+                        color: Colors.deepPurple,
+                        text: data[index]['csContent'], // DB : select
+                        textStyle: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
                         ),
-                      );
-                    } else {
-                      return Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: BubbleNormal(
-                          color: Colors.deepPurple,
-                          text: data[index]['csContent'], // DB : select
-                          textStyle: const TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
-                          isSender: true,
-                          tail: true,
-                        ),
-                      );
-                    }
-                  },
-                  itemCount: data.length,
-                ),
+                        isSender: true,
+                        tail: true,
+                      ),
+                    );
+                  }
+                },
+                itemCount: data.length,
               ),
             ),
             const SizedBox(
