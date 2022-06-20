@@ -1,9 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:korean_fitness/Calendar/calender_write.dart';
+import 'package:korean_fitness/Setting/mypage.dart';
 import 'package:korean_fitness/message.dart';
 import 'package:korean_fitness/message4.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,6 +21,9 @@ class Calender extends StatefulWidget {
 
 class _CalenderState extends State<Calender> {
   //property
+  late String finalId;
+  late String finalName;
+  late String finalEmail;
   late List allDatedata;
   late List data;
   late List analysisData;
@@ -43,6 +49,9 @@ class _CalenderState extends State<Calender> {
   @override
   void initState() {
     super.initState();
+    finalId = "";
+    finalName = "";
+    finalEmail = "";
     data = [];
     allDatedata = [];
     analysisData = [];
@@ -61,16 +70,27 @@ class _CalenderState extends State<Calender> {
     getAnalysisData();
   }
 
+  GoogleSignIn _googleSignIn = GoogleSignIn(
+    // Optional clientId
+    // clientId: '479882132969-9i9aqik3jfjd7qhci1nqf0bm2g71rm1u.apps.googleusercontent.com',
+    scopes: <String>[
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ],
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+           elevation: 0,
+      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(
-              height: 75,
-            ),
             //calendar
             TableCalendar(
               locale: 'ko-KR',
@@ -467,6 +487,65 @@ class _CalenderState extends State<Calender> {
           ],
         ),
       ),
+      drawer: Drawer(
+        child: ListView(
+          //패딩 없이 꽉 채우기
+          padding: EdgeInsets.zero,
+          children: [
+            UserAccountsDrawerHeader(
+              //상단에 이미지 넣기
+              currentAccountPicture: const CircleAvatar(
+                backgroundImage: AssetImage('images/korea.png'),
+              ),
+              //이미지 밑에 이름 & 이메일
+              accountName: Text('${Message.uName}님'),
+              accountEmail: Text(Message.uEmail),
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 164, 154, 239),
+                //테두리, 값을 각각 줄 수 있음. all 은 한번에 다 뜸
+              ),
+            ),
+            // 리스트
+            ListTile(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((BuildContext context) => const MyPage())));
+              },
+              leading: const Icon(
+                Icons.person,
+                // color: Colors.deepPurple,
+              ),
+              title: const Text('My Page'),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.pushNamed(context, '/Setting');
+              },
+              leading: const Icon(
+                Icons.settings,
+                // color: Colors.deepPurple,
+              ),
+              title: const Text('설정'),
+            ),
+            ListTile(
+              onTap: () async {
+                final SharedPreferences sharedPreferences =
+                    await SharedPreferences.getInstance();
+                sharedPreferences.remove("id");
+                _handleSignOut();
+                Navigator.pushNamed(context, '/Log_in');
+              },
+              leading: const Icon(
+                Icons.logout,
+                // color: Colors.deepPurple,
+              ),
+              title: const Text('로그아웃'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -515,6 +594,8 @@ class _CalenderState extends State<Calender> {
       getAnalysisDataAllDate();
     });
   }
+
+
 
   Future getAnalysisDataAllDate() async {
     allAnalysisData.clear();
@@ -611,5 +692,29 @@ class _CalenderState extends State<Calender> {
     } else {
       snackBarFuntion(context);
     }
+  }
+
+  Future<void> _handleSignOut() => _googleSignIn.disconnect();
+
+  Future getData() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var obitainedid = sharedPreferences.getString('id');
+    var obitainedEmail = sharedPreferences.getString('email');
+    var obitainedName = sharedPreferences.getString('name');
+
+    setState(() {
+      if (obitainedid == null) {
+        finalId = "";
+      } else {
+        finalId = obitainedid;
+        finalEmail = obitainedEmail!;
+        finalName = obitainedName!;
+      }
+    });
+    Message.uId = finalId;
+    Message.uEmail = finalEmail;
+    Message.uName = finalName;
+    print("분석메인 $finalId");
   }
 }
