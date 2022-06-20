@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:card_loading/card_loading.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:korean_fitness/Setting/mypage.dart';
+import 'package:korean_fitness/message.dart';
 import 'package:korean_fitness/message5.dart';
 import 'package:reveal_card/reveal_card.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MuscularStrength extends StatefulWidget {
+  
   final List<exercise> listM;
   final List<exercise> listC;
   final List<exercise> listF;
@@ -22,7 +24,7 @@ class MuscularStrength extends StatefulWidget {
     required this.listF,
     required this.listS,
   }) : super(key: key);
-
+  
   @override
   State<MuscularStrength> createState() => _MuscularStrengthState();
 }
@@ -53,14 +55,19 @@ class _MuscularStrengthState extends State<MuscularStrength> {
   late double jump5;
   late Curve cu; //!@
   late int num;
+  //drawer id, name, email
+  late String finalId;
+  late String finalName;
+  late String finalEmail;
+
   var lista = List.generate(50, (index) => index);
 
   @override
   void initState() {
     super.initState();
     type = '근력';
-    col = Colors.orange;
-    col2 = Color.fromARGB(150, 43, 9, 0);
+    col = Color.fromARGB(150, 43, 9, 0);
+    col2 = Colors.orange;
     listX = widget.listM;
     ment1 = '근력 향상 운동';
     ment2 = '맨몸운동, 웨이트 트레이닝, 저항밴드운동';
@@ -83,6 +90,20 @@ class _MuscularStrengthState extends State<MuscularStrength> {
     jump5 = 10;
     cu = Curves.easeInOutBack;
     num = 900;
+
+    finalId = "";
+    finalName = "";
+    finalEmail = "";
+    getData();
+    super.initState();
+  }
+
+  Future<void> _handleSignIn(BuildContext context) async {
+    try {
+      await _googleSignIn.signIn();
+    } catch (error) {
+      print(error);
+    }
   }
 
   GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -96,19 +117,48 @@ class _MuscularStrengthState extends State<MuscularStrength> {
 
   Future<void> _handleSignOut() => _googleSignIn.disconnect();
 
+  Future getData() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var obitainedid = sharedPreferences.getString('id');
+    var obitainedEmail = sharedPreferences.getString('email');
+    var obitainedName = sharedPreferences.getString('name');
+
+    setState(() {
+      if (obitainedid == null) {
+        finalId = "";
+      } else {
+        finalId = obitainedid;
+        finalEmail = obitainedEmail!;
+        finalName = obitainedName!;
+      }
+    });
+    Message.uId = finalId;
+    Message.uEmail = finalEmail;
+    Message.uName = finalName;
+    print("분석메인 $finalId");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('체력향상 프로그램'),
+        title: const Text('체력향상 프로그램',
+        style: TextStyle(
+              fontSize: 21, fontWeight: FontWeight.w600, color: Colors.black),),
+        toolbarHeight: 65,
+        elevation: 0,
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
       ),
       body: Center(
         child: Column(
           children: <Widget>[
+            SizedBox(
+              height: 5,
+            ),
             Container(
-              color: const Color.fromARGB(255, 164, 154, 239),
+              color: Color.fromARGB(190, 189, 180, 255),
               height: 80,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -139,7 +189,7 @@ class _MuscularStrengthState extends State<MuscularStrength> {
                         jump3 = 30;
                         jump4 = 30;
                         jump5 = 10;
-                        cu = Curves.easeInOutBack;
+                        cu = Curves.bounceOut;
                         num = 1200;
                       });
                     },
@@ -180,7 +230,7 @@ class _MuscularStrengthState extends State<MuscularStrength> {
                         jump4 = 10;
                         jump5 = 10;
                         cu = Curves.bounceOut;
-                        num = 1400;
+                        num = 1200;
                       });
                     },
                     child: const CircleAvatar(
@@ -219,8 +269,8 @@ class _MuscularStrengthState extends State<MuscularStrength> {
                         jump3 = 10;
                         jump4 = 10;
                         jump5 = 10;
-                        cu = Curves.linear;
-                        num = 800;
+                        cu = Curves.bounceOut;
+                        num = 1200;
                       });
                     },
                     child: const CircleAvatar(
@@ -238,7 +288,7 @@ class _MuscularStrengthState extends State<MuscularStrength> {
                       setState(() {
                         listX = widget.listS;
                         type = '순발력';
-                        col = Color.fromARGB(255, 90, 4, 101);
+                        col = Color.fromARGB(160, 90, 4, 101);
                         col2 = Colors.pinkAccent;
                         ment1 = '순발력 향상 운동';
                         ment2 = '사이드 스텝, 왕복 달리기, 부메랑 런';
@@ -259,8 +309,8 @@ class _MuscularStrengthState extends State<MuscularStrength> {
                         jump3 = 10;
                         jump4 = 30;
                         jump5 = 30;
-                        cu = Curves.elasticOut;
-                        num=1800;
+                        cu = Curves.bounceOut;
+                        num=1200;
                       });
                     },
                     child: const CircleAvatar(
@@ -283,7 +333,7 @@ class _MuscularStrengthState extends State<MuscularStrength> {
               ),
             ),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
 
             // ElevatedButton(
@@ -607,7 +657,7 @@ class _MuscularStrengthState extends State<MuscularStrength> {
               ],
             ),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
             CardLoading(
               cardLoadingTheme: CardLoadingTheme(
@@ -706,17 +756,17 @@ class _MuscularStrengthState extends State<MuscularStrength> {
             ),
             const SizedBox(
               height: 5,
-            ),
-            CardLoading(
-              cardLoadingTheme: CardLoadingTheme(
-                  colorOne: const Color.fromARGB(255, 243, 243, 243),
-                  colorTwo: col2),
-              height: 3,
-              borderRadius: 40,
-              margin: const EdgeInsets.only(bottom: 10),
-              curve: Curves.easeInToLinear,
-              animationDuration:const Duration(milliseconds:1400),
-            ),
+             ),
+            // CardLoading(
+            //   cardLoadingTheme: CardLoadingTheme(
+            //       colorOne: const Color.fromARGB(255, 243, 243, 243),
+            //       colorTwo: col2),
+            //   height: 3,
+            //   borderRadius: 40,
+            //   margin: const EdgeInsets.only(bottom: 10),
+            //   curve: Curves.easeInToLinear,
+            //   animationDuration:const Duration(milliseconds:1400),
+            // ),
 
             // Expanded(
             //   child: Container(
@@ -748,15 +798,17 @@ class _MuscularStrengthState extends State<MuscularStrength> {
           //패딩 없이 꽉 채우기
           padding: EdgeInsets.zero,
           children: [
-            const UserAccountsDrawerHeader(
+            UserAccountsDrawerHeader(
               //상단에 이미지 넣기
-              currentAccountPicture: CircleAvatar(
-                backgroundImage: AssetImage('images/korea.png'),
+              currentAccountPicture: const CircleAvatar(
+                backgroundImage: AssetImage(
+                  'images/logo.png',
+                  ),
               ),
               //이미지 밑에 이름 & 이메일
-              accountName: Text('user name'),
-              accountEmail: Text('user email'),
-              decoration: BoxDecoration(
+              accountName: Text('${Message.uName}님'),
+              accountEmail: Text(Message.uEmail),
+              decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 164, 154, 239),
                 //테두리, 값을 각각 줄 수 있음. all 은 한번에 다 뜸
               ),
