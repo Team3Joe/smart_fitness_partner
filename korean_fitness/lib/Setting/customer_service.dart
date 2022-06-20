@@ -27,7 +27,7 @@ class _CustomerServiceState extends State<CustomerService> {
     sendField = TextEditingController();
     data = [];
     csContent = '';
-    csAdmin = 0;
+    csAdmin = 0; // 고객모드
     uId = Message.uId;
 
     getJSONData();
@@ -135,7 +135,7 @@ class _CustomerServiceState extends State<CustomerService> {
                         sendField.text = ''; // text field 비우기
                       });
                     },
-                    child: const Text('문의하기')),
+                    child: const Text('문의')),
               ],
             )
           ],

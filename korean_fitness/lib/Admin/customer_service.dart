@@ -27,8 +27,9 @@ class _AdminCustomerServiceState extends State<AdminCustomerService> {
     sendField = TextEditingController();
     data = [];
     csContent = '';
-    csAdmin = 1;
+    csAdmin = 1; // 관리자모드
     uId = widget.uId;
+
     getJSONData();
   }
 
@@ -98,13 +99,13 @@ class _AdminCustomerServiceState extends State<AdminCustomerService> {
                   width: 250,
                   child: TextField(
                     autocorrect: false,
+                    controller: sendField,
                     decoration: const InputDecoration(
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.blueGrey),
                       ),
                     ),
                     cursorColor: Colors.blueGrey,
-                    controller: sendField,
                     onSubmitted: (value) {
                       setState(() {
                         if (sendField.text.trim().isNotEmpty) {
@@ -159,7 +160,6 @@ class _AdminCustomerServiceState extends State<AdminCustomerService> {
   }
 
   insertAction() async {
-    print(csAdmin);
     var url = Uri.parse(
       'http://localhost:8080/Flutter/fitness/customer_service_insert.jsp?csContent=$csContent&csAdmin=$csAdmin&uId=$uId',
     );
