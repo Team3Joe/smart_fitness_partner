@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:korean_fitness/Admin/customer_service.dart';
+import 'package:korean_fitness/message.dart';
 
 class CustomerList extends StatefulWidget {
   const CustomerList({Key? key}) : super(key: key);
@@ -48,6 +49,19 @@ class _CustomerListState extends State<CustomerList> {
             title: const Text('관리자 페이지'),
             backgroundColor: Colors.blueGrey,
             elevation: 0,
+            actions: [
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      logOutCheck(context);
+                    },
+                    child: const Icon(Icons.logout),
+                  ),
+                  const SizedBox(width: 20),
+                ],
+              )
+            ],
           ),
           body: Padding(
             padding: const EdgeInsets.all(15.0),
@@ -494,6 +508,9 @@ class _CustomerListState extends State<CustomerList> {
             content: const Text('정말로 삭제하시겠습니까?'),
             actions: [
               TextButton(
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.all(Colors.blueGrey),
+                ),
                 onPressed: () {
                   deleteAction();
                   Navigator.pop(context);
@@ -502,6 +519,9 @@ class _CustomerListState extends State<CustomerList> {
                 child: const Text('예'),
               ),
               TextButton(
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.all(Colors.blueGrey),
+                ),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -546,6 +566,32 @@ class _CustomerListState extends State<CustomerList> {
         duration: const Duration(seconds: 2),
         backgroundColor: Colors.red,
       ),
+    );
+  }
+
+  logOutCheck(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('로그아웃 확인'),
+          content: const Text('정말 로그아웃 하시겠습니까?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.popAndPushNamed(context, '/Log_in');
+              },
+              child: const Text('예'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('아니오'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
