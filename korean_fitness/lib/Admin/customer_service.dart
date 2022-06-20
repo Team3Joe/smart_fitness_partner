@@ -46,47 +46,46 @@ class _AdminCustomerServiceState extends State<AdminCustomerService> {
         backgroundColor: Colors.blueGrey,
         title: Text('$uId님의 문의내역'),
         elevation: 0,
+        toolbarHeight: 75,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            SingleChildScrollView(
-              child: SizedBox(
-                // 키보드 올라오는 공간 고려, 반응형 사이즈박스
-                height: 580 - MediaQuery.of(context).viewInsets.bottom,
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    // bubble을 리스트뷰로 촤르륵 띄워보자, data[index]
-                    if (data[index]['csAdmin'] == 1) {
-                      return Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: BubbleNormal(
-                          color: Colors.grey,
-                          text: data[index]['csContent'], // DB : select
-                          textStyle: const TextStyle(fontSize: 20),
-                          isSender: true,
-                          tail: true,
+            SizedBox(
+              // 키보드 올라오는 공간 고려, 반응형 사이즈박스
+              height: 580 - MediaQuery.of(context).viewInsets.bottom,
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  // bubble을 리스트뷰로 촤르륵 띄워보자, data[index]
+                  if (data[index]['csAdmin'] == 1) {
+                    return Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: BubbleNormal(
+                        color: Colors.grey,
+                        text: data[index]['csContent'], // DB : select
+                        textStyle: const TextStyle(fontSize: 20),
+                        isSender: true,
+                        tail: true,
+                      ),
+                    );
+                  } else {
+                    return Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: BubbleNormal(
+                        color: Colors.deepPurple,
+                        text: data[index]['csContent'], // DB : select
+                        textStyle: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
                         ),
-                      );
-                    } else {
-                      return Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: BubbleNormal(
-                          color: Colors.deepPurple,
-                          text: data[index]['csContent'], // DB : select
-                          textStyle: const TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
-                          isSender: false,
-                          tail: true,
-                        ),
-                      );
-                    }
-                  },
-                  itemCount: data.length,
-                ),
+                        isSender: false,
+                        tail: true,
+                      ),
+                    );
+                  }
+                },
+                itemCount: data.length,
               ),
             ),
             const SizedBox(
