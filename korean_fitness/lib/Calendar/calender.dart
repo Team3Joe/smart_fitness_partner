@@ -602,8 +602,8 @@ class _CalenderState extends State<Calender> {
     var url = Uri.parse(
         "http://localhost:8080/Flutter/fitness/calendar_analysis_all.jsp?uId=$uId");
     var response = await http.get(url);
+    var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
     setState(() {
-      var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
       //키값
       List value = dataConvertedJSON['results'];
       //데이터에 넣기
