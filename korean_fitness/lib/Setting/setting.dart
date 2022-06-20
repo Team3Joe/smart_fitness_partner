@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:korean_fitness/main.dart';
 
-
 class Setting extends StatefulWidget {
   const Setting({Key? key}) : super(key: key);
 
@@ -28,17 +27,12 @@ class _SettingState extends State<Setting> {
         elevation: 0,
         title: Text(
           '설정',
-          style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 24,
-                shadows: [
-                  Shadow(
-                    color: Colors.black.withOpacity(0.5),
-                    offset: const Offset(3, 3),
-                    blurRadius:10
-                  )
-                ]
-              ),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24, shadows: [
+            Shadow(
+                color: Colors.black.withOpacity(0.5),
+                offset: const Offset(3, 3),
+                blurRadius: 10)
+          ]),
         ),
         backgroundColor: Color.fromARGB(180, 58, 34, 131),
         toolbarHeight: 75,
@@ -119,7 +113,7 @@ class _SettingState extends State<Setting> {
                     width: 350,
                     height: 70,
                     child: Card(
-                      color: Color.fromARGB(134, 182, 167, 239),
+                      color: const Color.fromARGB(100, 158, 145, 203),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -157,7 +151,7 @@ class _SettingState extends State<Setting> {
                   width: 350,
                   height: 70,
                   child: Card(
-                    color: Color.fromARGB(134, 182, 167, 239),
+                    color: const Color.fromARGB(100, 158, 145, 203),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -187,12 +181,14 @@ class _SettingState extends State<Setting> {
                           ),
                           Switch(
                             value: darkModeSwitch,
-                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
                             // activeColor: Colors.deepPurple,
                             onChanged: (value) {
                               setState(() {
                                 darkModeSwitch = value;
-                                if (MyApp.themeNotifier.value == ThemeMode.dark) {
+                                if (MyApp.themeNotifier.value ==
+                                    ThemeMode.dark) {
                                   MyApp.themeNotifier.value = ThemeMode.light;
                                 } else {
                                   MyApp.themeNotifier.value = ThemeMode.dark;
@@ -252,13 +248,13 @@ class _SettingState extends State<Setting> {
                 ),
                 GestureDetector(
                   onTap: () {
-                     Navigator.pushNamed(context, '/Privacy_policy');
+                    Navigator.pushNamed(context, '/Privacy_policy');
                   },
                   child: SizedBox(
                     width: 350,
                     height: 70,
                     child: Card(
-                      color: Color.fromARGB(134, 182, 167, 239),
+                      color: const Color.fromARGB(100, 158, 145, 203),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(

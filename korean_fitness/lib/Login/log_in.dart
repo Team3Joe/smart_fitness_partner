@@ -26,11 +26,13 @@ class LogIn extends StatefulWidget {
 class _LogInState extends State<LogIn> {
   // Property
   GoogleSignInAccount? _currentUser;
-  String _contactText = '';
+  String contactText = '';
   late TextEditingController idController;
   late TextEditingController pwController;
   late String id;
   late String pw;
+  late int quit; //user탈퇴여부
+  late int admin; // admin check
   late String name;
   late int uq; //user탈퇴여부
   late String result;
@@ -41,7 +43,7 @@ class _LogInState extends State<LogIn> {
 
   @override
   void initState() {
-    _handleSignOut();//Google-Log-Out
+    _handleSignOut(); //Google-Log-Out
     super.initState();
 //Google API initState
     _googleSignIn.onCurrentUserChanged
@@ -53,17 +55,18 @@ class _LogInState extends State<LogIn> {
       if (user != null) {
         // print(user.displayName);
         // print(user.email);
-        
+
         //google info save
         gid = user.email.toString();
         gname = user.displayName.toString();
-        
+
         //SharedPreferences Set data
-        final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+        final SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
         sharedPreferences.setString('id', user.email.toString());
         sharedPreferences.setString('name', user.displayName.toString());
         sharedPreferences.setString('email', user.email.toString());
-        Get.to(SplashPage());
+        Get.to(const SplashPage());
       }
       if (_currentUser != null) {
         _handleGetContact(_currentUser!);
@@ -76,6 +79,8 @@ class _LogInState extends State<LogIn> {
     pwController = TextEditingController();
     id = '';
     pw = '';
+    quit = 0;
+    admin = 0;
     name = '';
     uq = 0;
     gid = '';
@@ -86,7 +91,7 @@ class _LogInState extends State<LogIn> {
 
   Future<void> _handleGetContact(GoogleSignInAccount user) async {
     setState(() {
-      _contactText = 'Loading contact info...';
+      contactText = 'Loading contact info...';
     });
     final http.Response response = await http.get(
       Uri.parse('https://people.googleapis.com/v1/people/me/connections'
@@ -95,7 +100,7 @@ class _LogInState extends State<LogIn> {
     );
     if (response.statusCode != 200) {
       setState(() {
-        _contactText = 'People API gave a ${response.statusCode} '
+        contactText = 'People API gave a ${response.statusCode} '
             'response. Check logs for details.';
       });
       print('People API ${response.statusCode} response: ${response.body}');
@@ -106,9 +111,9 @@ class _LogInState extends State<LogIn> {
     final String? namedContact = _pickFirstNamedContact(data);
     setState(() {
       if (namedContact != null) {
-        _contactText = 'I see you know $namedContact!';
+        contactText = 'I see you know $namedContact!';
       } else {
-        _contactText = 'No contacts to display.';
+        contactText = 'No contacts to display.';
       }
     });
   }
@@ -363,7 +368,7 @@ class _LogInState extends State<LogIn> {
                 GestureDetector(
                   onTap: () {
                     _handleSignIn(context); //Google-Log-In
-                    // _handleSignOut();//Google-Log-Out
+                    // handleSignOut();//Google-Log-Out
                   },
                   child: Image.asset(
                     "images/google-signin-button.png",
@@ -421,7 +426,7 @@ class _LogInState extends State<LogIn> {
                     child: const Text('OK'))
               ],
             );
-          } else if (uq == 1) {
+          } else if (quit == 1) {
             return AlertDialog(
               title: const Text(
                 '로그인 실패!',
@@ -438,15 +443,15 @@ class _LogInState extends State<LogIn> {
                     child: const Text('OK'))
               ],
             );
-          } else {
+          } else if (admin == 1) {
             return AlertDialog(
               title: const Text(
-                '로그인 성공!',
+                '관리자 로그인 성공!',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              content: const Text('로그인에 성공하였습니다.'),
+              content: const Text('관리자로 로그인했습니다.'),
               actions: [
                 ElevatedButton(
                     onPressed: () async {
@@ -455,13 +460,38 @@ class _LogInState extends State<LogIn> {
                       Message.uName = data[0]['uName'];
                       Message.uBirth = data[0]['uBirth'];
                       Message.uEmail = data[0]['uEmail'];
+                      Navigator.popUntil(context, (route) => false); // 뒤로가기 없애기
+                      Navigator.pushNamed(context, '/Customer_list');
+                    },
+                    child: const Text('OK'))
+              ],
+            );
+          } else {
+            return AlertDialog(
+              title: const Text(
+                '로그인 성공!',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              content: const Text('로그인에 성공했습니다.'),
+              actions: [
+                ElevatedButton(
+                    onPressed: () async {
+                      Message.uId = data[0]['uId'];
+                      Message.uPw = data[0]['uPw'];
+                      Message.uName = data[0]['uName'];
+                      Message.uBirth = data[0]['uBirth'];
+                      Message.uEmail = data[0]['uEmail'];
+
+                      Navigator.pop(context); // 다시 로그인페이지로 돌아가지 않도록
                       final SharedPreferences sharedPreferences =
                           await SharedPreferences.getInstance();
                       sharedPreferences.setString(
                           'id', idController.text.trim());
                       sharedPreferences.setString('name', data[0]['uName']);
                       sharedPreferences.setString('email', data[0]['uEmail']);
-                      Get.to(SplashPage());
+                      Get.to(const SplashPage());
                       //Navigator.popAndPushNamed(context, '/Mainpage');
                     },
                     child: const Text('OK'))
@@ -471,7 +501,7 @@ class _LogInState extends State<LogIn> {
         });
   }
 
-  Future<bool> _getJSONData() async {
+  Future _getJSONData() async {
     var url = Uri.parse(
         'http://localhost:8080/Flutter/fitness/user_select.jsp?id=$id&pw=$pw');
     var response = await http.get(url);
@@ -481,13 +511,14 @@ class _LogInState extends State<LogIn> {
       data = [];
       data.addAll(result);
     });
-    if (data.isEmpty) {
-      //없는 계정입력시
-      return true;
-    } else {
-      var userquite = data[0]['uQuit']; //탈퇴여부 값 받아오기
-      uq = userquite;
-      return true;
+    if (data.isNotEmpty) {
+      // 탈퇴한 계정 입력시
+      var userQuit = data[0]['uQuit']; //탈퇴여부 값 받아오기
+      var userAdmin = data[0]['uAdmin']; //관리자여부 값 받아오기
+      setState(() {
+        quit = userQuit;
+        admin = userAdmin;
+      });
     }
   }
 
@@ -501,11 +532,10 @@ class _LogInState extends State<LogIn> {
     setState(() {
       gdata = [];
       gdata.addAll(result);
-      print(gdata);
     });
     if (gdata.isEmpty) {
       //google id 없는 계정입력시 -> insert
-      GoogleInsertAction();
+      googleInsertAction();
       return true;
     } else {
       var userquite = gdata[0]['uQuit']; //탈퇴여부 값 받아오기
@@ -514,7 +544,7 @@ class _LogInState extends State<LogIn> {
     }
   }
 
-  GoogleInsertAction() async {
+  googleInsertAction() async {
     //google id insert
     var url = Uri.parse(
         'http://localhost:8080/Flutter/fitness/google_user_insert.jsp?id=$gid&name=$gname&email=$gid');

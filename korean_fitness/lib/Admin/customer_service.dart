@@ -3,16 +3,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:chat_bubbles/chat_bubbles.dart'; // 고객센터 채팅형식을 위한 import
 import 'package:http/http.dart' as http;
-import 'package:korean_fitness/message.dart';
 
-class CustomerService extends StatefulWidget {
-  const CustomerService({Key? key}) : super(key: key);
+class AdminCustomerService extends StatefulWidget {
+  final String uId;
+  const AdminCustomerService({Key? key, required this.uId}) : super(key: key);
 
   @override
-  State<CustomerService> createState() => _CustomerServiceState();
+  State<AdminCustomerService> createState() => _AdminCustomerServiceState();
 }
 
-class _CustomerServiceState extends State<CustomerService> {
+class _AdminCustomerServiceState extends State<AdminCustomerService> {
   // Property
   late TextEditingController sendField;
   late List data;
@@ -25,38 +25,17 @@ class _CustomerServiceState extends State<CustomerService> {
     super.initState();
     sendField = TextEditingController();
     data = [];
+    uId = widget.uId;
     csContent = '';
-    uId = Message.uId;
-
     getJSONData();
-  }
-
-  @override
-  void dispose() {
-    sendField.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          '고객센터',
-          style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 23,
-                shadows: [
-                  Shadow(
-                    color: Colors.black.withOpacity(0.5),
-                    offset: const Offset(3, 3),
-                    blurRadius:10
-                  )
-                ]
-              ),
-          ),
-          backgroundColor: Color.fromARGB(198, 58, 34, 131),
-        toolbarHeight: 75,
+        title: Text('$uId님의 문의내역'),
+        elevation: 0,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -64,12 +43,13 @@ class _CustomerServiceState extends State<CustomerService> {
           children: [
             SingleChildScrollView(
               child: SizedBox(
-                height: 600 - MediaQuery.of(context).viewInsets.bottom,
-                // 키보드 올라오는 공간 고려
+                // 키보드 올라오는 공간 고려, 반응형 사이즈박스
+                height: 550 - MediaQuery.of(context).viewInsets.bottom,
                 child: ListView.builder(
+                  shrinkWrap: true,
                   itemBuilder: (context, index) {
                     // bubble을 리스트뷰로 촤르륵 띄워보자, data[index]
-                    if (data[index]['csAdmin'] != 1) {
+                    if (data[index]['csAdmin'] != 0) {
                       return Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: BubbleNormal(
@@ -138,7 +118,7 @@ class _CustomerServiceState extends State<CustomerService> {
                         sendField.text = ''; // text field 비우기
                       });
                     },
-                    child: const Text('문의하기')),
+                    child: const Text('답변')),
               ],
             )
           ],
@@ -166,7 +146,7 @@ class _CustomerServiceState extends State<CustomerService> {
 
   insertAction() async {
     var url = Uri.parse(
-      'http://localhost:8080/Flutter/fitness/customer_service_insert.jsp?csContent=$csContent&uId=abc',
+      'http://localhost:8080/Flutter/fitness/customer_service_insert.jsp?csContent=$csContent&uId=$uId',
     );
     var response = await http.get(url);
     setState(
