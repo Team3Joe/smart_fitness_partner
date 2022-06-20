@@ -18,6 +18,7 @@ class _CustomerServiceState extends State<CustomerService> {
   late List data;
 
   late String csContent;
+  late int csAdmin;
   late String uId;
 
   @override
@@ -26,6 +27,7 @@ class _CustomerServiceState extends State<CustomerService> {
     sendField = TextEditingController();
     data = [];
     csContent = '';
+    csAdmin = 0;
     uId = Message.uId;
 
     getJSONData();
@@ -56,23 +58,22 @@ class _CustomerServiceState extends State<CustomerService> {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           children: [
             SingleChildScrollView(
               child: SizedBox(
-                height: 580 - MediaQuery.of(context).viewInsets.bottom,
                 // 키보드 올라오는 공간 고려
+                height: 580 - MediaQuery.of(context).viewInsets.bottom,
                 child: ListView.builder(
                   itemBuilder: (context, index) {
                     // bubble을 리스트뷰로 촤르륵 띄워보자, data[index]
-                    if (data[index]['csAdmin'] != 1) {
+                    if (data[index]['csAdmin'] == 1) {
                       return Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: BubbleNormal(
                           color: Colors.grey,
                           text: data[index]['csContent'], // DB : select
                           textStyle: const TextStyle(fontSize: 20),
-                          isSender: true,
+                          isSender: false,
                           tail: true,
                         ),
                       );
@@ -86,7 +87,7 @@ class _CustomerServiceState extends State<CustomerService> {
                             fontSize: 20,
                             color: Colors.white,
                           ),
-                          isSender: false,
+                          isSender: true,
                           tail: true,
                         ),
                       );
@@ -105,7 +106,6 @@ class _CustomerServiceState extends State<CustomerService> {
                 SizedBox(
                   width: 250,
                   child: TextField(
-                    expands: true,
                     autocorrect: false,
                     controller: sendField,
                     onSubmitted: (value) {
@@ -163,7 +163,7 @@ class _CustomerServiceState extends State<CustomerService> {
 
   insertAction() async {
     var url = Uri.parse(
-      'http://localhost:8080/Flutter/fitness/customer_service_insert.jsp?csContent=$csContent&uId=$uId',
+      'http://localhost:8080/Flutter/fitness/customer_service_insert.jsp?csContent=$csContent&csAdmin=$csAdmin&uId=$uId',
     );
     var response = await http.get(url);
     setState(

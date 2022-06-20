@@ -18,6 +18,7 @@ class _AdminCustomerServiceState extends State<AdminCustomerService> {
   late List data;
 
   late String csContent;
+  late int csAdmin;
   late String uId;
 
   @override
@@ -25,8 +26,9 @@ class _AdminCustomerServiceState extends State<AdminCustomerService> {
     super.initState();
     sendField = TextEditingController();
     data = [];
-    uId = widget.uId;
     csContent = '';
+    csAdmin = 1;
+    uId = widget.uId;
     getJSONData();
   }
 
@@ -38,107 +40,102 @@ class _AdminCustomerServiceState extends State<AdminCustomerService> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blueGrey,
-          title: Text('$uId님의 문의내역'),
-          elevation: 0,
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SingleChildScrollView(
-                child: SizedBox(
-                  // 키보드 올라오는 공간 고려, 반응형 사이즈박스
-                  height: 580 - MediaQuery.of(context).viewInsets.bottom,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      // bubble을 리스트뷰로 촤르륵 띄워보자, data[index]
-                      if (data[index]['csAdmin'] != 0) {
-                        return Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: BubbleNormal(
-                            color: Colors.grey,
-                            text: data[index]['csContent'], // DB : select
-                            textStyle: const TextStyle(fontSize: 20),
-                            isSender: true,
-                            tail: true,
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blueGrey,
+        title: Text('$uId님의 문의내역'),
+        elevation: 0,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            SingleChildScrollView(
+              child: SizedBox(
+                // 키보드 올라오는 공간 고려, 반응형 사이즈박스
+                height: 580 - MediaQuery.of(context).viewInsets.bottom,
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    // bubble을 리스트뷰로 촤르륵 띄워보자, data[index]
+                    if (data[index]['csAdmin'] == 1) {
+                      return Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: BubbleNormal(
+                          color: Colors.grey,
+                          text: data[index]['csContent'], // DB : select
+                          textStyle: const TextStyle(fontSize: 20),
+                          isSender: true,
+                          tail: true,
+                        ),
+                      );
+                    } else {
+                      return Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: BubbleNormal(
+                          color: Colors.deepPurple,
+                          text: data[index]['csContent'], // DB : select
+                          textStyle: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
                           ),
-                        );
-                      } else {
-                        return Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: BubbleNormal(
-                            color: Colors.deepPurple,
-                            text: data[index]['csContent'], // DB : select
-                            textStyle: const TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                            ),
-                            isSender: false,
-                            tail: true,
-                          ),
-                        );
-                      }
-                    },
-                    itemCount: data.length,
-                  ),
+                          isSender: false,
+                          tail: true,
+                        ),
+                      );
+                    }
+                  },
+                  itemCount: data.length,
                 ),
               ),
-              const SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 250,
-                    child: TextField(
-                      autocorrect: false,
-                      decoration: const InputDecoration(
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blueGrey),
-                        ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 250,
+                  child: TextField(
+                    autocorrect: false,
+                    decoration: const InputDecoration(
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueGrey),
                       ),
-                      cursorColor: Colors.blueGrey,
-                      controller: sendField,
-                      onSubmitted: (value) {
-                        setState(() {
-                          if (sendField.text.trim().isNotEmpty) {
-                            csContent = sendField.text;
-                            insertAction().then((context) => getJSONData());
-                          }
-                          sendField.text = ''; // text field 비우기
-                          csContent = '';
-                        });
-                      },
                     ),
+                    cursorColor: Colors.blueGrey,
+                    controller: sendField,
+                    onSubmitted: (value) {
+                      setState(() {
+                        if (sendField.text.trim().isNotEmpty) {
+                          csContent = sendField.text;
+                          insertAction().then((context) => getJSONData());
+                        }
+                        sendField.text = ''; // text field 비우기
+                        csContent = '';
+                      });
+                    },
                   ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: Colors.blueGrey),
-                      onPressed: () {
-                        setState(() {
-                          if (sendField.text.trim().isNotEmpty) {
-                            csContent = sendField.text;
-                            insertAction().then((context) => getJSONData());
-                            csContent = '';
-                          }
-                          sendField.text = ''; // text field 비우기
-                        });
-                      },
-                      child: const Text('답변')),
-                ],
-              )
-            ],
-          ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.blueGrey),
+                    onPressed: () {
+                      setState(() {
+                        if (sendField.text.trim().isNotEmpty) {
+                          csContent = sendField.text;
+                          insertAction().then((context) => getJSONData());
+                          csContent = '';
+                        }
+                        sendField.text = ''; // text field 비우기
+                      });
+                    },
+                    child: const Text('답변')),
+              ],
+            )
+          ],
         ),
       ),
     );
@@ -162,8 +159,9 @@ class _AdminCustomerServiceState extends State<AdminCustomerService> {
   }
 
   insertAction() async {
+    print(csAdmin);
     var url = Uri.parse(
-      'http://localhost:8080/Flutter/fitness/customer_service_insert.jsp?csContent=$csContent&uId=$uId',
+      'http://localhost:8080/Flutter/fitness/customer_service_insert.jsp?csContent=$csContent&csAdmin=$csAdmin&uId=$uId',
     );
     var response = await http.get(url);
     setState(
