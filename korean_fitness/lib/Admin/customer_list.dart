@@ -167,7 +167,7 @@ class _CustomerListState extends State<CustomerList> {
                   ),
                   SingleChildScrollView(
                     child: SizedBox(
-                      height: (data.length - uQuitCount) * 45 -
+                      height: (data.length - uQuitCount) * 40 -
                           MediaQuery.of(context).viewInsets.bottom,
                       // 키보드 올라오는 공간 고려
                       child: ListView.builder(
@@ -201,7 +201,7 @@ class _CustomerListState extends State<CustomerList> {
                                                     child: Text(
                                                       data[index]['uId'],
                                                       style: const TextStyle(
-                                                        fontSize: 20,
+                                                        fontSize: 15,
                                                       ),
                                                     ),
                                                   ),
@@ -236,7 +236,7 @@ class _CustomerListState extends State<CustomerList> {
                                               child: const Text(
                                                 '탈퇴',
                                                 style: TextStyle(
-                                                  fontSize: 15,
+                                                  fontSize: 20,
                                                 ),
                                               ),
                                             ),
@@ -306,7 +306,7 @@ class _CustomerListState extends State<CustomerList> {
                   ),
                   SingleChildScrollView(
                     child: SizedBox(
-                      height: uQuitCount * 45 -
+                      height: uQuitCount * 40 -
                           MediaQuery.of(context).viewInsets.bottom,
                       // 키보드 올라오는 공간 고려
                       child: ListView.builder(
@@ -339,7 +339,7 @@ class _CustomerListState extends State<CustomerList> {
                                                     child: Text(
                                                       data[index]['uId'],
                                                       style: const TextStyle(
-                                                        fontSize: 20,
+                                                        fontSize: 15,
                                                       ),
                                                     ),
                                                   ),
@@ -374,7 +374,7 @@ class _CustomerListState extends State<CustomerList> {
                                               child: const Text(
                                                 '탈퇴',
                                                 style: TextStyle(
-                                                  fontSize: 15,
+                                                  fontSize: 20,
                                                 ),
                                               ),
                                             ),
@@ -453,7 +453,7 @@ class _CustomerListState extends State<CustomerList> {
 
   signOutAction() async {
     var url = Uri.parse(
-        'http://localhost:8080/Flutter/fitness/admin_sign_out_update.jsp?uId?$uId');
+        'http://localhost:8080/Flutter/fitness/admin_sign_out_update.jsp?uId=$uId');
     var response = await http.get(url);
     var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
     setState(() {
