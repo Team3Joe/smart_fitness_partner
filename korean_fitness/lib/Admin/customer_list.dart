@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:korean_fitness/Admin/customer_service.dart';
+import 'package:korean_fitness/message.dart';
 
 class CustomerList extends StatefulWidget {
   const CustomerList({Key? key}) : super(key: key);
@@ -193,6 +194,8 @@ class _CustomerListState extends State<CustomerList> {
                             : data[index]['uQuit'] == 0
                                 ? GestureDetector(
                                     onTap: () {
+                                      Message.uQuit =
+                                          0; // customer_service에서 uquit을 받기 위함
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -329,6 +332,8 @@ class _CustomerListState extends State<CustomerList> {
                             : data[index]['uQuit'] == 1
                                 ? GestureDetector(
                                     onTap: () {
+                                      Message.uQuit =
+                                          1; // customer_service에서 uquit을 받기 위함
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(

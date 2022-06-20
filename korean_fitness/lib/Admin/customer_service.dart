@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:chat_bubbles/chat_bubbles.dart'; // 고객센터 채팅형식을 위한 import
 import 'package:http/http.dart' as http;
+import 'package:korean_fitness/message.dart';
 
 class AdminCustomerService extends StatefulWidget {
   final String uId;
@@ -20,6 +21,7 @@ class _AdminCustomerServiceState extends State<AdminCustomerService> {
   late String csContent;
   late int csAdmin;
   late String uId;
+  late int uQuit; // 탈퇴자 정보, 채팅 여부를 결정
 
   @override
   void initState() {
@@ -29,7 +31,7 @@ class _AdminCustomerServiceState extends State<AdminCustomerService> {
     csContent = '';
     csAdmin = 1; // 관리자모드
     uId = widget.uId;
-
+    uQuit = Message.uQuit;
     getJSONData();
   }
 
@@ -91,50 +93,59 @@ class _AdminCustomerServiceState extends State<AdminCustomerService> {
             const SizedBox(
               height: 30,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 250,
-                  child: TextField(
-                    autocorrect: false,
-                    controller: sendField,
-                    decoration: const InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blueGrey),
+            uQuit == 1
+                ? const Text(
+                    '탈퇴한 계정입니다.',
+                    style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: 20,
+                        color: Colors.grey),
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 250,
+                        child: TextField(
+                          autocorrect: false,
+                          controller: sendField,
+                          decoration: const InputDecoration(
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blueGrey),
+                            ),
+                          ),
+                          cursorColor: Colors.blueGrey,
+                          onSubmitted: (value) {
+                            setState(() {
+                              if (sendField.text.trim().isNotEmpty) {
+                                csContent = sendField.text;
+                                insertAction().then((context) => getJSONData());
+                              }
+                              sendField.text = ''; // text field 비우기
+                              csContent = '';
+                            });
+                          },
+                        ),
                       ),
-                    ),
-                    cursorColor: Colors.blueGrey,
-                    onSubmitted: (value) {
-                      setState(() {
-                        if (sendField.text.trim().isNotEmpty) {
-                          csContent = sendField.text;
-                          insertAction().then((context) => getJSONData());
-                        }
-                        sendField.text = ''; // text field 비우기
-                        csContent = '';
-                      });
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.blueGrey),
-                    onPressed: () {
-                      setState(() {
-                        if (sendField.text.trim().isNotEmpty) {
-                          csContent = sendField.text;
-                          insertAction().then((context) => getJSONData());
-                          csContent = '';
-                        }
-                        sendField.text = ''; // text field 비우기
-                      });
-                    },
-                    child: const Text('답변')),
-              ],
-            )
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.blueGrey),
+                          onPressed: () {
+                            setState(() {
+                              if (sendField.text.trim().isNotEmpty) {
+                                csContent = sendField.text;
+                                insertAction().then((context) => getJSONData());
+                                csContent = '';
+                              }
+                              sendField.text = ''; // text field 비우기
+                            });
+                          },
+                          child: const Text('답변')),
+                    ],
+                  )
           ],
         ),
       ),
