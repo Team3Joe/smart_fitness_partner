@@ -153,7 +153,7 @@ class _FindPwState extends State<FindPw> {
                               borderSide: BorderSide(width: 1, color: Color.fromARGB(255, 91, 80, 177)),
                             ),
                           ),
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.emailAddress,
                         cursorColor: Color.fromARGB(255, 113, 103, 194),
                         onChanged: (value) {},
                       ),
