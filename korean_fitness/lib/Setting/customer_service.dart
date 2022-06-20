@@ -43,19 +43,14 @@ class _CustomerServiceState extends State<CustomerService> {
       appBar: AppBar(
         title: Text(
           '고객센터',
-          style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 23,
-                shadows: [
-                  Shadow(
-                    color: Colors.black.withOpacity(0.5),
-                    offset: const Offset(3, 3),
-                    blurRadius:10
-                  )
-                ]
-              ),
-          ),
-          backgroundColor: Color.fromARGB(198, 58, 34, 131),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 23, shadows: [
+            Shadow(
+                color: Colors.black.withOpacity(0.5),
+                offset: const Offset(3, 3),
+                blurRadius: 10)
+          ]),
+        ),
+        backgroundColor: const Color.fromARGB(198, 58, 34, 131),
         toolbarHeight: 75,
       ),
       body: Padding(
@@ -166,7 +161,7 @@ class _CustomerServiceState extends State<CustomerService> {
 
   insertAction() async {
     var url = Uri.parse(
-      'http://localhost:8080/Flutter/fitness/customer_service_insert.jsp?csContent=$csContent&uId=abc',
+      'http://localhost:8080/Flutter/fitness/customer_service_insert.jsp?csContent=$csContent&uId=$uId',
     );
     var response = await http.get(url);
     setState(
