@@ -26,11 +26,11 @@ class _HelpState extends State<Help> {
                 ]
               ),
           ),
-        backgroundColor: Color.fromARGB(198, 58, 34, 131),
+        backgroundColor: const Color.fromARGB(198, 58, 34, 131),
         toolbarHeight: 75,
       ),
-      body: Center(
-        child: Column(),
+      body: Column(
+        
       ),
     );
   }
