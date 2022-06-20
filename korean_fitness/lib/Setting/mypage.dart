@@ -145,6 +145,7 @@ class _MyPageState extends State<MyPage> {
                         child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: TextField(
+                              obscureText: true,
                               decoration: const InputDecoration(
                                 labelText: 'PW',
                                 hintText: '비밀번호를 입력해주세요!',
