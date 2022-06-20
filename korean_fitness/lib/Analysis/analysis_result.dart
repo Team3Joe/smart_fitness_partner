@@ -105,7 +105,7 @@ class BarChartSample1State extends State<BarChartSample1> {
       } else if (rating == "B") {
         rating = "골드";
       } else if (rating == "C") {
-        rating == "실버";
+        rating = "실버";
       } else {
         rating = "브론즈";
       }
@@ -505,7 +505,7 @@ class BarChartSample2State extends State<BarChartSample2> {
       } else if (rating == "B") {
         rating = "골드";
       } else if (rating == "C") {
-        rating == "실버";
+        rating = "실버";
       } else {
         rating = "브론즈";
       }
@@ -894,7 +894,7 @@ class BarChartSample3State extends State<BarChartSample3> {
       } else if (rating == "B") {
         rating = "골드";
       } else if (rating == "C") {
-        rating == "실버";
+        rating = "실버";
       } else {
         rating = "브론즈";
       }
@@ -1282,7 +1282,7 @@ class BarChartSample4State extends State<BarChartSample4> {
       } else if (rating == "B") {
         rating = "골드";
       } else if (rating == "C") {
-        rating == "실버";
+        rating = "실버";
       } else {
         rating = "브론즈";
       }
@@ -1670,7 +1670,7 @@ class BarChartSample5State extends State<BarChartSample5> {
       } else if (rating == "B") {
         rating = "골드";
       } else if (rating == "C") {
-        rating == "실버";
+        rating = "실버";
       } else {
         rating = "브론즈";
       }
@@ -2045,7 +2045,7 @@ class _AnalysisResultState extends State<AnalysisResult> {
       } else if (rating == "B") {
         rating = "골드";
       } else if (rating == "C") {
-        rating == "실버";
+        rating = "실버";
       } else {
         rating = "브론즈";
       }
@@ -2379,7 +2379,7 @@ class _resultState extends State<result> {
         rating = "골드";
         Message2.tier = rating;
       } else if (rating == "C") {
-        rating == "실버";
+        rating = "실버";
         Message2.tier = rating;
       } else {
         rating = "브론즈";
