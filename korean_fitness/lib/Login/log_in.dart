@@ -67,6 +67,7 @@ class _LogInState extends State<LogIn> {
         sharedPreferences.setString('name', user.displayName.toString());
         sharedPreferences.setString('email', user.email.toString());
         Get.to(const SplashPage());
+        
       }
       if (_currentUser != null) {
         _handleGetContact(_currentUser!);
@@ -445,21 +446,17 @@ class _LogInState extends State<LogIn> {
           } else if (admin == 1) {
             return AlertDialog(
               title: const Text(
-                '관리자 로그인 성공!',
+                '관리자 확인',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              content: const Text('관리자로 로그인했습니다.'),
+              content: const Text('관리자 계정으로 로그인합니다.'),
               actions: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: Colors.blueGrey),
-                  onPressed: () async {
+                  onPressed: () {
                     Message.uId = data[0]['uId'];
-                    Message.uPw = data[0]['uPw'];
-                    Message.uName = data[0]['uName'];
-                    Message.uBirth = data[0]['uBirth'];
-                    Message.uEmail = data[0]['uEmail'];
                     Navigator.popUntil(context, (route) => false); // 뒤로가기 없애기
                     Navigator.pushNamed(context, '/Customer_list');
                   },
@@ -470,13 +467,18 @@ class _LogInState extends State<LogIn> {
           } else {
             return AlertDialog(
               title: const Text(
-                '로그인 성공!',
+                '로그인',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              content: const Text('로그인에 성공했습니다.'),
+              content: const Text('로그인 하시겠습니까?'),
               actions: [
+                ElevatedButton(
+                    onPressed: () async {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('NO')),
                 ElevatedButton(
                     onPressed: () async {
                       Message.uId = data[0]['uId'];
@@ -493,7 +495,7 @@ class _LogInState extends State<LogIn> {
                       sharedPreferences.setString('name', data[0]['uName']);
                       sharedPreferences.setString('email', data[0]['uEmail']);
                       Get.to(const SplashPage());
-                      //Navigator.popAndPushNamed(context, '/Mainpage');
+                      Navigator.popAndPushNamed(context, '/Mainpage');
                     },
                     child: const Text('OK'))
               ],
