@@ -536,7 +536,7 @@ class _CustomerListState extends State<CustomerList> {
 
   deleteAction() async {
     var url = Uri.parse(
-        'http://localhost:8080/Flutter/fitness/admin_delete.jsp?uId=$uId');
+        'http://localhost:8080/Flutter/fitness/admin_user_delete.jsp?uId=$uId');
     var response = await http.get(url);
     var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
     setState(() {
