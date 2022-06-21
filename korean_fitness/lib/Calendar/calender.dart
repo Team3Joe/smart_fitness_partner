@@ -497,6 +497,7 @@ class _CalenderState extends State<Calender> {
                     await SharedPreferences.getInstance();
                 sharedPreferences.remove("id");
                 handleSignOut();
+                Navigator.popUntil(context, (route) => false);
                 Navigator.pushNamed(context, '/Log_in');
               },
               leading: const Icon(

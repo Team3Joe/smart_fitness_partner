@@ -894,6 +894,7 @@ late String result;
                 final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
                 sharedPreferences.remove("id");
                 _handleSignOut();
+                Navigator.popUntil(context, (route) => false);
                 Navigator.pushNamed(context, '/Log_in');
               },
               leading: const Icon(
