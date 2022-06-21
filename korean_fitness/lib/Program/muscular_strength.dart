@@ -14,12 +14,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class MuscularStrength extends StatefulWidget {
-  
   final List<exercise> listM;
   final List<exercise> listC;
   final List<exercise> listF;
   final List<exercise> listS;
-
 
   const MuscularStrength({
     Key? key,
@@ -28,7 +26,7 @@ class MuscularStrength extends StatefulWidget {
     required this.listF,
     required this.listS,
   }) : super(key: key);
-  
+
   @override
   State<MuscularStrength> createState() => _MuscularStrengthState();
 }
@@ -62,16 +60,15 @@ class _MuscularStrengthState extends State<MuscularStrength> {
   late int page;
   late List numList;
 
- late List starM;
- late List starC;
- late List starF;
- late List starS;
+  late List starM;
+  late List starC;
+  late List starF;
+  late List starS;
 
- late List starList;
+  late List starList;
 
-late String result;
- 
- 
+  late String result;
+
   //drawer id, name, email
   late String finalId;
   late String finalName;
@@ -81,8 +78,7 @@ late String result;
 
   @override
   void initState() {
-
-  page = 1;
+    page = 1;
 
     type = '근력';
     col = Color.fromARGB(150, 43, 9, 0);
@@ -108,25 +104,73 @@ late String result;
     jump4 = 30;
     jump5 = 10;
 
-  
-
     cu = Curves.easeInOutBack;
     num = 900;
 
-    starM = [false,false,false,false,false,false,false,false,false,false,false,false];
-    starC = [false,false,false,false,false,false,false,false,false,false,false,false];
-    starF = [false,false,false,false,false,false,false,false,false,false,false,false];
-    starS = [false,false,false,false,false,false,false,false,false,false,false,false];
-    
-    starList = []; 
+    starM = [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ];
+    starC = [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ];
+    starF = [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ];
+    starS = [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ];
+
+    starList = [];
     numList = [];
 
     favoriteGetJSONData(1);
 
     super.initState();
 
-
-    
     finalId = "";
     finalName = "";
     finalEmail = "";
@@ -179,9 +223,11 @@ late String result;
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('체력향상 프로그램',
-        style: TextStyle(
-              fontSize: 21, fontWeight: FontWeight.w600, color: Colors.black),),
+        title: const Text(
+          '체력향상 프로그램',
+          style: TextStyle(
+              fontSize: 21, fontWeight: FontWeight.w600, color: Colors.black),
+        ),
         toolbarHeight: 65,
         elevation: 0,
         foregroundColor: Colors.black,
@@ -289,7 +335,7 @@ late String result;
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                           page = 3;
+                        page = 3;
                         listX = widget.listF;
                         starList = starF;
                         favoriteGetJSONData(3);
@@ -332,10 +378,9 @@ late String result;
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                       
                         listX = widget.listS;
                         starList = starS;
-                         favoriteGetJSONData(4);
+                        favoriteGetJSONData(4);
                         print("S : $starS");
                         print(starList);
                         page = 4;
@@ -362,7 +407,7 @@ late String result;
                         jump4 = 30;
                         jump5 = 30;
                         cu = Curves.bounceOut;
-                        num=1200;
+                        num = 1200;
                       });
                     },
                     child: const CircleAvatar(
@@ -704,14 +749,14 @@ late String result;
             ),
             CardLoading(
               cardLoadingTheme: CardLoadingTheme(
-                  colorOne: const Color.fromARGB(255, 243, 243, 243),
-                  colorTwo: col2,
-                  ),
+                colorOne: const Color.fromARGB(255, 243, 243, 243),
+                colorTwo: col2,
+              ),
               height: 3,
               borderRadius: 40,
               margin: const EdgeInsets.only(bottom: 10),
               curve: Curves.easeInToLinear,
-              animationDuration:const Duration(milliseconds:1400),
+              animationDuration: const Duration(milliseconds: 1400),
             ),
             SingleChildScrollView(
               child: SizedBox(
@@ -729,7 +774,7 @@ late String result;
                           child: AnimatedCard(
                             direction: AnimatedCardDirection.left,
                             initDelay: const Duration(milliseconds: 0),
-                            duration: Duration(milliseconds: num), 
+                            duration: Duration(milliseconds: num),
                             curve: cu,
                             child: Row(
                               children: [
@@ -743,17 +788,22 @@ late String result;
                                   width: 20,
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                     width: 210,
-                                     decoration: BoxDecoration(
-                                      border: Border(right: BorderSide(color:col))),
+                                      width: 210,
+                                      decoration: BoxDecoration(
+                                          border: Border(
+                                              right: BorderSide(color: col))),
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Text(listX[position].exName,
+                                          Text(
+                                            listX[position].exName,
                                             textAlign: TextAlign.right,
                                             style: TextStyle(
                                               fontSize: 20,
@@ -773,7 +823,6 @@ late String result;
                                               color: col,
                                             ),
                                           ),
-                                          
                                         ],
                                       ),
                                     ),
@@ -781,25 +830,22 @@ late String result;
                                       width: 15,
                                     ),
                                     Checkbox(
-                                      value: numList.contains(position) == true ? true : false,
+                                      value: numList.contains(position) == true
+                                          ? true
+                                          : false,
                                       // iconDisabledColor: Colors.white,
                                       onChanged: (_isStarred) {
-                                        
-                                        if (_isStarred == true){
+                                        if (_isStarred == true) {
                                           insertAction(page, position);
-                                          
-                                        }else{
+                                        } else {
                                           deleteAction(page, position);
                                         }
-                                                                  
                                       },
                                     )
                                   ],
                                 ),
-                                
                               ],
                             ),
-                            
                           ),
                         ),
                       );
@@ -808,7 +854,7 @@ late String result;
             ),
             const SizedBox(
               height: 5,
-             ),
+            ),
             // CardLoading(
             //   cardLoadingTheme: CardLoadingTheme(
             //       colorOne: const Color.fromARGB(255, 243, 243, 243),
@@ -855,7 +901,7 @@ late String result;
               currentAccountPicture: const CircleAvatar(
                 backgroundImage: AssetImage(
                   'images/logo.png',
-                  ),
+                ),
               ),
               //이미지 밑에 이름 & 이메일
               accountName: Text('${Message.uName}님'),
@@ -890,8 +936,9 @@ late String result;
               title: const Text('설정'),
             ),
             ListTile(
-              onTap: () async{
-                final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+              onTap: () async {
+                final SharedPreferences sharedPreferences =
+                    await SharedPreferences.getInstance();
                 sharedPreferences.remove("id");
                 _handleSignOut();
                 Navigator.popUntil(context, (route) => false);
@@ -927,12 +974,9 @@ late String result;
             ],
           );
         });
-
-
-        
   }
 
-    Future<bool> favoriteGetJSONData(int exName) async {
+  Future<bool> favoriteGetJSONData(int exName) async {
     // showDialog(
     //   context: context,
     //   builder: (context) {
@@ -952,23 +996,17 @@ late String result;
       List result = dataConvertedJSOn['results'];
 
       starList.addAll(result);
-    
-numList = [];
 
-    for (int i = 0; i < starList.length; i++ ){
- numList.add(starList[i]['exNum']);
+      numList = [];
 
-}
-
+      for (int i = 0; i < starList.length; i++) {
+        numList.add(starList[i]['exNum']);
+      }
     });
-
-
-
 
     //  print(double.parse(Message3.mLatitude));
 
     // print(result);
-
 
     return true;
   }
@@ -980,26 +1018,18 @@ numList = [];
     setState(() {
       var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
       result = dataConvertedJSON['result'];
-
-  
     });
     favoriteGetJSONData(page);
   }
 
-    deleteAction(int exName, int exNum) async {
+  deleteAction(int exName, int exNum) async {
     var url = Uri.parse(
         'http://localhost:8080/Flutter/fitness/favorite_delete.jsp?Id=${Message.uId}&exName=$exName&exNum=$exNum');
     var response = await http.get(url);
     setState(() {
       var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
       result = dataConvertedJSON['result'];
-
-  
     });
     favoriteGetJSONData(page);
   }
-
-
-
-  
 }

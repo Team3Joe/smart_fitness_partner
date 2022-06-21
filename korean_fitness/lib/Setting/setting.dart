@@ -16,7 +16,11 @@ class _SettingState extends State<Setting> {
   @override
   void initState() {
     super.initState();
-    darkModeSwitch = false;
+    if (MyApp.themeNotifier.value == ThemeMode.dark) {
+      darkModeSwitch = true;
+    } else {
+      darkModeSwitch = false;
+    }
     version = '1.0.1';
   }
 
@@ -34,7 +38,7 @@ class _SettingState extends State<Setting> {
                 blurRadius: 10)
           ]),
         ),
-        backgroundColor: Color.fromARGB(180, 58, 34, 131),
+        backgroundColor: const Color.fromARGB(180, 58, 34, 131),
         toolbarHeight: 75,
         actions: [
           Row(
@@ -54,7 +58,7 @@ class _SettingState extends State<Setting> {
         ],
       ),
       body: Container(
-        color: Color.fromARGB(63, 150, 131, 213),
+        color: const Color.fromARGB(63, 150, 131, 213),
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -160,10 +164,10 @@ class _SettingState extends State<Setting> {
                             width: 20,
                           ),
                           const Icon(
-                              Icons.circle,
-                              size: 13,
-                              // color: Color.fromARGB(186, 30, 22, 56),
-                            ),
+                            Icons.circle,
+                            size: 13,
+                            // color: Color.fromARGB(186, 30, 22, 56),
+                          ),
                           const SizedBox(
                             width: 30,
                           ),
