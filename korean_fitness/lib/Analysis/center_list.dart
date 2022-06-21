@@ -95,7 +95,7 @@ class _CenterListState extends State<CenterList> {
               color: Color.fromARGB(220, 200, 167, 238),
               height: 65,
               child: data.isEmpty
-                  ? const Text("데이터가 없습니다.")
+                  ? const Text("체력인증센터가 없습니다.")
                   : ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: mRegion.length,
