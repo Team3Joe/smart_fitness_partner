@@ -66,7 +66,7 @@ class _LogInState extends State<LogIn> {
         sharedPreferences.setString('id', user.email.toString());
         sharedPreferences.setString('name', user.displayName.toString());
         sharedPreferences.setString('email', user.email.toString());
-        Get.to(const SplashPage());
+        Get.to(() => SplashPage());
         
       }
       if (_currentUser != null) {
@@ -277,9 +277,9 @@ class _LogInState extends State<LogIn> {
                             setState(() {
                               id = idController.text.trim();
                               pw = pwController.text.trim();
-                            });
                             _getJSONData().then(
                                 (value) => logInCheck(context)); // data 오류
+                            });
                           }
                         },
                         child: const Text(
@@ -475,27 +475,25 @@ class _LogInState extends State<LogIn> {
               content: const Text('로그인 하시겠습니까?'),
               actions: [
                 ElevatedButton(
-                    onPressed: () async {
+                    onPressed: (){
                       Navigator.pop(context);
                     },
                     child: const Text('NO')),
                 ElevatedButton(
                     onPressed: () async {
-                      Message.uId = data[0]['uId'];
+                      setState(() {
+                        Message.uId = data[0]['uId'];
                       Message.uPw = data[0]['uPw'];
                       Message.uName = data[0]['uName'];
                       Message.uBirth = data[0]['uBirth'];
                       Message.uEmail = data[0]['uEmail'];
-
-                      Navigator.pop(context); // 다시 로그인페이지로 돌아가지 않도록
-                      final SharedPreferences sharedPreferences =
-                          await SharedPreferences.getInstance();
-                      sharedPreferences.setString(
-                          'id', idController.text.trim());
-                      sharedPreferences.setString('name', data[0]['uName']);
-                      sharedPreferences.setString('email', data[0]['uEmail']);
-                      Get.to(const SplashPage());
-                      Navigator.popAndPushNamed(context, '/Mainpage');
+                      id = data[0]['uId'];
+                      });
+                      final SharedPreferences sharedPreferences =await SharedPreferences.getInstance();
+                      sharedPreferences.setString('id', id);
+                      Get.to(() => SplashPage());
+                    
+                     
                     },
                     child: const Text('OK'))
               ],
