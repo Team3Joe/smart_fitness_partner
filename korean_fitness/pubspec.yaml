@@ -45,7 +45,7 @@ dependencies:
   easy_splash_screen: ^1.0.3 # 로딩화면
   
   table_calendar: ^3.0.6 # 캘린더 구현
-  intl: ^0.17.0 # 캘린더 datetime 세팅
+  intl: ^0.17.0 # 캘린더 한글설정
   
   shared_preferences: ^2.0.15
   get: ^4.6.5

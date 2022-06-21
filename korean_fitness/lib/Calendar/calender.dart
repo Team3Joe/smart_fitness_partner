@@ -215,7 +215,10 @@ class _CalenderState extends State<Calender> {
                   const SizedBox(
                     width: 20,
                   ),
+                  
                   GestureDetector(
+                    // 분석 결과 보기 버튼 tap 하면 선택된 날짜 메세지에 넣어주고
+                    // 데이터가 있는지를 확인하는 analysisDataCheck(); 를 실행
                     onTap: () {
                       Message4.selectedDay =
                           selectedDay.toString().substring(0, 10);
@@ -270,7 +273,7 @@ class _CalenderState extends State<Calender> {
             height: 20,
           ),
           SizedBox(
-            height: 220, // 반응형 높이조절 하고싶은데 너무 어렵다..
+            height: 220, 
             child: data.isEmpty
                 ? const Text('데이터가 없습니다')
                 : ListView.builder(
