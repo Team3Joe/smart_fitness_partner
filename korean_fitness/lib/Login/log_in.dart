@@ -495,7 +495,6 @@ class _LogInState extends State<LogIn> {
                       sharedPreferences.setString('name', data[0]['uName']);
                       sharedPreferences.setString('email', data[0]['uEmail']);
                       Get.to(const SplashPage());
-                      Navigator.popAndPushNamed(context, '/Mainpage');
                     },
                     child: const Text('OK'))
               ],
