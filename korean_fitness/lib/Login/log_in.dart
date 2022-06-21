@@ -478,7 +478,7 @@ class _LogInState extends State<LogIn> {
                     onPressed: () async {
                       Navigator.pop(context);
                     },
-                    child: const Text('NO')),
+                    child: const Text('아니요')),
                 ElevatedButton(
                     onPressed: () async {
                       Message.uId = data[0]['uId'];
@@ -494,7 +494,7 @@ class _LogInState extends State<LogIn> {
                       sharedPreferences.setString('email', data[0]['uEmail']);
                       Get.to(const SplashPage());
                     },
-                    child: const Text('OK'))
+                    child: const Text('예'))
               ],
             );
           }
