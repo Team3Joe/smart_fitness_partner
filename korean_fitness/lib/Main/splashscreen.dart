@@ -20,8 +20,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     getData().whenComplete(() async {
       Timer(
-          const Duration(seconds: 2),
-          () => Get.to(finalId == ""
+          const Duration(seconds: 2),() => Get.to(finalId == ""
               ? Navigator.pushNamed(context, '/Log_in')
               : Navigator.pushNamed(context, '/Mainpage')));
     });
@@ -31,7 +30,7 @@ class _SplashPageState extends State<SplashPage> {
   Future getData() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
-    var obitainedId = sharedPreferences.getString(' id');
+    var obitainedId = sharedPreferences.getString('id');
     var obitainedName = sharedPreferences.getString('name');
     var obitainedEmail = sharedPreferences.getString('email');
 
