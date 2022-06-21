@@ -312,8 +312,7 @@ class _AnalysisState extends State<Analysis> {
             ),
             ListTile(
               onTap: () async {
-                final SharedPreferences sharedPreferences =
-                    await SharedPreferences.getInstance();
+                final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
                 sharedPreferences.remove("id");
                 handleSignOut();
                 Navigator.popUntil(context, (route) => false);
