@@ -488,10 +488,8 @@ class _LogInState extends State<LogIn> {
                       Message.uEmail = data[0]['uEmail'];
 
                       Navigator.pop(context); // 다시 로그인페이지로 돌아가지 않도록
-                      final SharedPreferences sharedPreferences =
-                          await SharedPreferences.getInstance();
-                      sharedPreferences.setString(
-                          'id', idController.text.trim());
+                      final SharedPreferences sharedPreferences =await SharedPreferences.getInstance();
+                      sharedPreferences.setString('id', idController.text.trim());
                       sharedPreferences.setString('name', data[0]['uName']);
                       sharedPreferences.setString('email', data[0]['uEmail']);
                       Get.to(const SplashPage());
