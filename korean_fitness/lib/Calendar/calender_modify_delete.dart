@@ -136,7 +136,6 @@ class _CalenderModifyDeleteState extends State<CalenderModifyDelete> {
               cWits = _cWitsState;
               cMuscularStrength = _cMuscularStrengthState;
               cCardiovascularEndurance = _cCardiovascularEnduranceState;
-              uId = "asdf";
               cDate = widget.selectedDay.toString().substring(0, 10);
               cCode = widget.cCode;
               updateAction();

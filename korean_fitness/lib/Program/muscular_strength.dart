@@ -194,8 +194,8 @@ late String result;
               height: 5,
             ),
             Container(
-              color: Color.fromARGB(190, 189, 180, 255),
-              height: 80,
+              color: Color.fromARGB(180, 162, 182, 255),
+              height: 90,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -237,11 +237,11 @@ late String result;
                       backgroundImage: AssetImage(
                         'images/mu1.png',
                       ),
-                      radius: 30,
+                      radius: 33,
                     ),
                   ),
                   const SizedBox(
-                    width: 50,
+                    width: 30,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -280,11 +280,11 @@ late String result;
                       backgroundImage: AssetImage(
                         'images/ca1.png',
                       ),
-                      radius: 30,
+                      radius: 33,
                     ),
                   ),
                   const SizedBox(
-                    width: 50,
+                    width: 30,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -323,11 +323,11 @@ late String result;
                       backgroundImage: AssetImage(
                         'images/fl1.png',
                       ),
-                      radius: 30,
+                      radius: 33,
                     ),
                   ),
                   const SizedBox(
-                    width: 50,
+                    width: 30,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -369,7 +369,7 @@ late String result;
                       backgroundImage: AssetImage(
                         'images/sp1.png',
                       ),
-                      radius: 30,
+                      radius: 33,
                     ),
                   ),
                 ],

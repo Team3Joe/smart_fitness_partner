@@ -37,6 +37,12 @@ class _CustomerListState extends State<CustomerList> {
   }
 
   @override
+  void dispose() {
+    searchField.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => Future(() => false),
@@ -46,7 +52,7 @@ class _CustomerListState extends State<CustomerList> {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('관리자 페이지'),
+            title: const Text('관리자 화면'),
             backgroundColor: Colors.blueGrey,
             elevation: 0,
             actions: [
@@ -82,8 +88,8 @@ class _CustomerListState extends State<CustomerList> {
                                 borderSide: BorderSide(color: Colors.blueGrey),
                               ),
                               focusedBorder: UnderlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.blueGrey)),
+                                borderSide: BorderSide(color: Colors.blueGrey),
+                              ),
                               focusColor: Colors.blueGrey),
                           cursorColor: Colors.blueGrey,
                           autocorrect: false,
@@ -103,18 +109,19 @@ class _CustomerListState extends State<CustomerList> {
                         width: 10,
                       ),
                       ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.blueGrey),
-                          onPressed: () {
-                            setState(() {
-                              if (searchField.text.trim().isNotEmpty) {
-                                search = searchField.text.trim();
-                                getJSONData();
-                              }
-                              searchField.text = ''; // text field 비우기
-                            });
-                          },
-                          child: const Text('검색')),
+                        style:
+                            ElevatedButton.styleFrom(primary: Colors.blueGrey),
+                        onPressed: () {
+                          setState(() {
+                            if (searchField.text.trim().isNotEmpty) {
+                              search = searchField.text.trim();
+                              getJSONData();
+                            }
+                            searchField.text = ''; // text field 비우기
+                          });
+                        },
+                        child: const Text('검색'),
+                      ),
                       const SizedBox(
                         width: 10,
                       ),
@@ -186,7 +193,6 @@ class _CustomerListState extends State<CustomerList> {
                   ),
                   SizedBox(
                     height: (data.length - uQuitCount) * 45,
-                    // 키보드 올라오는 공간 고려
                     child: ListView.builder(
                       itemBuilder: (context, index) {
                         return data.isEmpty
@@ -265,7 +271,7 @@ class _CustomerListState extends State<CustomerList> {
                                   )
                                 : const SizedBox();
                       },
-                      itemCount: data.length - uQuitCount,
+                      itemCount: data.length,
                     ),
                   ),
                   const SizedBox(
@@ -412,7 +418,7 @@ class _CustomerListState extends State<CustomerList> {
                                   )
                                 : const SizedBox();
                       },
-                      itemCount: uQuitCount,
+                      itemCount: data.length,
                     ),
                   ),
                   const SizedBox(
