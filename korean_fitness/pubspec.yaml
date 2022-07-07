@@ -36,25 +36,20 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   http: ^0.13.4 # url 활용
-
   chat_bubbles: ^1.2.0 # 고객센터 채팅
-
-  google_maps_flutter: ^2.1.7 # 체력인증센터 위치
-
+  google_maps_flutter: ^2.1.7 # 체력인증센터 위치용 api
   fl_chart: ^0.51.0 # 체력분석 차트
   easy_splash_screen: ^1.0.3 # 로딩화면
-  
   table_calendar: ^3.0.6 # 캘린더 구현
   intl: ^0.17.0 # 캘린더 한글설정
-  
-  shared_preferences: ^2.0.15 # 앱 종료해도 정보 가지
-  get: ^4.6.5 
-  google_sign_in: ^5.3.3
-  animated_card: ^2.0.0
-  card_loading: ^0.1.5
-  card_flip: ^0.0.5
-  reveal_card: ^1.0.0
-  favorite_button: ^0.0.4
+  shared_preferences: ^2.0.15 # 앱 종료해도 정보를 보관하기
+  get: ^4.6.5 # 상태 유지? 상태 관리?
+  google_sign_in: ^5.3.3 # 구글계정 로그인
+  animated_card: ^2.0.0 # 카드 효과(애니메이션)
+  card_loading: ^0.1.5 # 카드 효과(애니메이션)
+  card_flip: ^0.0.5 # 카드 효과(애니메이션)
+  reveal_card: ^1.0.0 # 카드 효과(애니메이션)
+  favorite_button: ^0.0.4 # 즐겨찾기 버튼 애니메이션 
 
 dev_dependencies:
   flutter_test:
