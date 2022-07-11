@@ -43,7 +43,7 @@ class _SplashPageState extends State<SplashPage> {
         finalEmail = obitainedEmail;
       }
     });
-    print("로딩 : $finalId");
+    // print("로딩 : $finalId");
   }
 
   @override
