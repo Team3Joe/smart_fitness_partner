@@ -88,366 +88,368 @@ class _CalenderState extends State<Calender> {
         elevation: 0,
       ),
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          //calendar
-          TableCalendar(
-            locale: 'ko-KR',
-            firstDay: DateTime(1990),
-            lastDay: DateTime(2050),
-            focusedDay: selectedDay,
-            calendarFormat: _calendarFormat,
-            onFormatChanged: (CalendarFormat format) {
-              setState(() {
-                _calendarFormat = format;
-              });
-            },
-
-            // Day Changed
-            onDaySelected: (DateTime selectDay, DateTime focusDay) {
-              setState(() {
-                selectedDay = selectDay;
-                focusedDay = focusDay; // update `_focusedDay` here as well
-                cDate = selectedDay.toString().substring(0, 10);
-              });
-              getJSONData();
-              getAnalysisData();
-            },
-
-            selectedDayPredicate: (DateTime day) {
-              return isSameDay(selectedDay, day);
-            },
-
-            eventLoader: (day) {
-              List dot = [];
-
-              for (int i = 0; i < allDatedata.length; i++) {
-                if (allDatedata.isNotEmpty) {
-                  if (day.toString().substring(0, 10) ==
-                      allDatedata[i]['cDate']) {
-                    dot.add(true);
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            //calendar
+            TableCalendar(
+              locale: 'ko-KR',
+              firstDay: DateTime(1990),
+              lastDay: DateTime(2050),
+              focusedDay: selectedDay,
+              calendarFormat: _calendarFormat,
+              onFormatChanged: (CalendarFormat format) {
+                setState(() {
+                  _calendarFormat = format;
+                });
+              },
+      
+              // Day Changed
+              onDaySelected: (DateTime selectDay, DateTime focusDay) {
+                setState(() {
+                  selectedDay = selectDay;
+                  focusedDay = focusDay; // update `_focusedDay` here as well
+                  cDate = selectedDay.toString().substring(0, 10);
+                });
+                getJSONData();
+                getAnalysisData();
+              },
+      
+              selectedDayPredicate: (DateTime day) {
+                return isSameDay(selectedDay, day);
+              },
+      
+              eventLoader: (day) {
+                List dot = [];
+      
+                for (int i = 0; i < allDatedata.length; i++) {
+                  if (allDatedata.isNotEmpty) {
+                    if (day.toString().substring(0, 10) ==
+                        allDatedata[i]['cDate']) {
+                      dot.add(true);
+                    }
                   }
                 }
-              }
-              for (int a = 0; a < allAnalysisData.length; a++) {
-                if (allAnalysisData.isNotEmpty) {
-                  if (day.toString().substring(0, 10) ==
-                      allAnalysisData[a]['bDate']) {
-                    dot.add(true);
+                for (int a = 0; a < allAnalysisData.length; a++) {
+                  if (allAnalysisData.isNotEmpty) {
+                    if (day.toString().substring(0, 10) ==
+                        allAnalysisData[a]['bDate']) {
+                      dot.add(true);
+                    }
                   }
                 }
-              }
-              return dot;
-            },
-            // Calendar Style
-            calendarStyle: CalendarStyle(
-              selectedDecoration: BoxDecoration(
-                color: Colors.purple.shade100,
-                shape: BoxShape.circle,
+                return dot;
+              },
+              // Calendar Style
+              calendarStyle: CalendarStyle(
+                selectedDecoration: BoxDecoration(
+                  color: Colors.purple.shade100,
+                  shape: BoxShape.circle,
+                ),
+                todayDecoration: const BoxDecoration(
+                  color: Color.fromARGB(178, 186, 104, 200),
+                  shape: BoxShape.circle,
+                ),
               ),
-              todayDecoration: const BoxDecoration(
-                color: Color.fromARGB(178, 186, 104, 200),
-                shape: BoxShape.circle,
+              headerStyle: const HeaderStyle(
+                formatButtonShowsNext: false,
               ),
             ),
-            headerStyle: const HeaderStyle(
-              formatButtonShowsNext: false,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        CalenderWrite(selectedDay: selectedDay)))
+                            .then((value) => getJSONData());
+                      },
+                      child: Container(
+                        width: 150,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: const Color.fromARGB(165, 81, 9, 164),
+                          boxShadow: [
+                            BoxShadow(
+                              color:
+                                  Colors.grey.withOpacity(0.5), //color of shadow
+                              spreadRadius: 1, //spread radius
+                              blurRadius: 1, // blur radius
+                              offset: const Offset(
+                                  0, 2), // changes position of shadow
+                              //first paramerter of offset is left-right
+                              //second parameter is top to down
+                            ),
+                            //you can set more BoxShadow() here
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Icon(Icons.add,
+                                color: Color.fromARGB(255, 241, 228, 255),
+                                size: 25),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              '운동 기록 추가',
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromARGB(255, 241, 228, 255)),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    
+                    GestureDetector(
+                      // 분석 결과 보기 버튼 tap 하면 선택된 날짜 메세지에 넣어주고
+                      // 데이터가 있는지를 확인하는 analysisDataCheck(); 를 실행
+                      onTap: () {
+                        Message4.selectedDay =
+                            selectedDay.toString().substring(0, 10);
+                        analysisDataCheck();
+                      },
+                      child: Container(
+                        width: 150,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: const Color.fromARGB(144, 0, 58, 158),
+                          boxShadow: [
+                            BoxShadow(
+                              color:
+                                  Colors.grey.withOpacity(0.5), //color of shadow
+                              spreadRadius: 1, //spread radius
+                              blurRadius: 1, // blur radius
+                              offset: const Offset(
+                                  0, 2), // changes position of shadow
+                              //first paramerter of offset is left-right
+                              //second parameter is top to down
+                            ),
+                            //you can set more BoxShadow() here
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Icon(
+                              Icons.bar_chart,
+                              color: Color.fromARGB(255, 237, 237, 255),
+                            ),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              '분석 결과 보기',
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromARGB(255, 237, 237, 255)),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
+            const SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              height: 220, 
+              child: data.isEmpty
+                  ? const Text('데이터가 없습니다')
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: data.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          //calenderDelete
+                          onLongPress: () {
+                            cCode = data[index]['cCode'].toString();
+                            deleteShowDialog(context);
+                          },
+                          //calendarModify
+                          onTap: () {
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      CalenderWrite(selectedDay: selectedDay)))
-                          .then((value) => getJSONData());
-                    },
-                    child: Container(
-                      width: 150,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: const Color.fromARGB(165, 81, 9, 164),
-                        boxShadow: [
-                          BoxShadow(
-                            color:
-                                Colors.grey.withOpacity(0.5), //color of shadow
-                            spreadRadius: 1, //spread radius
-                            blurRadius: 1, // blur radius
-                            offset: const Offset(
-                                0, 2), // changes position of shadow
-                            //first paramerter of offset is left-right
-                            //second parameter is top to down
-                          ),
-                          //you can set more BoxShadow() here
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(Icons.add,
-                              color: Color.fromARGB(255, 241, 228, 255),
-                              size: 25),
-                          SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            '운동 기록 추가',
-                            style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.w600,
-                                color: Color.fromARGB(255, 241, 228, 255)),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  
-                  GestureDetector(
-                    // 분석 결과 보기 버튼 tap 하면 선택된 날짜 메세지에 넣어주고
-                    // 데이터가 있는지를 확인하는 analysisDataCheck(); 를 실행
-                    onTap: () {
-                      Message4.selectedDay =
-                          selectedDay.toString().substring(0, 10);
-                      analysisDataCheck();
-                    },
-                    child: Container(
-                      width: 150,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: const Color.fromARGB(144, 0, 58, 158),
-                        boxShadow: [
-                          BoxShadow(
-                            color:
-                                Colors.grey.withOpacity(0.5), //color of shadow
-                            spreadRadius: 1, //spread radius
-                            blurRadius: 1, // blur radius
-                            offset: const Offset(
-                                0, 2), // changes position of shadow
-                            //first paramerter of offset is left-right
-                            //second parameter is top to down
-                          ),
-                          //you can set more BoxShadow() here
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(
-                            Icons.bar_chart,
-                            color: Color.fromARGB(255, 237, 237, 255),
-                          ),
-                          SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            '분석 결과 보기',
-                            style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.w600,
-                                color: Color.fromARGB(255, 237, 237, 255)),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          SizedBox(
-            height: 220, 
-            child: data.isEmpty
-                ? const Text('데이터가 없습니다')
-                : ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: data.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        //calenderDelete
-                        onLongPress: () {
-                          cCode = data[index]['cCode'].toString();
-                          deleteShowDialog(context);
-                        },
-                        //calendarModify
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  CalenderModifyDelete(
-                                cTitle: data[index]['cTitle'],
-                                cContent: data[index]['cContent'],
-                                cFlexibility:
-                                    data[index]['cFlexibility'].toString(),
-                                cEndurance:
-                                    data[index]['cEndurance'].toString(),
-                                cWits: data[index]['cWits'].toString(),
-                                cMuscularStrength:
-                                    data[index]['cMuscularStrength'].toString(),
-                                cCardiovascularEndurance: data[index]
-                                        ['cCardiovascularEndurance']
-                                    .toString(),
-                                cDate: data[index]['cDate'],
-                                selectedDay: selectedDay,
-                                cCode: data[index]['cCode'].toString(),
+                                builder: (BuildContext context) =>
+                                    CalenderModifyDelete(
+                                  cTitle: data[index]['cTitle'],
+                                  cContent: data[index]['cContent'],
+                                  cFlexibility:
+                                      data[index]['cFlexibility'].toString(),
+                                  cEndurance:
+                                      data[index]['cEndurance'].toString(),
+                                  cWits: data[index]['cWits'].toString(),
+                                  cMuscularStrength:
+                                      data[index]['cMuscularStrength'].toString(),
+                                  cCardiovascularEndurance: data[index]
+                                          ['cCardiovascularEndurance']
+                                      .toString(),
+                                  cDate: data[index]['cDate'],
+                                  selectedDay: selectedDay,
+                                  cCode: data[index]['cCode'].toString(),
+                                ),
+                              ),
+                            ).then((value) => getJSONData());
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Container(
+                              width: 200,
+                              height: 120,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: const Color.fromARGB(80, 224, 197, 255),
+                              ),
+                              margin: const EdgeInsets.only(bottom: 10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(17, 13, 0, 7),
+                                    child: Text(
+                                      data[index]['cTitle'],
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                    child: Row(
+                                      children: [
+                                        data[index]['cFlexibility'] == 1
+                                            ? Padding(
+                                                padding: const EdgeInsets.all(3.0),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(10),
+                                                    color: const Color.fromARGB(
+                                                        129, 245, 183, 183),
+                                                  ),
+                                                  width: 60,
+                                                  height: 30,
+                                                  child: const Center(
+                                                      child: Text('유연성')),
+                                                ),
+                                              )
+                                            : const SizedBox(),
+                                        data[index]['cEndurance'] == 1
+                                            ? Padding(
+                                                padding: const EdgeInsets.all(3.0),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(10),
+                                                    color: const Color.fromARGB(
+                                                        129, 240, 183, 245),
+                                                  ),
+                                                  width: 60,
+                                                  height: 30,
+                                                  child: const Center(
+                                                      child: Text('근지구력')),
+                                                ),
+                                              )
+                                            : const SizedBox(),
+                                        data[index]['cWits'] == 1
+                                            ? Padding(
+                                                padding: const EdgeInsets.all(3.0),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(10),
+                                                    color: const Color.fromARGB(
+                                                        129, 227, 217, 142),
+                                                  ),
+                                                  width: 60,
+                                                  height: 30,
+                                                  child: const Center(
+                                                      child: Text('순발력')),
+                                                ),
+                                              )
+                                            : const SizedBox(),
+                                        data[index]['cMuscularStrength'] == 1
+                                            ? Padding(
+                                                padding: const EdgeInsets.all(3.0),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(10),
+                                                    color: const Color.fromARGB(
+                                                        80, 116, 252, 195),
+                                                  ),
+                                                  width: 50,
+                                                  height: 30,
+                                                  child: const Center(
+                                                      child: Text('근력')),
+                                                ),
+                                              )
+                                            : const SizedBox(),
+                                        data[index]['cCardiovascularEndurance'] == 1
+                                            ? Padding(
+                                                padding: const EdgeInsets.all(3.0),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(10),
+                                                    color: const Color.fromARGB(
+                                                        98, 116, 154, 252),
+                                                  ),
+                                                  width: 90,
+                                                  height: 30,
+                                                  child: const Center(
+                                                      child: Text('심폐지구력')),
+                                                ),
+                                              )
+                                            : const SizedBox(),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(17, 0, 0, 0),
+                                    child: Text(
+                                      data[index]['cContent'],
+                                      style: const TextStyle(
+                                        fontSize: 17,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ).then((value) => getJSONData());
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Container(
-                            width: 200,
-                            height: 120,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: const Color.fromARGB(80, 224, 197, 255),
-                            ),
-                            margin: const EdgeInsets.only(bottom: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(17, 13, 0, 7),
-                                  child: Text(
-                                    data[index]['cTitle'],
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                  child: Row(
-                                    children: [
-                                      data[index]['cFlexibility'] == 1
-                                          ? Padding(
-                                              padding: const EdgeInsets.all(3.0),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  color: const Color.fromARGB(
-                                                      129, 245, 183, 183),
-                                                ),
-                                                width: 60,
-                                                height: 30,
-                                                child: const Center(
-                                                    child: Text('유연성')),
-                                              ),
-                                            )
-                                          : const SizedBox(),
-                                      data[index]['cEndurance'] == 1
-                                          ? Padding(
-                                              padding: const EdgeInsets.all(3.0),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  color: const Color.fromARGB(
-                                                      129, 240, 183, 245),
-                                                ),
-                                                width: 60,
-                                                height: 30,
-                                                child: const Center(
-                                                    child: Text('근지구력')),
-                                              ),
-                                            )
-                                          : const SizedBox(),
-                                      data[index]['cWits'] == 1
-                                          ? Padding(
-                                              padding: const EdgeInsets.all(3.0),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  color: const Color.fromARGB(
-                                                      129, 227, 217, 142),
-                                                ),
-                                                width: 60,
-                                                height: 30,
-                                                child: const Center(
-                                                    child: Text('순발력')),
-                                              ),
-                                            )
-                                          : const SizedBox(),
-                                      data[index]['cMuscularStrength'] == 1
-                                          ? Padding(
-                                              padding: const EdgeInsets.all(3.0),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  color: const Color.fromARGB(
-                                                      80, 116, 252, 195),
-                                                ),
-                                                width: 50,
-                                                height: 30,
-                                                child: const Center(
-                                                    child: Text('근력')),
-                                              ),
-                                            )
-                                          : const SizedBox(),
-                                      data[index]['cCardiovascularEndurance'] == 1
-                                          ? Padding(
-                                              padding: const EdgeInsets.all(3.0),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  color: const Color.fromARGB(
-                                                      98, 116, 154, 252),
-                                                ),
-                                                width: 90,
-                                                height: 30,
-                                                child: const Center(
-                                                    child: Text('심폐지구력')),
-                                              ),
-                                            )
-                                          : const SizedBox(),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(17, 0, 0, 0),
-                                  child: Text(
-                                    data[index]['cContent'],
-                                    style: const TextStyle(
-                                      fontSize: 17,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
                           ),
-                        ),
-                      );
-                    }),
-          ),
-        ],
+                        );
+                      }),
+            ),
+          ],
+        ),
       ),
       drawer: Drawer(
         child: ListView(
@@ -648,8 +650,7 @@ class _CalenderState extends State<Calender> {
 
   analysisDataCheck() {
     if (analysisData.isNotEmpty) {
-      Navigator.pushNamed(context, '/Calender_alnalysis')
-          .then((value) => Navigator.popAndPushNamed(context, '/Calender'));
+      Navigator.pushNamed(context, '/Calender_alnalysis');
     } else {
       snackBarFuntion(context);
     }

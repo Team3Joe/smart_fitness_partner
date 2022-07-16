@@ -53,8 +53,6 @@ class _LogInState extends State<LogIn> {
       });
       final GoogleSignInAccount? user = _currentUser;
       if (user != null) {
-        // print(user.displayName);
-        // print(user.email);
 
         //google info save
         gid = user.email.toString();
